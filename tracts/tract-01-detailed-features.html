@@ -1,0 +1,2804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Specifications - BoB Management Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 60px 80px;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent-teal);
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .tier-section {
+      margin-bottom: 4rem;
+    }
+
+    .tier-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .tier-header.tier-2 {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, #0d9488 100%);
+    }
+
+    .tier-header.tier-3 {
+      background: linear-gradient(135deg, var(--accent-amber) 0%, #f97316 100%);
+    }
+
+    .tier-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-description {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .ticket {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .ticket:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    .ticket h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+    }
+
+    .ticket-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--accent-blue);
+      color: white;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-badge.tier-2 {
+      background: var(--accent-teal);
+    }
+
+    .tier-badge.tier-3 {
+      background: var(--accent-amber);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .phase-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .ticket h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1.5rem 0 1rem 0;
+    }
+
+    .ticket ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .ticket ul li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+    }
+
+    .ticket ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-teal);
+      font-weight: 700;
+    }
+
+    .ticket ul li strong {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .api-spec {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-teal);
+      margin: 1rem 0;
+    }
+
+    .api-spec code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-teal);
+    }
+
+    .api-spec p {
+      margin: 0.5rem 0;
+      color: var(--text-secondary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    table th {
+      background: var(--bg-secondary);
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    table tr:hover {
+      background: var(--bg-secondary);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-secondary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent-teal);
+    }
+
+    .dependencies {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-amber);
+      margin: 1rem 0;
+    }
+
+    .dependencies p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .dependencies strong {
+      color: var(--accent-amber);
+    }
+
+    .related-brds {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-teal);
+      margin: 1rem 0;
+    }
+
+    .related-brds p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .related-brds strong {
+      color: var(--accent-teal);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px 30px;
+      }
+      h1 {
+        font-size: 2.25rem;
+      }
+      .stats-bar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="label">BOB MANAGEMENT SUITE</div>
+    <h1>Feature Specifications</h1>
+    <p class="subtitle">Comprehensive ticket breakdown for Builder of Bundles Management Suite</p>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">43</div>
+        <div class="stat-label">Total Tickets</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Tier 1 (Foundation)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">7</div>
+        <div class="stat-label">Tier 2 (Identification)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">26</div>
+        <div class="stat-label">Tier 3+ (Features)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">43</div>
+        <div class="stat-label">MVP Phase 1</div>
+      </div>
+    </div>
+
+    <!-- TIER 1 SECTION -->
+    <div class="tier-section">
+      <div class="tier-header">
+        <h2>Tier 1: Platform Foundation</h2>
+        <p class="tier-description">Core infrastructure, security, and shared capabilities that all features depend on</p>
+      </div>
+
+      <!-- BOB-001 -->
+      <div class="ticket" id="BOB-001">
+        <h3>BOB-001: Security & Access Control</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Implement role-based access control for BoB applications. Users MUST have 'Shipper' OR 'Limited Admin' permissions and BytePro / Post Close Responsibilities (Operations roles). Users lacking permissions receive an error message preventing access to the Bundle Builder.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Users MUST have 'Shipper' OR 'Limited Admin' permissions</li>
+          <li>Users MUST have BytePro / Post Close Responsibilities (Operations roles)</li>
+          <li><strong>IF</strong> user lacks permissions <strong>THEN</strong> display error: "You do not have permission to access Bundle Builder. Please contact your administrator"</li>
+          <li>3 approved security roles (TBD from Single Flow BRD 89567)</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user has 'Shipper' OR 'Limited Admin' permissions</li>
+          <li><strong>When</strong> user accesses Bulk Bundle Manager</li>
+          <li><strong>Then</strong> landing page loads successfully</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user lacks required permissions</li>
+          <li><strong>When</strong> user attempts access</li>
+          <li><strong>Then</strong> access denied with error message</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.User, dbo.Permissions, authentication middleware</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page), Single Flow BRD 89567</p>
+        </div>
+      </div>
+
+      <!-- BOB-002 -->
+      <div class="ticket" id="BOB-002">
+        <h3>BOB-002: Bundle Configuration Dropdown</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Populate bundle selection dropdown from dbo.Bundle table with approximately 80 bundle options sorted alphabetically. Examples include Fannie Mae, Freddie Mac, Ginnie Mae, Wells Fargo, JP Morgan Chase, Bank of America, and US Bank.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Dropdown populated from dbo.Bundle.Name (~80 bundle options)</li>
+          <li>Sort alphabetically</li>
+          <li>Data mappings: BundleID, Name, DocumentStackID, OutputFileNameFormat, ServerFolderName (Column Q)</li>
+        </ul>
+
+        <h4>Field Specifications</h4>
+        <table>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Required</th>
+          </tr>
+          <tr>
+            <td>BundleID</td>
+            <td>INT</td>
+            <td>dbo.Bundle</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>VARCHAR</td>
+            <td>dbo.Bundle</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>DocumentStackID</td>
+            <td>INT (FK)</td>
+            <td>dbo.Bundle</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>OutputFileNameFormat</td>
+            <td>VARCHAR</td>
+            <td>dbo.Bundle</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>ServerFolderName</td>
+            <td>VARCHAR (Column Q)</td>
+            <td>dbo.Bundle</td>
+            <td>No (Nullable)</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks Bundle Name dropdown</li>
+          <li><strong>When</strong> dropdown opens</li>
+          <li><strong>Then</strong> approximately 80 bundle options display alphabetically</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user selects bundle</li>
+          <li><strong>When</strong> selection made</li>
+          <li><strong>Then</strong> BundleID stored for stacking order retrieval</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.Bundle table</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page), Single Flow BRD 76335</p>
+        </div>
+      </div>
+
+      <!-- BOB-003 -->
+      <div class="ticket" id="BOB-003">
+        <h3>BOB-003: Tab Navigation (Bulk Bundle Builder / Activity Log)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Implement two-tab interface with "Bulk Bundle Builder" (default active) and "Activity Log" with an incomplete bundle badge. The badge displays the count of incomplete bundles for the current user.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Tab 1: "Bulk Bundle Builder" (default active)</li>
+          <li>Tab 2: "Activity Log [X]" (badge displays incomplete bundle count)</li>
+          <li>Badge count logic: <code>SELECT COUNT(*) FROM ActivityLog WHERE BulkBundleStatus = 'Incomplete' AND DATEDIFF(DAY, LastViewed, GETDATE()) <= 10</code></li>
+          <li>Display "[X] Incomplete Bundles" message when count > 0</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user has 8 incomplete bundles</li>
+          <li><strong>When</strong> user views Activity Log tab</li>
+          <li><strong>Then</strong> tab displays "Activity Log 8"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user has 0 incomplete bundles</li>
+          <li><strong>When</strong> user views tab</li>
+          <li><strong>Then</strong> no badge displays (or "Activity Log 0")</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog table, BOB-008 (Activity Log Database Schema)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page), BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-004 -->
+      <div class="ticket" id="BOB-004">
+        <h3>BOB-004: Logout Button with Background Job Support</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Enable user logout while background jobs continue processing. Button located in upper-right corner. When users log out during active jobs, they are logged out while jobs continue server-side. When they log back in, the Activity Log reflects current statuses.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Button located upper-right corner</li>
+          <li><strong>IF</strong> user logs out AND background jobs running <strong>THEN</strong> log user out AND jobs continue server-side</li>
+          <li><strong>IF</strong> user logs back in <strong>THEN</strong> Activity Log reflects current statuses</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks logout button during active job</li>
+          <li><strong>When</strong> logout occurs</li>
+          <li><strong>Then</strong> user logged out AND job continues processing</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user logs back in hours later</li>
+          <li><strong>When</strong> user checks Activity Log</li>
+          <li><strong>Then</strong> current job status displayed</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Session management, background job service</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page), BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-005 -->
+      <div class="ticket" id="BOB-005">
+        <h3>BOB-005: Document Category Structure (20 Categories)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Implement document category table with DisplayOrder. VERBATIM REUSE from Single Flow BRD 76336. Filter index uses DocumentCategoryID, DocumentCategoryCode, and DisplayOrder.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>20 categories with specific DisplayOrder values</li>
+          <li>Categories: APP (1), DISC (2), CRED (3), INC (4), ASSET (5), PROP (6), DOCS (7), GOV (8), TITLE (9), MISC (14), AUDIT (16), CORR (17), PTF DOCS (15), WHS (18), POST CLSNG (19), BOND SUB FIN (10), Unsigned (20), MCC (11), RENO (12), CONST (13)</li>
+          <li>VERBATIM REUSE from Single Flow BRD 76336</li>
+        </ul>
+
+        <h4>Field Specifications</h4>
+        <table>
+          <tr>
+            <th>Category Code</th>
+            <th>Display Order</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>APP</td>
+            <td>1</td>
+            <td>Application</td>
+          </tr>
+          <tr>
+            <td>DISC</td>
+            <td>2</td>
+            <td>Disclosure</td>
+          </tr>
+          <tr>
+            <td>CRED</td>
+            <td>3</td>
+            <td>Credit</td>
+          </tr>
+          <tr>
+            <td>INC</td>
+            <td>4</td>
+            <td>Income</td>
+          </tr>
+          <tr>
+            <td>ASSET</td>
+            <td>5</td>
+            <td>Assets</td>
+          </tr>
+          <tr>
+            <td>PROP</td>
+            <td>6</td>
+            <td>Property</td>
+          </tr>
+          <tr>
+            <td>DOCS</td>
+            <td>7</td>
+            <td>Documents</td>
+          </tr>
+          <tr>
+            <td>GOV</td>
+            <td>8</td>
+            <td>Government</td>
+          </tr>
+          <tr>
+            <td>TITLE</td>
+            <td>9</td>
+            <td>Title</td>
+          </tr>
+          <tr>
+            <td>BOND SUB FIN</td>
+            <td>10</td>
+            <td>Bond Submission Financials</td>
+          </tr>
+          <tr>
+            <td>MCC</td>
+            <td>11</td>
+            <td>Mortgage Credit Certificate</td>
+          </tr>
+          <tr>
+            <td>RENO</td>
+            <td>12</td>
+            <td>Renovation</td>
+          </tr>
+          <tr>
+            <td>CONST</td>
+            <td>13</td>
+            <td>Construction</td>
+          </tr>
+          <tr>
+            <td>MISC</td>
+            <td>14</td>
+            <td>Miscellaneous</td>
+          </tr>
+          <tr>
+            <td>PTF DOCS</td>
+            <td>15</td>
+            <td>Portfolio Documents</td>
+          </tr>
+          <tr>
+            <td>AUDIT</td>
+            <td>16</td>
+            <td>Audit</td>
+          </tr>
+          <tr>
+            <td>CORR</td>
+            <td>17</td>
+            <td>Correspondence</td>
+          </tr>
+          <tr>
+            <td>WHS</td>
+            <td>18</td>
+            <td>Warehouse</td>
+          </tr>
+          <tr>
+            <td>POST CLSNG</td>
+            <td>19</td>
+            <td>Post Closing</td>
+          </tr>
+          <tr>
+            <td>Unsigned</td>
+            <td>20</td>
+            <td>Unsigned Documents</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> system queries document categories</li>
+          <li><strong>When</strong> categories retrieved</li>
+          <li><strong>Then</strong> 20 categories returned sorted by DisplayOrder</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.DocumentCategory table</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid), Single Flow BRD 76336</p>
+        </div>
+      </div>
+
+      <!-- BOB-006 -->
+      <div class="ticket" id="BOB-006">
+        <h3>BOB-006: Hide Not Applicable Docs - Conditional Logic Engine</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Implement 9-rule conditional logic to hide N/A documents per-loan. Applied PER-LOAN based on individual loan attributes. VERBATIM REUSE from Single Flow BRD 76336.</p>
+        </div>
+
+        <h4>Hide N/A Rules</h4>
+        <ul>
+          <li><strong>Rule 1:</strong> Mortgage Type = Conventional → hide FHA/VA/USDA docs (~108 docs)</li>
+          <li><strong>Rule 2:</strong> Property Type = Detached/Attached/PUD → hide Condo/Co-op docs (~18 docs)</li>
+          <li><strong>Rule 3:</strong> Origination Channel = Retail → hide Correspondent docs (~7 docs)</li>
+          <li><strong>Rule 4:</strong> PMI Type = None → hide MI docs (~7 docs)</li>
+          <li><strong>Rule 5:</strong> Flood Insurance = NULL → hide Flood docs (~6 docs)</li>
+          <li><strong>Rule 6:</strong> State = CA → hide CA-specific docs (~8 docs)</li>
+          <li><strong>Rule 7:</strong> State = FL → hide FL-specific docs (~3 docs)</li>
+          <li><strong>Rule 8:</strong> State = TX → hide TX-specific docs (~3 docs)</li>
+          <li><strong>Rule 9:</strong> Loan Purpose = Refinance → hide Purchase/Construction docs (~15 docs)</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> Loan A has MortgageType = Conventional AND doc count = 0</li>
+          <li><strong>When</strong> Hide N/A logic applied</li>
+          <li><strong>Then</strong> FHA/VA/USDA documents excluded from validation counts</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> Loan B has MortgageType = FHA</li>
+          <li><strong>When</strong> Hide N/A logic applied</li>
+          <li><strong>Then</strong> FHA documents included in validation counts</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> any rule parameter NOT met (e.g., doc count > 0)</li>
+          <li><strong>When</strong> system evaluates rules</li>
+          <li><strong>Then</strong> document displays "as-is" and NOT hidden</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.Loan, dbo.SubProp, dbo.FileData, dbo.LoanMIMethod, dbo.PartyMisc</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid), Single Flow BRD 76336</p>
+        </div>
+      </div>
+
+      <!-- BOB-007 -->
+      <div class="ticket" id="BOB-007">
+        <h3>BOB-007: BytePro API Integration - Byte 25.2 Dependency</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p><strong>CRITICAL BLOCKER:</strong> "All API call effort associated to dbo.bundle is contingent on Byte release 25.2". Integrate with BytePro Byte release 25.2 APIs for bundle operations including loan document retrieval, bundle stacking order retrieval, bulk validation, and PDF generation.</p>
+        </div>
+
+        <h4>API Endpoints Required</h4>
+        <ul>
+          <li><strong>API Endpoint 1:</strong> Loan Document Retrieval (query dbo.EmbeddedDoc)</li>
+          <li><strong>API Endpoint 2:</strong> Bundle Stacking Order Retrieval (query dbo.DocumentStack)</li>
+          <li><strong>API Endpoint 3:</strong> Bulk Validation API (calculate Missing/Found doc counts)</li>
+          <li><strong>API Endpoint 4:</strong> PDF Generation API (create bundle PDF per loan)</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> BytePro Byte 25.2 NOT deployed</li>
+          <li><strong>When</strong> BoB attempts API calls</li>
+          <li><strong>Then</strong> API calls fail with error message</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> Byte 25.2 deployed</li>
+          <li><strong>When</strong> BoB makes API calls</li>
+          <li><strong>Then</strong> bundle processing functions correctly</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> BytePro Byte release 25.2, dbo.EmbeddedDoc, dbo.DocumentStack, dbo.Bundle</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid), BRD-3 (Product Output), Single Flow BRD 77115</p>
+        </div>
+      </div>
+
+      <!-- BOB-008 -->
+      <div class="ticket" id="BOB-008">
+        <h3>BOB-008: Activity Log Database Schema</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Create ActivityLog table for job history tracking. Retention: 10 business days, auto-delete via nightly job.</p>
+        </div>
+
+        <h4>Field Specifications</h4>
+        <table>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>ActivityLogID</td>
+            <td>BIGINT (PK, Identity)</td>
+            <td>Yes</td>
+            <td>Primary Key</td>
+          </tr>
+          <tr>
+            <td>UserID</td>
+            <td>INT (FK)</td>
+            <td>Yes</td>
+            <td>User who initiated job</td>
+          </tr>
+          <tr>
+            <td>BundleID</td>
+            <td>INT (FK)</td>
+            <td>Yes</td>
+            <td>Reference to dbo.Bundle</td>
+          </tr>
+          <tr>
+            <td>BundleName</td>
+            <td>NVARCHAR(100)</td>
+            <td>Yes</td>
+            <td>Denormalized for display</td>
+          </tr>
+          <tr>
+            <td>LastViewed</td>
+            <td>DATETIME</td>
+            <td>Yes</td>
+            <td>Last accessed timestamp</td>
+          </tr>
+          <tr>
+            <td>LastBuildRequest</td>
+            <td>DATETIME (Nullable)</td>
+            <td>No</td>
+            <td>Build initiated timestamp</td>
+          </tr>
+          <tr>
+            <td>NumberOfLoans</td>
+            <td>INT</td>
+            <td>Yes</td>
+            <td>Total loan count</td>
+          </tr>
+          <tr>
+            <td>BulkBundleStatus</td>
+            <td>NVARCHAR(20)</td>
+            <td>Yes</td>
+            <td>Incomplete/In progress/Complete</td>
+          </tr>
+          <tr>
+            <td>CreatedDate</td>
+            <td>DATETIME</td>
+            <td>Yes</td>
+            <td>Entry creation timestamp</td>
+          </tr>
+          <tr>
+            <td>LoanPopulationData</td>
+            <td>NVARCHAR(MAX)</td>
+            <td>No</td>
+            <td>Serialized loan numbers (JSON)</td>
+          </tr>
+        </table>
+
+        <h4>Indexes Required</h4>
+        <ul>
+          <li>PK on ActivityLogID</li>
+          <li>Index on UserID</li>
+          <li>Index on LastViewed (retention queries)</li>
+          <li>Index on BulkBundleStatus (badge count)</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job initiated</li>
+          <li><strong>When</strong> Activity Log entry created</li>
+          <li><strong>Then</strong> entry stored with BulkBundleStatus = "Incomplete"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> entry 11 business days old</li>
+          <li><strong>When</strong> nightly cleanup job runs</li>
+          <li><strong>Then</strong> entry deleted from table</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> New table creation, scheduled cleanup job</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-009 -->
+      <div class="ticket" id="BOB-009">
+        <h3>BOB-009: PDF Destination Mapping - Column Q Logic</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Route generated PDFs to investor-specific destinations based on dbo.Bundle.ServerFolderName (Column Q). Data source: dbo.Bundle.ServerFolderName (Column Q, nullable).</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li><strong>IF</strong> Column Q NOT NULL AND != '' <strong>THEN</strong> send PDF to specified path</li>
+          <li><strong>ELSE</strong> send PDF to C:\Users\{username}\Temp\</li>
+          <li>Destination types: UNC network paths (\\server\share\), SFTP (sftp://host/path/), FTP (ftp://host/path/), Local paths (C:\SharedFolders\)</li>
+        </ul>
+
+        <h4>Destination Examples</h4>
+        <table>
+          <tr>
+            <th>Column Q Value</th>
+            <th>Destination Type</th>
+            <th>Action</th>
+          </tr>
+          <tr>
+            <td>\\FileServer01\InvestorDelivery\FannieMae\</td>
+            <td>Network Share</td>
+            <td>Copy to network path</td>
+          </tr>
+          <tr>
+            <td>sftp://ginniemae.delivery.com/bundles/</td>
+            <td>SFTP</td>
+            <td>Upload via SFTP</td>
+          </tr>
+          <tr>
+            <td>NULL or blank</td>
+            <td>Temp Folder</td>
+            <td>Save to temp directory</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> Column Q = "\\FileServer01\InvestorDelivery\FannieMae\"</li>
+          <li><strong>When</strong> PDF generated</li>
+          <li><strong>Then</strong> PDF delivered to network share path</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> Column Q = NULL</li>
+          <li><strong>When</strong> PDF generated</li>
+          <li><strong>Then</strong> PDF delivered to C:\Users\{username}\Temp\</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.Bundle.ServerFolderName, file I/O libraries, SFTP client libraries</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-3 (Product Output), BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-010 -->
+      <div class="ticket" id="BOB-010">
+        <h3>BOB-010: Manual Refresh Pattern (No Real-Time Updates)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge">TIER 1</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Implement manual refresh button to update loan statuses. NO automatic polling or WebSocket updates. Use case: Check progress during long-running background jobs.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Button text: "Refresh Population"</li>
+          <li>NO automatic polling or WebSocket updates</li>
+          <li><strong>IF</strong> user clicks refresh <strong>THEN</strong> re-query loan statuses AND update grid AND update tab counts AND preserve checkbox states</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job processing in background</li>
+          <li><strong>When</strong> user clicks "Refresh Population"</li>
+          <li><strong>Then</strong> grid updates with current loan statuses</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job processing</li>
+          <li><strong>When</strong> user does NOT click refresh</li>
+          <li><strong>Then</strong> loan statuses remain at last-known state (no automatic updates)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> BytePro API, dbo.EmbeddedDoc query</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid), BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 2 SECTION -->
+    <div class="tier-section">
+      <div class="tier-header tier-2">
+        <h2>Tier 2: Loan Identification & Selection</h2>
+        <p class="tier-description">Four methods for identifying and selecting loan populations</p>
+      </div>
+
+      <!-- BOB-021 -->
+      <div class="ticket" id="BOB-021">
+        <h3>BOB-021: Manual Entry - Loan Number Input with Fix Format</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Allow users to paste/enter multiple loan numbers with flexible delimiters. "Fix Format" button cleans and validates input by splitting by delimiters, trimming whitespace, removing duplicates, and validating alphanumeric characters.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Textarea field labeled "Subject Loans"</li>
+          <li>Accepts delimiters: comma, space, backslash, period, semicolon, dash</li>
+          <li>"Fix Format" button: split by delimiters, trim whitespace, remove duplicates, validate alphanumeric</li>
+          <li>Query: <code>SELECT FileDataID FROM FileData WHERE FileName IN (cleaned array) AND Status.LoanStatus NOT IN (7, 8, 9)</code></li>
+        </ul>
+
+        <h4>Error Validations</h4>
+        <ul>
+          <li>Special characters → "Unable to format loan numbers, please remove any special characters and try again"</li>
+          <li>Empty field → "No valid loan numbers found"</li>
+          <li>No matches → "No active loans found matching entered loan numbers. Please verify loan numbers and try again"</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user pastes "TEST001, TEST002; TEST003.TEST004"</li>
+          <li><strong>When</strong> user clicks "Fix Format"</li>
+          <li><strong>Then</strong> loan numbers cleaned to ["TEST001", "TEST002", "TEST003", "TEST004"]</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user enters special characters</li>
+          <li><strong>When</strong> user clicks "Fix Format"</li>
+          <li><strong>Then</strong> error displays</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.FileData, dbo.Status, sp_GetLoansByLoanNumbers</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+      </div>
+
+      <!-- BOB-022 -->
+      <div class="ticket" id="BOB-022">
+        <h3>BOB-022: Trade Number Identification Method</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Retrieve loan population by trade number. Textbox field labeled "Trade Number". [TBD: Trade table name and field mapping]</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Textbox field labeled "Trade Number"</li>
+          <li>[TBD: Trade table name and field mapping]</li>
+          <li><strong>IF</strong> trade number exists <strong>THEN</strong> retrieve associated loans</li>
+          <li><strong>IF</strong> trade NOT found <strong>THEN</strong> error: "Trade number not found. Please verify and try again"</li>
+          <li><strong>IF</strong> trade has no loans <strong>THEN</strong> error: "No loans found for this trade number"</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user enters valid trade number</li>
+          <li><strong>When</strong> system validates</li>
+          <li><strong>Then</strong> associated loans retrieved</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> invalid trade number</li>
+          <li><strong>When</strong> system validates</li>
+          <li><strong>Then</strong> error message displays</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> [TBD: Trade table mapping], dbo.FileData</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Database schema for trade number mapping unknown (OI-002)</p>
+        </div>
+      </div>
+
+      <!-- BOB-023 -->
+      <div class="ticket" id="BOB-023">
+        <h3>BOB-023: Custom Filter Identification Method</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Dynamic filtering by loan attributes. Two-part input: Dropdown (filter type) + Textbox (filter value). [TBD: Filter type definitions table - options unknown]</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Two-part input: Dropdown (filter type) + Textbox (filter value)</li>
+          <li>[TBD: Filter type definitions table - options unknown]</li>
+          <li>Wildcard matching: <code>WHERE [FilterField] LIKE '%@filterValue%'</code></li>
+          <li><strong>IF</strong> filter type selected <strong>THEN</strong> enable textbox</li>
+          <li><strong>IF</strong> no matches <strong>THEN</strong> error: "No loans found matching filter criteria. Please adjust filter and try again"</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user selects filter type AND enters value</li>
+          <li><strong>When</strong> query executes</li>
+          <li><strong>Then</strong> matching loans returned</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> query returns zero results</li>
+          <li><strong>When</strong> validation completes</li>
+          <li><strong>Then</strong> error message displays</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> [TBD: Filter definitions], dbo.FileData</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Available filter types and fields unknown (OI-003)</p>
+        </div>
+      </div>
+
+      <!-- BOB-024 -->
+      <div class="ticket" id="BOB-024">
+        <h3>BOB-024: Investor Commitment Number Identification Method</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Retrieve loan population by investor commitment number. Textbox field labeled "Investor Commitment Number". [TBD: Commitment table name and field mapping]</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Textbox field labeled "Investor Commitment Number"</li>
+          <li>[TBD: Commitment table name and field mapping]</li>
+          <li><strong>IF</strong> commitment exists <strong>THEN</strong> retrieve associated loans</li>
+          <li><strong>IF</strong> commitment NOT found <strong>THEN</strong> error: "Investor commitment number not found. Please verify and try again"</li>
+          <li><strong>IF</strong> commitment has no loans <strong>THEN</strong> error: "No loans found for this investor commitment number"</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user enters valid commitment number</li>
+          <li><strong>When</strong> system validates</li>
+          <li><strong>Then</strong> associated loans retrieved</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> invalid commitment number</li>
+          <li><strong>When</strong> validation fails</li>
+          <li><strong>Then</strong> error displays</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> [TBD: Commitment table mapping], dbo.FileData</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Database schema for commitment mapping unknown (OI-004)</p>
+        </div>
+      </div>
+
+      <!-- BOB-025 -->
+      <div class="ticket" id="BOB-025">
+        <h3>BOB-025: View Loan Population - Validation & Navigation</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Validate loan population against bundle stacking order and navigate to grid. Button enabled when (loan population identified) AND (bundle selected). Processing time: 2-10 seconds for 50 loans.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Button text: "View Loan Population"</li>
+          <li>Button enabled when: (loan population identified) AND (bundle selected)</li>
+          <li>Loading state: "Generating..." button text, spinner, "Loading Loan Population..." message</li>
+          <li>Validation logic: FOR EACH loan query documents, compare to stacking order, calculate Missing/Found counts</li>
+          <li>Create Activity Log entry with status "Incomplete" and "Not built yet"</li>
+          <li>Navigate to Bundle Build Grid (BRD 2) with results</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks enabled button AND validation succeeds</li>
+          <li><strong>When</strong> processing completes</li>
+          <li><strong>Then</strong> user navigates to grid with validation results</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> validation fails</li>
+          <li><strong>When</strong> button clicked</li>
+          <li><strong>Then</strong> error displays inline, no navigation</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.EmbeddedDoc, dbo.DocumentStack, dbo.ActivityLog, BOB-007 (BytePro API), BOB-008 (Activity Log Schema)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page), BRD-2 (Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-026 -->
+      <div class="ticket" id="BOB-026">
+        <h3>BOB-026: Clear Form Button</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Reset all landing page form inputs. Button text: "Clear". IF user clicks THEN reset all inputs, clear errors, revert to "Manual Entry" tab.</p>
+        </div>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user has entered form data</li>
+          <li><strong>When</strong> user clicks "Clear"</li>
+          <li><strong>Then</strong> all inputs reset to default state</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> None (client-side only)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+      </div>
+
+      <!-- BOB-027 -->
+      <div class="ticket" id="BOB-027">
+        <h3>BOB-027: Maximum Population Size Validation</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-2">TIER 2</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Prevent oversized populations from causing performance issues. [TBD: Define maximum loan count per bulk job based on system capacity]</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>[TBD: Define maximum loan count per bulk job based on system capacity]</li>
+          <li><strong>IF</strong> population size > max <strong>THEN</strong> error: "Population size exceeds maximum limit of [X] loans. Please reduce population size"</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user attempts population > max limit</li>
+          <li><strong>When</strong> validation runs</li>
+          <li><strong>Then</strong> error displays, no navigation to grid</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> System capacity analysis required</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-1 (Landing Page)</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Maximum population size unknown, requires performance testing (OI-005)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 3 SECTION - Part 1 -->
+    <div class="tier-section">
+      <div class="tier-header tier-3">
+        <h2>Tier 3: Bundle Build Grid & Multi-Loan Operations</h2>
+        <p class="tier-description">Grid display, filtering, and multi-loan bundle operations</p>
+      </div>
+
+      <!-- BOB-031 -->
+      <div class="ticket" id="BOB-031">
+        <h3>BOB-031: Grid Structure - Five Columns with Sortable Headers</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Display loan-level validation summaries in multi-row grid. One row per loan in population. Default sort: Loan Number ascending. Column header click: Toggle ascending/descending sort.</p>
+        </div>
+
+        <h4>Column Specifications</h4>
+        <table>
+          <tr>
+            <th>Column</th>
+            <th>Sortable</th>
+            <th>Format</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <td>Checkbox</td>
+            <td>No</td>
+            <td>Master select in header</td>
+            <td>For multi-select</td>
+          </tr>
+          <tr>
+            <td>Loan Number</td>
+            <td>Yes</td>
+            <td>Text</td>
+            <td>Default sort ascending</td>
+          </tr>
+          <tr>
+            <td>Missing Docs</td>
+            <td>Yes</td>
+            <td>Integer (red if > 0)</td>
+            <td>Required docs not found</td>
+          </tr>
+          <tr>
+            <td>Found Docs</td>
+            <td>Yes</td>
+            <td>Integer (green text)</td>
+            <td>Required docs found</td>
+          </tr>
+          <tr>
+            <td>Bundle Status</td>
+            <td>Yes</td>
+            <td>Enum (color-coded)</td>
+            <td>Processing status</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> grid loads with 50 loans</li>
+          <li><strong>When</strong> user views grid</li>
+          <li><strong>Then</strong> 50 rows display with 5 columns each</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicks "Loan Number" column header</li>
+          <li><strong>When</strong> sort triggers</li>
+          <li><strong>Then</strong> grid re-sorts alphabetically</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Grid rendering library (React Data Grid, AG Grid, etc.)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-032 -->
+      <div class="ticket" id="BOB-032">
+        <h3>BOB-032: Filter Tabs with Dynamic Counts</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Three-tab filtering with real-time count updates. Default active: "All Loans". Tab click: Filter grid to matching loans. Count updates: Manual refresh only (not real-time).</p>
+        </div>
+
+        <h4>Tab Specifications</h4>
+        <ul>
+          <li><strong>Tab 1:</strong> "All Loans [X]" - total count</li>
+          <li><strong>Tab 2:</strong> "Loans Missing Docs [X]" - count WHERE Missing Docs > 0</li>
+          <li><strong>Tab 3:</strong> "Ready to Bundle [X]" - count WHERE Missing Docs = 0</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> grid displays 15 loans (10 missing docs, 5 ready)</li>
+          <li><strong>When</strong> tabs load</li>
+          <li><strong>Then</strong> display "All Loans 15", "Loans Missing Docs 10", "Ready to Bundle 5"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicks "Loans Missing Docs" tab</li>
+          <li><strong>When</strong> tab activates</li>
+          <li><strong>Then</strong> grid shows only 10 loans with Missing Docs > 0</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Client-side filtering, count calculations</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-033 -->
+      <div class="ticket" id="BOB-033">
+        <h3>BOB-033: Status Filter Dropdown (All / Fail / Pass)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Additional filtering layer for loan validation status. Works in conjunction with filter tabs (AND logic). Dropdown options: "All" (default), "Fail" (Missing Docs > 0), "Pass" (Missing Docs = 0).</p>
+        </div>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user selects "Fail" status</li>
+          <li><strong>When</strong> filter applied</li>
+          <li><strong>Then</strong> grid shows only loans with Missing Docs > 0</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> "Loans Missing Docs" tab active AND "Fail" status selected</li>
+          <li><strong>When</strong> filters combine</li>
+          <li><strong>Then</strong> result set = loans with Missing Docs > 0 (same as tab alone)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Client-side filtering logic</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-034 -->
+      <div class="ticket" id="BOB-034">
+        <h3>BOB-034: Hide Not Applicable Docs Checkbox Toggle</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>User-controlled toggle for Hide N/A logic application. Checkbox labeled "Hide Not Applicable Docs". Default state: Checked. IF toggled THEN recalculate all loan counts, refresh grid, update tab counts.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Default state: Checked</li>
+          <li><strong>IF</strong> checked <strong>THEN</strong> apply 9-rule Hide N/A logic per-loan, exclude N/A docs from counts</li>
+          <li><strong>IF</strong> unchecked <strong>THEN</strong> include all stacking order docs (full "as-is" display)</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> checkbox checked AND Loan A has MortgageType = Conventional</li>
+          <li><strong>When</strong> grid displays</li>
+          <li><strong>Then</strong> FHA/VA/USDA docs excluded from Loan A's Missing/Found counts</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user toggles checkbox to unchecked</li>
+          <li><strong>When</strong> state changes</li>
+          <li><strong>Then</strong> all docs included in counts, grid refreshes</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Hide N/A logic engine (BOB-006)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-035 -->
+      <div class="ticket" id="BOB-035">
+        <h3>BOB-035: Multi-Select Checkboxes with Master Checkbox</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Individual and bulk loan selection for targeted builds. Master checkbox in header: Select/deselect all visible loans. Default state: All checked. Intermediate state: Dash icon when some (not all) selected.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Master checkbox in header: Select/deselect all visible loans</li>
+          <li>Individual checkboxes: One per loan row</li>
+          <li>Default state: All checked</li>
+          <li>State persistence: Checkbox states preserved during tab switches and refresh</li>
+          <li>Real-time count update: "Build [X] Selected Loans" button updates as user checks/unchecks</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> grid loads with 5 loans</li>
+          <li><strong>When</strong> user views checkboxes</li>
+          <li><strong>Then</strong> all 5 checkboxes checked by default</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicks master checkbox (unchecked state)</li>
+          <li><strong>When</strong> clicked</li>
+          <li><strong>Then</strong> all visible loans deselected</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user checks 3 of 5 loans</li>
+          <li><strong>When</strong> master checkbox viewed</li>
+          <li><strong>Then</strong> displays intermediate state (dash icon)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Checkbox state management (client-side)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-036 -->
+      <div class="ticket" id="BOB-036">
+        <h3>BOB-036: Add Loan to Population Modal</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Allow users to add 1-2 forgotten loans without restarting. Button: "+ Add Loan to Population". Modal reuses Manual Entry logic 100% (Fix Format functionality).</p>
+        </div>
+
+        <h4>Modal Specifications</h4>
+        <ul>
+          <li>Modal title: "Add Loan to Summary"</li>
+          <li>Modal content: Loan input field, "Fix Format" button (reuses BOB-021 logic)</li>
+          <li>Modal buttons: "Cancel", "Add to Summary"</li>
+          <li>Validation: Duplicate detection, invalid loan detection, no active loans found</li>
+          <li>Success: Add loans to population, validate against stacking order, close modal, refresh grid</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks "+ Add Loan to Population"</li>
+          <li><strong>When</strong> button clicked</li>
+          <li><strong>Then</strong> modal opens</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user enters loan numbers in modal</li>
+          <li><strong>When</strong> user clicks "Add to Summary"</li>
+          <li><strong>Then</strong> valid loans added, grid refreshes</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user enters duplicates</li>
+          <li><strong>When</strong> validation runs</li>
+          <li><strong>Then</strong> error: "Loan(s) already exist in population: [loan numbers]"</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Manual Entry formatter (BOB-021), dbo.FileData</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Bundle Build Grid)</p>
+        </div>
+      </div>
+
+      <!-- BOB-037 -->
+      <div class="ticket" id="BOB-037">
+        <h3>BOB-037: Build Ready to Bundle Loans (Status-Based Path)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Bulk operation to build all validated loans. Ignores checkbox selection (operates on status only). Initiates background job to process all Ready loans sequentially.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Button text: "Build Ready to Bundle Loans"</li>
+          <li>Button enabled IF at least one loan has Bundle Status = "Ready to Bundle"</li>
+          <li>Ignores checkbox selection (operates on status only)</li>
+          <li>Initiates background job to process all Ready loans sequentially</li>
+          <li>Updates loan statuses to "In Progress" during processing</li>
+          <li>Updates to "Completed" on success, "Bundle Failed" on failure</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> 5 loans with Ready to Bundle status</li>
+          <li><strong>When</strong> user clicks button</li>
+          <li><strong>Then</strong> background job initiates for all 5 loans</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> zero Ready to Bundle loans</li>
+          <li><strong>When</strong> user views button</li>
+          <li><strong>Then</strong> button disabled (gray)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Background job service, PDF generation API, BOB-051 (Background Job Initiation)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid), BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-038 -->
+      <div class="ticket" id="BOB-038">
+        <h3>BOB-038: Build [X] Selected Loans (Manual Selection Path)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Targeted operation to build only checked loans. Button text: "Build [X] Selected Loans" (dynamic count). Allows building loans with Missing Docs > 0 (if intentionally selected).</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Button text: "Build [X] Selected Loans" (dynamic count)</li>
+          <li>Button enabled IF at least one loan checked</li>
+          <li>[X] updates in real-time as user checks/unchecks</li>
+          <li>Allows building loans with Missing Docs > 0 (if intentionally selected)</li>
+          <li>Initiates background job for checked loans only</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user checks 5 loans</li>
+          <li><strong>When</strong> button displays</li>
+          <li><strong>Then</strong> text = "Build 5 Selected Loans"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user unchecks 2 loans</li>
+          <li><strong>When</strong> count updates</li>
+          <li><strong>Then</strong> text = "Build 3 Selected Loans" (real-time)</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user includes loans with Missing Docs > 0</li>
+          <li><strong>When</strong> build initiates</li>
+          <li><strong>Then</strong> all checked loans processed regardless of status</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Background job service, checkbox state, BOB-035 (Multi-Select Checkboxes)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid), BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-039 -->
+      <div class="ticket" id="BOB-039">
+        <h3>BOB-039: Bundle Status Enum Values</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Track loan-level bundle processing status. HARD RULE: At job completion, ONLY "Completed" or "Bundle Failed" allowed. IF job status = "Complete" THEN ALL loans MUST show "Completed".</p>
+        </div>
+
+        <h4>Status Values</h4>
+        <table>
+          <tr>
+            <th>Status</th>
+            <th>Visual Indicator</th>
+            <th>When Used</th>
+          </tr>
+          <tr>
+            <td>Not Bundled</td>
+            <td>Gray</td>
+            <td>Default state (Missing Docs > 0)</td>
+          </tr>
+          <tr>
+            <td>Ready to Bundle</td>
+            <td>Green</td>
+            <td>Missing Docs = 0</td>
+          </tr>
+          <tr>
+            <td>In Progress</td>
+            <td>Blue + animation</td>
+            <td>Currently processing</td>
+          </tr>
+          <tr>
+            <td>Completed</td>
+            <td>Green + checkmark</td>
+            <td>Successfully bundled</td>
+          </tr>
+          <tr>
+            <td>Bundle Failed</td>
+            <td>Red + error icon</td>
+            <td>Processing error</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job completes with 100% success</li>
+          <li><strong>When</strong> user refreshes grid</li>
+          <li><strong>Then</strong> ALL loans show Bundle Status = "Completed"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job completes with 2 failures out of 10 loans</li>
+          <li><strong>When</strong> user refreshes grid</li>
+          <li><strong>Then</strong> 2 loans show "Bundle Failed", 8 show "Completed"</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.BulkBundleJob.LoanStatus</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid), BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-040 -->
+      <div class="ticket" id="BOB-040">
+        <h3>BOB-040: Grid Pagination (Optional Future Enhancement)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 3</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 2</span>
+        </div>
+
+        <div class="description">
+          <p>Handle very large populations (500+ loans). [TBD: Define pagination strategy - client-side or server-side?] [TBD: Page size (e.g., 100 loans per page)?] [TBD: Performance threshold where pagination required?]</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Pagination requirement unknown, requires performance testing with large populations (OI-015)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-2 (Grid)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 4 SECTION -->
+    <div class="tier-section">
+      <div class="tier-header tier-3">
+        <h2>Tier 4: Background Job Processing & PDF Delivery</h2>
+        <p class="tier-description">Server-side job execution, PDF generation, and delivery mechanisms</p>
+      </div>
+
+      <!-- BOB-051 -->
+      <div class="ticket" id="BOB-051">
+        <h3>BOB-051: Background Job Initiation</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Create server-side job when user clicks build button. Execute stored procedure to create Activity Log entry with status "Incomplete" and create BundleJobQueue entries for each selected loan.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>IF user clicks build button THEN create Activity Log entry with status "Incomplete"</li>
+          <li>Execute <code>sp_InitiateBulkBundleJob</code> with @bundleId, @loanList, @userId parameters</li>
+          <li>Create BundleJobQueue entries for each selected loan</li>
+          <li>Return jobId for tracking</li>
+          <li>Display brief "Generating..." state (2-3 seconds)</li>
+          <li>Return user to grid with updated statuses</li>
+        </ul>
+
+        <h4>API Endpoint</h4>
+        <div class="api-spec">
+          <p><code>POST /api/bundle/initiate-job</code></p>
+          <p>Request: { bundleId, loanNumbers, userId, buildMode }</p>
+          <p>Response: { jobId, status, activityLogId }</p>
+        </div>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks build button</li>
+          <li><strong>When</strong> job initiates</li>
+          <li><strong>Then</strong> Activity Log entry created, grid shows "In Progress" statuses</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog, dbo.BundleJobQueue, sp_InitiateBulkBundleJob</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-052 -->
+      <div class="ticket" id="BOB-052">
+        <h3>BOB-052: Sequential Loan Processing (3-5 Minutes Per Loan)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Process loans one at a time to prevent system overload. Sequential processing (NOT parallel). Processing time: 3-5 minutes per loan (varies by doc count/complexity). Total job time = loan count × 3-5 minutes.</p>
+        </div>
+
+        <h4>Processing Steps Per Loan</h4>
+        <ul>
+          <li>Retrieve docs from BytePro API</li>
+          <li>Retrieve stacking order</li>
+          <li>Apply Hide N/A logic</li>
+          <li>Sort by DisplayOrder</li>
+          <li>Generate PDF</li>
+          <li>Deliver PDF</li>
+          <li>Update status</li>
+        </ul>
+
+        <h4>Time Estimates</h4>
+        <table>
+          <tr>
+            <th>Loan Count</th>
+            <th>Est. Time</th>
+          </tr>
+          <tr>
+            <td>5 loans</td>
+            <td>15-25 minutes</td>
+          </tr>
+          <tr>
+            <td>50 loans</td>
+            <td>2.5-4 hours</td>
+          </tr>
+          <tr>
+            <td>100 loans</td>
+            <td>5-8 hours</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job processing 50 loans</li>
+          <li><strong>When</strong> job executes</li>
+          <li><strong>Then</strong> loans processed one at a time (not parallel)</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> each loan takes 4 minutes average</li>
+          <li><strong>When</strong> 50-loan job runs</li>
+          <li><strong>Then</strong> total time ≈ 200 minutes (3.3 hours)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Background job worker service, BOB-007 (BytePro API)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-3 (Background Jobs)</p>
+        </div>
+      </div>
+
+      <!-- BOB-053 -->
+      <div class="ticket" id="BOB-053">
+        <h3>BOB-053: PDF Naming Convention</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Generate PDF filenames from template. Data source: dbo.Bundle.OutputFileNameFormat (template with placeholders). Sanitization: Replace invalid chars with underscores, trim whitespace, limit to 200 chars.</p>
+        </div>
+
+        <h4>Available Placeholders</h4>
+        <table>
+          <tr>
+            <th>Placeholder</th>
+            <th>Example Output</th>
+          </tr>
+          <tr>
+            <td>{LoanNumber}</td>
+            <td>1234567</td>
+          </tr>
+          <tr>
+            <td>{InvestorLoanNumber}</td>
+            <td>INV987654</td>
+          </tr>
+          <tr>
+            <td>{BorrowerLastName}</td>
+            <td>Smith</td>
+          </tr>
+          <tr>
+            <td>{PropertyAddress}</td>
+            <td>123_Main_St</td>
+          </tr>
+          <tr>
+            <td>{Date}</td>
+            <td>20251211</td>
+          </tr>
+          <tr>
+            <td>{DateTime}</td>
+            <td>20251211_140530</td>
+          </tr>
+          <tr>
+            <td>{BundleName}</td>
+            <td>FannieMae</td>
+          </tr>
+          <tr>
+            <td>{BundleID}</td>
+            <td>1001</td>
+          </tr>
+        </table>
+
+        <h4>Template Examples</h4>
+        <ul>
+          <li>Template: <code>{LoanNumber}_FNMA_{Date}.pdf</code> → Output: <code>1234567_FNMA_20251211.pdf</code></li>
+          <li>Template: <code>{InvestorLoanNumber}_FHLMC_{Date}.pdf</code> → Output: <code>INV987654_FHLMC_20251211.pdf</code></li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> template = "{LoanNumber}_FNMA_{Date}.pdf" AND LoanNumber = "1234567"</li>
+          <li><strong>When</strong> PDF generated</li>
+          <li><strong>Then</strong> filename = "1234567_FNMA_20251211.pdf"</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.Bundle.OutputFileNameFormat, dbo.FileData.FileName</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-3 (Product Output), BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-054 -->
+      <div class="ticket" id="BOB-054">
+        <h3>BOB-054: Network Share PDF Delivery</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Deliver PDFs to UNC network paths. Authentication: Windows Integrated Auth (service account with R/W permissions). Retry logic: Up to 3 attempts with 5-second delay for transient errors.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>UNC path format: <code>\\ServerName\ShareName\SubFolder\</code></li>
+          <li>Authentication: Windows Integrated Auth (service account with R/W permissions)</li>
+          <li>Validation: Directory.Exists(), test file creation</li>
+          <li>Retry logic: Up to 3 attempts with 5-second delay for transient errors</li>
+          <li>Fallback: IF delivery fails THEN deliver to temp folder</li>
+        </ul>
+
+        <h4>Error Handling</h4>
+        <ul>
+          <li>Network path not found</li>
+          <li>Access denied</li>
+          <li>Disk full</li>
+          <li>File already exists</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> Column Q = "\\FileServer01\InvestorDelivery\FannieMae\"</li>
+          <li><strong>When</strong> PDF delivered</li>
+          <li><strong>Then</strong> PDF copied to network share path</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> network path inaccessible</li>
+          <li><strong>When</strong> delivery attempted</li>
+          <li><strong>Then</strong> retry 3 times, fallback to temp folder</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> System.IO.File.Copy(), network credentials, BOB-056 (Temp Folder Fallback)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-055 -->
+      <div class="ticket" id="BOB-055">
+        <h3>BOB-055: SFTP PDF Delivery</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Upload PDFs to investor SFTP servers. Authentication: Username/Password (encrypted) OR SSH Private Key. Connection pooling: Reuse SFTP connection for all loans in same job.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>SFTP URL format: <code>sftp://hostname[:port]/path/to/folder/</code></li>
+          <li>Authentication: Username/Password (encrypted) OR SSH Private Key</li>
+          <li>Credential storage: dbo.BundleSFTPCredentials table (BundleID → SFTP credentials mapping)</li>
+          <li>Connection pooling: Reuse SFTP connection for all loans in same job</li>
+          <li>Retry logic: Up to 3 attempts with 10-second delay</li>
+          <li>Fallback: IF delivery fails THEN deliver to temp folder</li>
+        </ul>
+
+        <h4>Error Handling</h4>
+        <ul>
+          <li>Connection timeout</li>
+          <li>Authentication failed</li>
+          <li>Remote path not found</li>
+          <li>Upload permission denied</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> Column Q = "sftp://ginniemae.delivery.com/bundles/"</li>
+          <li><strong>When</strong> PDF delivered</li>
+          <li><strong>Then</strong> PDF uploaded via SFTP</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> SFTP authentication fails</li>
+          <li><strong>When</strong> delivery attempted</li>
+          <li><strong>Then</strong> fallback to temp folder immediately (no retry)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> SFTP client library (WinSCP .NET, SSH.NET), dbo.BundleSFTPCredentials, BOB-056 (Temp Folder Fallback)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-056 -->
+      <div class="ticket" id="BOB-056">
+        <h3>BOB-056: Temp Folder Fallback Delivery</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Default destination when Column Q mapping fails or is null. Path: C:\Users\{username}\Temp\BoB_Bundles\{BundleName}\{YYYYMMDD}\. Bundle Status = "Completed" (generation succeeded), Audit log records fallback reason.</p>
+        </div>
+
+        <h4>Use Case Scenarios</h4>
+        <ul>
+          <li>Column Q NULL</li>
+          <li>Column Q blank</li>
+          <li>Invalid format</li>
+          <li>Destination unreachable</li>
+          <li>Permissions denied</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> Column Q = NULL</li>
+          <li><strong>When</strong> PDF generated</li>
+          <li><strong>Then</strong> PDF saved to C:\Users\aolival\Temp\BoB_Bundles\FannieMae\20251211\</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> destination path validation fails</li>
+          <li><strong>When</strong> fallback triggered</li>
+          <li><strong>Then</strong> PDF delivered to temp folder, audit log records reason</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> File I/O, temp folder creation, BOB-057 (Delivery Audit Logging)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-057 -->
+      <div class="ticket" id="BOB-057">
+        <h3>BOB-057: Delivery Audit Logging</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Track all PDF delivery transactions for compliance. Retention: 90 days minimum, archival to dbo.BundleDeliveryLog_Archive after 90 days, retain archive for 7 years (compliance).</p>
+        </div>
+
+        <h4>Field Specifications</h4>
+        <table>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>DeliveryLogID</td>
+            <td>BIGINT (PK)</td>
+            <td>Primary Key</td>
+          </tr>
+          <tr>
+            <td>BundleID</td>
+            <td>INT (FK)</td>
+            <td>Reference to bundle</td>
+          </tr>
+          <tr>
+            <td>LoanNumber</td>
+            <td>NVARCHAR(50)</td>
+            <td>Loan identifier</td>
+          </tr>
+          <tr>
+            <td>DestinationPath</td>
+            <td>NVARCHAR(500)</td>
+            <td>Full delivery path</td>
+          </tr>
+          <tr>
+            <td>FileName</td>
+            <td>NVARCHAR(250)</td>
+            <td>Generated PDF filename</td>
+          </tr>
+          <tr>
+            <td>FileSizeBytes</td>
+            <td>BIGINT</td>
+            <td>File size</td>
+          </tr>
+          <tr>
+            <td>DeliveryTimestamp</td>
+            <td>DATETIME2</td>
+            <td>When delivered</td>
+          </tr>
+          <tr>
+            <td>DeliveryStatus</td>
+            <td>NVARCHAR(50)</td>
+            <td>Success/Failed/Fallback_TempFolder</td>
+          </tr>
+          <tr>
+            <td>DeliveryDurationMS</td>
+            <td>INT</td>
+            <td>Delivery time</td>
+          </tr>
+          <tr>
+            <td>ErrorMessage</td>
+            <td>NVARCHAR(MAX)</td>
+            <td>Error details if failed</td>
+          </tr>
+          <tr>
+            <td>DeliveryMethod</td>
+            <td>NVARCHAR(50)</td>
+            <td>NetworkShare/SFTP/FTP/TempFolder</td>
+          </tr>
+          <tr>
+            <td>RetryAttempts</td>
+            <td>INT</td>
+            <td>Number of retries</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> PDF delivered successfully</li>
+          <li><strong>When</strong> delivery completes</li>
+          <li><strong>Then</strong> audit log entry created with DeliveryStatus = "Success"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> PDF delivery failed</li>
+          <li><strong>When</strong> fallback occurs</li>
+          <li><strong>Then</strong> audit log shows DeliveryStatus = "Fallback_TempFolder" with error reason</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.BundleDeliveryLog table, dbo.BundleDeliveryLog_Archive</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-058 -->
+      <div class="ticket" id="BOB-058">
+        <h3>BOB-058: Email Notification on Job Completion</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Send SMTP email when bulk bundle job finishes. Trigger: Job completes (all loans processed). SMTP service: Existing BoB Email Service (http://localhost:3001). Rate limiting: Max 10 emails per user per hour.</p>
+        </div>
+
+        <h4>Email Templates</h4>
+        <ul>
+          <li><strong>Template 1 (Complete):</strong> Subject = "BoB Bundle Job Complete - {BundleName} - {TotalLoanCount} Loans Processed"</li>
+          <li><strong>Template 2 (Incomplete):</strong> Subject = "BoB Bundle Job Incomplete - {BundleName} - {FailedLoanCount} of {TotalLoanCount} Loans Failed"</li>
+          <li>HTML + plain text versions</li>
+        </ul>
+
+        <h4>API Endpoint</h4>
+        <div class="api-spec">
+          <p><code>POST http://localhost:3001/send-demo-notification</code></p>
+          <p>Request: { appName, action, to, details }</p>
+        </div>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job completes with 100% success</li>
+          <li><strong>When</strong> job finishes</li>
+          <li><strong>Then</strong> SMTP email sent with subject "Bundle Job Complete: {BundleName}"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job completes with 2 failures</li>
+          <li><strong>When</strong> job finishes</li>
+          <li><strong>Then</strong> email sent with subject "Bundle Job Incomplete: {BundleName} - 2 of 17 Loans Failed"</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> BoB Email Service (port 3001), CMG SMTP relay, dbo.EmailNotificationLog</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-059 -->
+      <div class="ticket" id="BOB-059">
+        <h3>BOB-059: In-App Notification Banners (Complete/Incomplete)</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Display job completion banners at top of grid page. Banner location: Top of Bundle Build Grid page (below header, above loan grid). Banner dismissible: User clicks "X" to close permanently for that job.</p>
+        </div>
+
+        <h4>Banner Specifications</h4>
+        <ul>
+          <li><strong>Complete banner:</strong> Light green background, green left border, checkmark icon</li>
+          <li><strong>Text:</strong> "All {TotalLoanCount} loans in your '{BundleName}' bulk bundle were successfully processed and delivered to their designated destinations. Job completed at: {CompletionTimestamp}"</li>
+          <li><strong>Actions:</strong> [View Activity Log] [Dismiss]</li>
+        </ul>
+        <ul>
+          <li><strong>Incomplete banner:</strong> Light yellow background, amber left border, warning icon</li>
+          <li><strong>Text:</strong> "Your '{BundleName}' bulk bundle job completed with {FailedLoanCount} of {TotalLoanCount} loans failing to bundle. {CompletedLoanCount} loans were successfully processed. Failed loans: {LoanNumber1}, {LoanNumber2}... Please review the failed loans below and retry if needed."</li>
+          <li><strong>Actions:</strong> [View Failed Loans] [View Activity Log] [Dismiss]</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job completes with 100% success</li>
+          <li><strong>When</strong> user refreshes page</li>
+          <li><strong>Then</strong> green "Complete" banner displays</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job completes with failures</li>
+          <li><strong>When</strong> user refreshes page</li>
+          <li><strong>Then</strong> yellow "Incomplete" banner displays with failed loan numbers</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.BundleJobNotifications table</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+      <!-- BOB-060 -->
+      <div class="ticket" id="BOB-060">
+        <h3>BOB-060: Error Handling - Loan-Level Failures</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 4</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Continue job processing when individual loans fail. IF one loan fails THEN job continues processing remaining loans. Retry logic: Transient errors (network timeout) → retry 3 times; Configuration errors (permissions, auth) → no retry, immediate fallback.</p>
+        </div>
+
+        <h4>Error Types</h4>
+        <ul>
+          <li>Missing required documents</li>
+          <li>PDF generation failure</li>
+          <li>Destination delivery failure</li>
+          <li>BytePro API unavailable</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> 1 of 5 loans fails during processing</li>
+          <li><strong>When</strong> job continues</li>
+          <li><strong>Then</strong> 4 loans marked "Completed", 1 loan marked "Bundle Failed", Activity Log shows "Incomplete"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> all loans succeed</li>
+          <li><strong>When</strong> job completes</li>
+          <li><strong>Then</strong> all loans "Completed", Activity Log shows "Complete"</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Error logging, dbo.BundleJobErrors</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-3 (Background Jobs), BRD-5 (PDF Delivery)</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 5 SECTION -->
+    <div class="tier-section">
+      <div class="tier-header tier-3">
+        <h2>Tier 5: Activity Log & Job History</h2>
+        <p class="tier-description">Job history tracking, navigation, and retention management</p>
+      </div>
+
+      <!-- BOB-071 -->
+      <div class="ticket" id="BOB-071">
+        <h3>BOB-071: Activity Log Table Display</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Display job history in sortable table. Default sort: Last Viewed descending (most recent first). Sortable: All columns (click header to toggle ascending/descending).</p>
+        </div>
+
+        <h4>Column Specifications</h4>
+        <table>
+          <tr>
+            <th>Column</th>
+            <th>Format</th>
+            <th>Sortable</th>
+          </tr>
+          <tr>
+            <td>Bundle Name</td>
+            <td>Hyperlink</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Last Viewed</td>
+            <td>MM/DD/YY HH:MMam/pm TZ</td>
+            <td>Yes (default desc)</td>
+          </tr>
+          <tr>
+            <td>Last Build Request</td>
+            <td>Timestamp or "Not built yet"</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Number of Loans</td>
+            <td>Integer</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Bulk Bundle Status</td>
+            <td>Color-coded text</td>
+            <td>Yes</td>
+          </tr>
+        </table>
+
+        <h4>Query</h4>
+        <div class="api-spec">
+          <p><code>SELECT * FROM ActivityLog WHERE UserID = @currentUser AND DATEDIFF(DAY, LastViewed, GETDATE()) <= 10 ORDER BY LastViewed DESC</code></p>
+        </div>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks Activity Log tab</li>
+          <li><strong>When</strong> table loads</li>
+          <li><strong>Then</strong> displays 5 columns with job history sorted by Last Viewed descending</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicks "Bundle Name" column header</li>
+          <li><strong>When</strong> sort triggered</li>
+          <li><strong>Then</strong> table re-sorts alphabetically by bundle name</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog table, BOB-008 (Activity Log Schema)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-072 -->
+      <div class="ticket" id="BOB-072">
+        <h3>BOB-072: Hyperlink Navigation from Activity Log to Grid</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Enable users to navigate from Activity Log to Bundle Build Grid. Each Bundle Name is clickable hyperlink. Click behavior IDENTICAL for all statuses (Incomplete/In progress/Complete). Update Last Viewed timestamp to current time on navigation.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Each Bundle Name is clickable hyperlink</li>
+          <li>Navigation destination: "Bulk Bundle Builder" tab, displays Bundle Build Grid for clicked bundle</li>
+          <li>Grid displays: All loans from that bundle with current statuses (user must refresh to see latest)</li>
+          <li>Update Last Viewed timestamp to current time on navigation</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks "Fannie Mae" bundle hyperlink (status = Incomplete)</li>
+          <li><strong>When</strong> navigation occurs</li>
+          <li><strong>Then</strong> user returned to Bulk Bundle Builder tab showing Fannie Mae grid</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicks bundle hyperlink</li>
+          <li><strong>When</strong> Activity Log entry updates</li>
+          <li><strong>Then</strong> Last Viewed timestamp = current timestamp</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog, navigation routing, BOB-075 (Last Viewed Update)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-073 -->
+      <div class="ticket" id="BOB-073">
+        <h3>BOB-073: "Not Built Yet" Display Logic</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Show placeholder when job created but not yet initiated. Use case: User identified loan population, viewed grid, logged out WITHOUT clicking build button. BulkBundleStatus = "Incomplete" when "Not built yet".</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li><strong>IF</strong> LastBuildRequest IS NULL <strong>THEN</strong> display "Not built yet" in Last Build Request column</li>
+          <li><strong>IF</strong> LastBuildRequest IS NOT NULL <strong>THEN</strong> display formatted timestamp</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user created population but never clicked build</li>
+          <li><strong>When</strong> Activity Log displays</li>
+          <li><strong>Then</strong> Last Build Request shows "Not built yet"</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> user clicked build button</li>
+          <li><strong>When</strong> Activity Log displays</li>
+          <li><strong>Then</strong> Last Build Request shows timestamp (e.g., "12/03/25 10:08am EST")</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog.LastBuildRequest (nullable)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-074 -->
+      <div class="ticket" id="BOB-074">
+        <h3>BOB-074: 10-Business-Day Retention Policy</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Auto-delete Activity Log entries after retention period. Retention period: 10 business days (excludes weekends and company holidays). Calculation starts from: LastViewed timestamp (most recent user access). Auto-removal: Nightly scheduled job runs at 2:00am EST.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li>Retention period: 10 business days (excludes weekends and company holidays)</li>
+          <li>Calculation starts from: LastViewed timestamp</li>
+          <li>Auto-removal: Nightly scheduled job runs at 2:00am EST</li>
+          <li>Query: <code>DELETE FROM ActivityLog WHERE DATEDIFF(DAY, LastViewed, GETDATE()) > 10 AND DATEPART(WEEKDAY, LastViewed) NOT IN (1, 7)</code></li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> entry 10 business days old</li>
+          <li><strong>When</strong> nightly job runs</li>
+          <li><strong>Then</strong> entry retained</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> entry 11 business days old</li>
+          <li><strong>When</strong> nightly job runs</li>
+          <li><strong>Then</strong> entry deleted</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> Scheduled job (Windows Task Scheduler, Hangfire, etc.), company holiday calendar</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+
+        <div class="dependencies" style="border-left-color: var(--accent-red);">
+          <p><strong>OPEN ISSUE:</strong> Company holiday calendar integration for business day calculation (OI-008)</p>
+        </div>
+      </div>
+
+      <!-- BOB-075 -->
+      <div class="ticket" id="BOB-075">
+        <h3>BOB-075: Last Viewed Timestamp Update</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Track when user last accessed bundle grid. IF user clicks bundle hyperlink THEN UPDATE ActivityLog SET LastViewed = GETDATE(). Use case: Helps users identify recently reviewed bundles, prevents premature deletion of active work.</p>
+        </div>
+
+        <h4>Requirements</h4>
+        <ul>
+          <li><strong>IF</strong> user clicks bundle hyperlink <strong>THEN</strong> <code>UPDATE ActivityLog SET LastViewed = GETDATE() WHERE ActivityLogID = @selectedActivityLogID</code></li>
+          <li><strong>IF</strong> LastViewed updates <strong>THEN</strong> 10-day retention countdown restarts</li>
+        </ul>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> user clicks bundle hyperlink</li>
+          <li><strong>When</strong> navigation occurs</li>
+          <li><strong>Then</strong> Last Viewed timestamp updates to current time</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> entry 9 days old</li>
+          <li><strong>When</strong> user clicks hyperlink (Last Viewed updates)</li>
+          <li><strong>Then</strong> retention countdown restarts from day 0</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog.LastViewed, BOB-072 (Hyperlink Navigation)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+      <!-- BOB-076 -->
+      <div class="ticket" id="BOB-076">
+        <h3>BOB-076: Bulk Bundle Status Values & Color Coding</h3>
+
+        <div class="ticket-meta">
+          <span class="tier-badge tier-3">TIER 5</span>
+          <span class="status-badge">NOT STARTED</span>
+          <span class="phase-badge">PHASE 1 MVP</span>
+        </div>
+
+        <div class="description">
+          <p>Visual indicators for job completion status. HARD RULE: IF BulkBundleStatus = "Complete" THEN all loans MUST have Bundle Status = "Completed" (no exceptions). IF BulkBundleStatus = "Incomplete" (after job finishes) THEN at least ONE loan MUST show Bundle Status = "Bundle Failed".</p>
+        </div>
+
+        <h4>Status Values</h4>
+        <table>
+          <tr>
+            <th>Status</th>
+            <th>Color</th>
+            <th>When Used</th>
+          </tr>
+          <tr>
+            <td>Incomplete</td>
+            <td>Red</td>
+            <td>Job not started (LastBuildRequest = NULL) OR job completed with failures</td>
+          </tr>
+          <tr>
+            <td>In progress</td>
+            <td>Blue</td>
+            <td>Job currently processing loans</td>
+          </tr>
+          <tr>
+            <td>Complete</td>
+            <td>Green</td>
+            <td>ALL loans successfully bundled (100% success rate)</td>
+          </tr>
+        </table>
+
+        <h4>Acceptance Criteria</h4>
+        <ul>
+          <li><strong>Given</strong> job not yet initiated</li>
+          <li><strong>When</strong> Activity Log displays</li>
+          <li><strong>Then</strong> Bulk Bundle Status = "Incomplete" (red text)</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job processing</li>
+          <li><strong>When</strong> Activity Log displays</li>
+          <li><strong>Then</strong> Bulk Bundle Status = "In progress" (blue text)</li>
+        </ul>
+        <ul>
+          <li><strong>Given</strong> job completes with 100% success</li>
+          <li><strong>When</strong> Activity Log displays</li>
+          <li><strong>Then</strong> Bulk Bundle Status = "Complete" (green text)</li>
+        </ul>
+
+        <div class="dependencies">
+          <p><strong>Dependencies:</strong> dbo.ActivityLog.BulkBundleStatus (enum)</p>
+        </div>
+
+        <div class="related-brds">
+          <p><strong>Related BRDs:</strong> BRD-4 (Activity Log)</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Models - BoB Management Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 60px 80px;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent-teal);
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .erd-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      overflow-x: auto;
+    }
+
+    .erd-container svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .entity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .entity-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    .entity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .entity-header h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    .system-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .system-badge-new {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .system-badge-existing {
+      background: var(--accent-teal);
+      color: white;
+    }
+
+    .entity-summary {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .relationship-box {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-teal);
+      margin-bottom: 1.5rem;
+    }
+
+    .relationship-box h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .relationship-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .relationship-box ul li {
+      padding: 0.25rem 0;
+      color: var(--text-secondary);
+    }
+
+    .relationship-box code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: var(--accent-teal);
+    }
+
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .field-table thead {
+      background: var(--bg-secondary);
+    }
+
+    .field-table th {
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    .field-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .field-table tr:hover {
+      background: var(--bg-secondary);
+    }
+
+    .field-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--accent-blue);
+    }
+
+    .field-type {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-teal);
+      font-size: 0.9em;
+    }
+
+    .required-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent-red);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .optional-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent-amber);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .enum-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .enum-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+    }
+
+    .enum-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .enum-group h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .enum-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .enum-item {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-teal);
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 3rem 0 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    .workflow-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .workflow-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+    }
+
+    .workflow-section ol {
+      padding-left: 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .workflow-section li {
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px 30px;
+      }
+      h1 {
+        font-size: 2.25rem;
+      }
+      .field-table {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="label">BOB MANAGEMENT SUITE</div>
+    <h1>🗄️ Data Models</h1>
+    <p class="subtitle">Complete entity relationship documentation with field specifications</p>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">18</div>
+        <div class="stat-label">Total Entities</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">7</div>
+        <div class="stat-label">New Tables</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">11</div>
+        <div class="stat-label">Existing Tables</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">20</div>
+        <div class="stat-label">Document Categories</div>
+      </div>
+    </div>
+
+    <!-- ERD Diagram Section -->
+    <h2>Entity Relationship Diagram</h2>
+    <div class="erd-container">
+      <svg width="1200" height="1400" viewBox="0 0 1200 1400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Legend -->
+        <g transform="translate(20, 20)">
+          <text x="0" y="0" fill="#f1f5f9" font-size="16" font-weight="700">Legend</text>
+          <rect x="0" y="10" width="20" height="20" fill="#3b82f6" rx="4"/>
+          <text x="30" y="25" fill="#94a3b8" font-size="12">New BoB Tables</text>
+          <rect x="150" y="10" width="20" height="20" fill="#14b8a6" rx="4"/>
+          <text x="180" y="25" fill="#94a3b8" font-size="12">Existing BytePro Tables</text>
+        </g>
+
+        <!-- Core Entities -->
+        <!-- dbo.User (Existing) -->
+        <g transform="translate(50, 100)">
+          <rect width="180" height="80" fill="#14b8a6" rx="8"/>
+          <text x="90" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.User</text>
+          <text x="90" y="45" text-anchor="middle" fill="white" font-size="11">UserID (PK)</text>
+          <text x="90" y="60" text-anchor="middle" fill="white" font-size="11">EmailAddress</text>
+        </g>
+
+        <!-- dbo.Bundle (Existing) -->
+        <g transform="translate(300, 100)">
+          <rect width="220" height="120" fill="#14b8a6" rx="8"/>
+          <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.Bundle</text>
+          <text x="110" y="45" text-anchor="middle" fill="white" font-size="11">BundleID (PK)</text>
+          <text x="110" y="60" text-anchor="middle" fill="white" font-size="11">Name</text>
+          <text x="110" y="75" text-anchor="middle" fill="white" font-size="11">DocumentStackID (FK)</text>
+          <text x="110" y="90" text-anchor="middle" fill="white" font-size="11">OutputFileNameFormat</text>
+          <text x="110" y="105" text-anchor="middle" fill="white" font-size="11">ServerFolderName</text>
+        </g>
+
+        <!-- dbo.DocumentStack (Existing) -->
+        <g transform="translate(580, 100)">
+          <rect width="200" height="80" fill="#14b8a6" rx="8"/>
+          <text x="100" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.DocumentStack</text>
+          <text x="100" y="45" text-anchor="middle" fill="white" font-size="11">DocumentStackID (PK)</text>
+          <text x="100" y="60" text-anchor="middle" fill="white" font-size="11">Name</text>
+        </g>
+
+        <!-- dbo.ActivityLog (New) -->
+        <g transform="translate(280, 280)">
+          <rect width="240" height="160" fill="#3b82f6" rx="8"/>
+          <text x="120" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.ActivityLog</text>
+          <text x="120" y="45" text-anchor="middle" fill="white" font-size="11">ActivityLogID (PK)</text>
+          <text x="120" y="60" text-anchor="middle" fill="white" font-size="11">UserID (FK)</text>
+          <text x="120" y="75" text-anchor="middle" fill="white" font-size="11">BundleID (FK)</text>
+          <text x="120" y="90" text-anchor="middle" fill="white" font-size="11">BundleName</text>
+          <text x="120" y="105" text-anchor="middle" fill="white" font-size="11">LastViewed</text>
+          <text x="120" y="120" text-anchor="middle" fill="white" font-size="11">LastBuildRequest</text>
+          <text x="120" y="135" text-anchor="middle" fill="white" font-size="11">BulkBundleStatus</text>
+          <text x="120" y="150" text-anchor="middle" fill="white" font-size="11">NumberOfLoans</text>
+        </g>
+
+        <!-- dbo.BundleDeliveryLog (New) -->
+        <g transform="translate(50, 500)">
+          <rect width="220" height="180" fill="#3b82f6" rx="8"/>
+          <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.BundleDeliveryLog</text>
+          <text x="110" y="45" text-anchor="middle" fill="white" font-size="11">DeliveryLogID (PK)</text>
+          <text x="110" y="60" text-anchor="middle" fill="white" font-size="11">BundleID (FK)</text>
+          <text x="110" y="75" text-anchor="middle" fill="white" font-size="11">LoanNumber</text>
+          <text x="110" y="90" text-anchor="middle" fill="white" font-size="11">DestinationPath</text>
+          <text x="110" y="105" text-anchor="middle" fill="white" font-size="11">FileName</text>
+          <text x="110" y="120" text-anchor="middle" fill="white" font-size="11">DeliveryStatus</text>
+          <text x="110" y="135" text-anchor="middle" fill="white" font-size="11">DeliveryMethod</text>
+          <text x="110" y="150" text-anchor="middle" fill="white" font-size="11">DeliveryTimestamp</text>
+          <text x="110" y="165" text-anchor="middle" fill="white" font-size="11">RetryAttempts</text>
+        </g>
+
+        <!-- dbo.BundleSFTPCredentials (New) -->
+        <g transform="translate(320, 500)">
+          <rect width="220" height="140" fill="#3b82f6" rx="8"/>
+          <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.BundleSFTPCredentials</text>
+          <text x="110" y="45" text-anchor="middle" fill="white" font-size="11">BundleID (PK, FK)</text>
+          <text x="110" y="60" text-anchor="middle" fill="white" font-size="11">SFTPHost</text>
+          <text x="110" y="75" text-anchor="middle" fill="white" font-size="11">SFTPPort</text>
+          <text x="110" y="90" text-anchor="middle" fill="white" font-size="11">SFTPUsername</text>
+          <text x="110" y="105" text-anchor="middle" fill="white" font-size="11">SFTPPasswordEncrypted</text>
+          <text x="110" y="120" text-anchor="middle" fill="white" font-size="11">SSHKeyFilePath</text>
+        </g>
+
+        <!-- dbo.BundleJobNotifications (New) -->
+        <g transform="translate(590, 500)">
+          <rect width="220" height="140" fill="#3b82f6" rx="8"/>
+          <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.BundleJobNotifications</text>
+          <text x="110" y="45" text-anchor="middle" fill="white" font-size="11">NotificationID (PK)</text>
+          <text x="110" y="60" text-anchor="middle" fill="white" font-size="11">JobID (FK)</text>
+          <text x="110" y="75" text-anchor="middle" fill="white" font-size="11">UserID</text>
+          <text x="110" y="90" text-anchor="middle" fill="white" font-size="11">BundleID</text>
+          <text x="110" y="105" text-anchor="middle" fill="white" font-size="11">JobStatus</text>
+          <text x="110" y="120" text-anchor="middle" fill="white" font-size="11">Dismissed</text>
+        </g>
+
+        <!-- dbo.EmailNotificationLog (New) -->
+        <g transform="translate(50, 730)">
+          <rect width="220" height="120" fill="#3b82f6" rx="8"/>
+          <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.EmailNotificationLog</text>
+          <text x="110" y="45" text-anchor="middle" fill="white" font-size="11">EmailLogID (PK)</text>
+          <text x="110" y="60" text-anchor="middle" fill="white" font-size="11">JobID (FK)</text>
+          <text x="110" y="75" text-anchor="middle" fill="white" font-size="11">EmailAddress</text>
+          <text x="110" y="90" text-anchor="middle" fill="white" font-size="11">SentStatus</text>
+          <text x="110" y="105" text-anchor="middle" fill="white" font-size="11">EmailType</text>
+        </g>
+
+        <!-- dbo.BundleJobQueue (New) -->
+        <g transform="translate(320, 730)">
+          <rect width="200" height="120" fill="#3b82f6" rx="8"/>
+          <text x="100" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.BundleJobQueue</text>
+          <text x="100" y="45" text-anchor="middle" fill="white" font-size="11">JobID (FK)</text>
+          <text x="100" y="60" text-anchor="middle" fill="white" font-size="11">FileDataID (FK)</text>
+          <text x="100" y="75" text-anchor="middle" fill="white" font-size="11">Status</text>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="11">ProcessingStartTime</text>
+          <text x="100" y="105" text-anchor="middle" fill="white" font-size="11">ProcessingEndTime</text>
+        </g>
+
+        <!-- Document-related tables -->
+        <!-- dbo.DocumentCategory (Existing) -->
+        <g transform="translate(850, 100)">
+          <rect width="200" height="100" fill="#14b8a6" rx="8"/>
+          <text x="100" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.DocumentCategory</text>
+          <text x="100" y="45" text-anchor="middle" fill="white" font-size="11">DocumentCategoryID (PK)</text>
+          <text x="100" y="60" text-anchor="middle" fill="white" font-size="11">DocumentCategoryCode</text>
+          <text x="100" y="75" text-anchor="middle" fill="white" font-size="11">DisplayOrder</text>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="10" font-style="italic">(20 categories)</text>
+        </g>
+
+        <!-- dbo.DocumentType (Existing) -->
+        <g transform="translate(850, 250)">
+          <rect width="200" height="100" fill="#14b8a6" rx="8"/>
+          <text x="100" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.DocumentType</text>
+          <text x="100" y="45" text-anchor="middle" fill="white" font-size="11">DocumentTypeCode (PK)</text>
+          <text x="100" y="60" text-anchor="middle" fill="white" font-size="11">Name</text>
+          <text x="100" y="75" text-anchor="middle" fill="white" font-size="11">DocumentCategoryCode (FK)</text>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="11">Inactive</text>
+        </g>
+
+        <!-- dbo.DocumentStackDocumentType (Existing) -->
+        <g transform="translate(630, 250)">
+          <rect width="180" height="100" fill="#14b8a6" rx="8"/>
+          <text x="90" y="25" text-anchor="middle" fill="white" font-size="13" font-weight="700">dbo.DocumentStack...</text>
+          <text x="90" y="40" text-anchor="middle" fill="white" font-size="12" font-weight="700">DocumentType</text>
+          <text x="90" y="60" text-anchor="middle" fill="white" font-size="11">DocumentStackID (FK)</text>
+          <text x="90" y="75" text-anchor="middle" fill="white" font-size="11">DocumentTypeCode (FK)</text>
+          <text x="90" y="90" text-anchor="middle" fill="white" font-size="11">DisplayOrder</text>
+        </g>
+
+        <!-- Loan-related tables -->
+        <!-- dbo.FileData (Existing) -->
+        <g transform="translate(600, 730)">
+          <rect width="180" height="100" fill="#14b8a6" rx="8"/>
+          <text x="90" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.FileData</text>
+          <text x="90" y="45" text-anchor="middle" fill="white" font-size="11">FileDataID (PK)</text>
+          <text x="90" y="60" text-anchor="middle" fill="white" font-size="11">FileName</text>
+          <text x="90" y="75" text-anchor="middle" fill="white" font-size="11">OriginationChannel</text>
+          <text x="90" y="90" text-anchor="middle" fill="white" font-size="10" font-style="italic">(Loan Master)</text>
+        </g>
+
+        <!-- dbo.Loan (Existing) -->
+        <g transform="translate(850, 730)">
+          <rect width="160" height="100" fill="#14b8a6" rx="8"/>
+          <text x="80" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.Loan</text>
+          <text x="80" y="45" text-anchor="middle" fill="white" font-size="11">FileDataID (FK)</text>
+          <text x="80" y="60" text-anchor="middle" fill="white" font-size="11">MortgageType</text>
+          <text x="80" y="75" text-anchor="middle" fill="white" font-size="11">LoanPurpose</text>
+        </g>
+
+        <!-- dbo.SubProp (Existing) -->
+        <g transform="translate(850, 880)">
+          <rect width="160" height="100" fill="#14b8a6" rx="8"/>
+          <text x="80" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.SubProp</text>
+          <text x="80" y="45" text-anchor="middle" fill="white" font-size="11">FileDataID (FK)</text>
+          <text x="80" y="60" text-anchor="middle" fill="white" font-size="11">PropertyType</text>
+          <text x="80" y="75" text-anchor="middle" fill="white" font-size="11">State</text>
+          <text x="80" y="90" text-anchor="middle" fill="white" font-size="11">SpecialFloodHazardArea</text>
+        </g>
+
+        <!-- dbo.Status (Existing) -->
+        <g transform="translate(850, 1030)">
+          <rect width="160" height="80" fill="#14b8a6" rx="8"/>
+          <text x="80" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.Status</text>
+          <text x="80" y="45" text-anchor="middle" fill="white" font-size="11">FileDataID (FK)</text>
+          <text x="80" y="60" text-anchor="middle" fill="white" font-size="11">LoanStatus</text>
+        </g>
+
+        <!-- dbo.EmbeddedDoc (Existing) -->
+        <g transform="translate(600, 1000)">
+          <rect width="180" height="140" fill="#14b8a6" rx="8"/>
+          <text x="90" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="700">dbo.EmbeddedDoc</text>
+          <text x="90" y="45" text-anchor="middle" fill="white" font-size="11">FileDataID (FK)</text>
+          <text x="90" y="60" text-anchor="middle" fill="white" font-size="11">DocumentTypeCode (FK)</text>
+          <text x="90" y="75" text-anchor="middle" fill="white" font-size="11">DocumentCategoryCode (FK)</text>
+          <text x="90" y="90" text-anchor="middle" fill="white" font-size="11">Status</text>
+          <text x="90" y="105" text-anchor="middle" fill="white" font-size="11">Viewable</text>
+          <text x="90" y="120" text-anchor="middle" fill="white" font-size="11">ExpirationDate</text>
+        </g>
+
+        <!-- Relationship Lines -->
+        <!-- User to ActivityLog -->
+        <line x1="140" y1="180" x2="330" y2="280" stroke="#64748b" stroke-width="2"/>
+        <text x="220" y="220" fill="#64748b" font-size="10">1</text>
+        <text x="320" y="270" fill="#64748b" font-size="10">*</text>
+
+        <!-- Bundle to ActivityLog -->
+        <line x1="410" y1="220" x2="400" y2="280" stroke="#64748b" stroke-width="2"/>
+        <text x="410" y="240" fill="#64748b" font-size="10">1</text>
+        <text x="395" y="270" fill="#64748b" font-size="10">*</text>
+
+        <!-- Bundle to DocumentStack -->
+        <line x1="520" y1="140" x2="580" y2="140" stroke="#64748b" stroke-width="2"/>
+        <text x="535" y="135" fill="#64748b" font-size="10">1</text>
+        <text x="570" y="135" fill="#64748b" font-size="10">1</text>
+
+        <!-- Bundle to BundleDeliveryLog -->
+        <line x1="350" y1="220" x2="160" y2="500" stroke="#64748b" stroke-width="2"/>
+        <text x="340" y="240" fill="#64748b" font-size="10">1</text>
+        <text x="155" y="490" fill="#64748b" font-size="10">*</text>
+
+        <!-- Bundle to BundleSFTPCredentials -->
+        <line x1="410" y1="220" x2="430" y2="500" stroke="#64748b" stroke-width="2"/>
+        <text x="415" y="240" fill="#64748b" font-size="10">1</text>
+        <text x="425" y="490" fill="#64748b" font-size="10">0..1</text>
+
+        <!-- Bundle to BundleJobNotifications -->
+        <line x1="470" y1="220" x2="700" y2="500" stroke="#64748b" stroke-width="2"/>
+        <text x="475" y="240" fill="#64748b" font-size="10">1</text>
+        <text x="695" y="490" fill="#64748b" font-size="10">*</text>
+
+        <!-- DocumentStack to DocumentStackDocumentType -->
+        <line x1="680" y1="180" x2="720" y2="250" stroke="#64748b" stroke-width="2"/>
+        <text x="685" y="200" fill="#64748b" font-size="10">1</text>
+        <text x="715" y="240" fill="#64748b" font-size="10">*</text>
+
+        <!-- DocumentCategory to DocumentType -->
+        <line x1="950" y1="200" x2="950" y2="250" stroke="#64748b" stroke-width="2"/>
+        <text x="955" y="215" fill="#64748b" font-size="10">1</text>
+        <text x="955" y="245" fill="#64748b" font-size="10">*</text>
+
+        <!-- DocumentStackDocumentType to DocumentType -->
+        <line x1="810" y1="300" x2="850" y2="300" stroke="#64748b" stroke-width="2"/>
+        <text x="820" y="295" fill="#64748b" font-size="10">*</text>
+        <text x="840" y="295" fill="#64748b" font-size="10">1</text>
+
+        <!-- BundleJobQueue to FileData -->
+        <line x1="520" y1="790" x2="600" y2="790" stroke="#64748b" stroke-width="2"/>
+        <text x="545" y="785" fill="#64748b" font-size="10">*</text>
+        <text x="590" y="785" fill="#64748b" font-size="10">1</text>
+
+        <!-- FileData to Loan -->
+        <line x1="780" y1="780" x2="850" y2="780" stroke="#64748b" stroke-width="2"/>
+        <text x="805" y="775" fill="#64748b" font-size="10">1</text>
+        <text x="840" y="775" fill="#64748b" font-size="10">1</text>
+
+        <!-- FileData to SubProp -->
+        <line x1="750" y1="830" x2="890" y2="880" stroke="#64748b" stroke-width="2"/>
+        <text x="760" y="850" fill="#64748b" font-size="10">1</text>
+        <text x="880" y="875" fill="#64748b" font-size="10">1</text>
+
+        <!-- FileData to Status -->
+        <line x1="750" y1="830" x2="890" y2="1030" stroke="#64748b" stroke-width="2"/>
+        <text x="760" y="850" fill="#64748b" font-size="10">1</text>
+        <text x="880" y="1025" fill="#64748b" font-size="10">1</text>
+
+        <!-- FileData to EmbeddedDoc -->
+        <line x1="690" y1="830" x2="690" y2="1000" stroke="#64748b" stroke-width="2"/>
+        <text x="695" y="900" fill="#64748b" font-size="10">1</text>
+        <text x="695" y="995" fill="#64748b" font-size="10">*</text>
+
+        <!-- EmbeddedDoc to DocumentType -->
+        <line x1="780" y1="1050" x2="900" y2="350" stroke="#64748b" stroke-width="2"/>
+        <text x="790" y="1040" fill="#64748b" font-size="10">*</text>
+        <text x="890" y="360" fill="#64748b" font-size="10">1</text>
+      </svg>
+    </div>
+
+    <!-- Entities Section -->
+    <h2>Entity Documentation</h2>
+
+    <!-- NEW TABLES -->
+
+    <!-- dbo.ActivityLog -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.ActivityLog</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Audit trail for bulk bundle job history tracking. Stores information about each job initiated by users, including completion status, loan counts, and timestamps. Entries are automatically deleted after 10 business days retention period.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.User</code>: Many jobs initiated by one user</li>
+          <li><strong>Many-to-1</strong> with <code>dbo.Bundle</code>: Many job entries for one bundle configuration</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">ActivityLogID</span></td>
+            <td><span class="field-type">BIGINT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key, auto-incrementing identity column</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">UserID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.User - user who initiated the job</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BundleID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.Bundle - bundle configuration used</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BundleName</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Denormalized bundle name for display performance</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LastViewed</span></td>
+            <td><span class="field-type">DATETIME</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Timestamp when user last accessed the grid for this job</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LastBuildRequest</span></td>
+            <td><span class="field-type">DATETIME</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Timestamp when build was initiated (NULL = "Not built yet")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">NumberOfLoans</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Total loan count in the population</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BulkBundleStatus</span></td>
+            <td><span class="field-type">NVARCHAR(20)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Job status: "Incomplete", "In progress", "Complete"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CreatedDate</span></td>
+            <td><span class="field-type">DATETIME</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Entry creation timestamp</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LoanPopulationData</span></td>
+            <td><span class="field-type">NVARCHAR(MAX)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Serialized loan numbers (JSON) for grid reconstruction</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.BundleDeliveryLog -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.BundleDeliveryLog</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Audit log for PDF delivery transactions used for compliance tracking and troubleshooting. Records every delivery attempt including destination, status, timing, and error details. Retained for 90 days minimum, then archived for 7 years to meet compliance requirements.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.Bundle</code>: Many delivery logs for one bundle configuration</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">DeliveryLogID</span></td>
+            <td><span class="field-type">BIGINT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key, auto-incrementing identity column</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BundleID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.Bundle</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LoanNumber</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Loan identifier for which PDF was delivered</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DestinationPath</span></td>
+            <td><span class="field-type">NVARCHAR(500)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Full path where PDF was delivered</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FileName</span></td>
+            <td><span class="field-type">NVARCHAR(250)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Generated PDF filename</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FileSizeBytes</span></td>
+            <td><span class="field-type">BIGINT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Size of delivered PDF in bytes</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DeliveryTimestamp</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>When the delivery occurred</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DeliveryStatus</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Success", "Failed", "Fallback_TempFolder"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DeliveryDurationMS</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Delivery time in milliseconds</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ErrorMessage</span></td>
+            <td><span class="field-type">NVARCHAR(MAX)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Error details if delivery failed</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DeliveryMethod</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"NetworkShare", "SFTP", "FTP", "TempFolder"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">UserID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>User who initiated the bundle job</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">JobID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Background job reference</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">RetryAttempts</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Number of retries before success/failure (max 3)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CreatedDate</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Log entry creation timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.BundleSFTPCredentials -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.BundleSFTPCredentials</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Stores encrypted SFTP credentials for investor-specific delivery destinations. Passwords are encrypted at rest using AES-256, with encryption keys stored in Azure Key Vault. Optional table - only populated for bundles requiring SFTP delivery.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-1</strong> with <code>dbo.Bundle</code>: Optional - only for SFTP-enabled bundles</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">BundleID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key and foreign key to dbo.Bundle</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SFTPHost</span></td>
+            <td><span class="field-type">NVARCHAR(200)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>SFTP hostname (e.g., "ginniemae.delivery.com")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SFTPPort</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>SFTP port (default 22)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SFTPUsername</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>SFTP username for authentication</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SFTPPasswordEncrypted</span></td>
+            <td><span class="field-type">NVARCHAR(500)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>AES-256 encrypted password (key in Azure Key Vault)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SSHKeyFilePath</span></td>
+            <td><span class="field-type">NVARCHAR(500)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Path to SSH private key file (alternative to password auth)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.BundleJobNotifications -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.BundleJobNotifications</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Tracks job completion banners displayed to users in the application. Stores notification status including whether user has dismissed the banner. Banners auto-hide after 24 hours retention period.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.Bundle</code>: Many notifications for one bundle</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">NotificationID</span></td>
+            <td><span class="field-type">BIGINT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key, auto-incrementing identity column</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">JobID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Background job ID reference</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">UserID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>User who initiated the job</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BundleID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Bundle being processed</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">BundleName</span></td>
+            <td><span class="field-type">NVARCHAR(200)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Bundle name for display</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">TotalLoanCount</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Total loans in the job</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CompletedLoanCount</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Number of successfully bundled loans</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FailedLoanCount</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Number of failed loans</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">JobStatus</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Complete" or "Incomplete"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CompletionTimestamp</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>When the job completed</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Dismissed</span></td>
+            <td><span class="field-type">BIT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Whether user dismissed the banner (default: false)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DismissedAt</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>When user dismissed the banner</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CreatedDate</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Notification creation timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.EmailNotificationLog -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.EmailNotificationLog</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Audit log for email notification delivery tracking. Records all email attempts sent via the BoB Email Service including delivery status and error messages. Retained for 90 days minimum for troubleshooting and compliance.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Logging only</strong>: No foreign key relationships</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">EmailLogID</span></td>
+            <td><span class="field-type">BIGINT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key, auto-incrementing identity column</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">JobID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Background job ID reference</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">UserID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>User who received the email</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">EmailAddress</span></td>
+            <td><span class="field-type">NVARCHAR(200)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Email address where notification was sent</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">EmailSubject</span></td>
+            <td><span class="field-type">NVARCHAR(500)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Email subject line</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">EmailType</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Complete" or "Incomplete"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SentStatus</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Sent", "Failed", "Queued"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">MessageID</span></td>
+            <td><span class="field-type">NVARCHAR(200)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>SMTP message ID from email server</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SentAt</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>When email was successfully sent</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ErrorMessage</span></td>
+            <td><span class="field-type">NVARCHAR(MAX)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Error details if send failed</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">RetryAttempts</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Number of retry attempts</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">CreatedDate</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Log entry creation timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.BundleJobQueue -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.BundleJobQueue</h3>
+        <span class="system-badge system-badge-new">NEW TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Queue table storing loans awaiting background processing. Each entry represents a loan in the job queue with its processing status. Entries are created when job initiates and deleted (or archived) after job completes.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.FileData</code>: Many queue entries reference one loan</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">JobID</span></td>
+            <td><span class="field-type">NVARCHAR(100)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Background job ID reference</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.FileData - loan to process</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Status</span></td>
+            <td><span class="field-type">NVARCHAR(50)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Pending", "Processing", "Completed", "Failed"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ProcessingStartTime</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>When processing started for this loan</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ProcessingEndTime</span></td>
+            <td><span class="field-type">DATETIME2</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>When processing completed for this loan</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EXISTING TABLES -->
+
+    <!-- dbo.Bundle -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.Bundle</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Bundle configuration table storing stacking order mappings and PDF output settings. Contains approximately 80 bundle options (e.g., Fannie Mae, Freddie Mac, Ginnie Mae, Wells Fargo). Central configuration table used by both Single Flow and Bulk workflows.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-1</strong> with <code>dbo.DocumentStack</code>: Each bundle references one stacking order</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.ActivityLog</code>: One bundle has many job history entries</li>
+          <li><strong>1-to-1</strong> (optional) with <code>dbo.BundleSFTPCredentials</code>: Only SFTP bundles have credentials</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.BundleDeliveryLog</code>: One bundle has many delivery logs</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.BundleJobNotifications</code>: One bundle has many notifications</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">BundleID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Name</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Bundle display name (e.g., "Fannie Mae", "Freddie Mac")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentStackID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentStack</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">OutputFileNameFormat</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>PDF naming template with placeholders: {LoanNumber}, {InvestorLoanNumber}, {BorrowerLastName}, {Date}, {DateTime}, etc.</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ServerFolderName</span></td>
+            <td><span class="field-type">NVARCHAR(500)</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Column Q - PDF destination path (UNC network share, SFTP, FTP, or local path). If NULL/blank, defaults to temp folder.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.User -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.User</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>User authentication and profile table from BytePro system. Stores user credentials and email addresses used for authentication, authorization, and email notifications.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-Many</strong> with <code>dbo.ActivityLog</code>: One user initiates many jobs</li>
+          <li><strong>Many-to-Many</strong> with <code>dbo.Permissions</code>: Users have multiple permission roles</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">UserID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">EmailAddress</span></td>
+            <td><span class="field-type">NVARCHAR(200)</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>User email for notifications</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: center; font-style: italic; color: var(--text-muted);">Additional fields managed by BytePro authentication system</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.DocumentStack -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.DocumentStack</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Stacking order definitions specifying which documents are required for each bundle type. Each stack defines the sequence and requirements for document assembly in the final PDF bundle.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-Many</strong> with <code>dbo.Bundle</code>: One stack used by many bundles</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.DocumentStackDocumentType</code>: One stack has many document type mappings</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">DocumentStackID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Name</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Stack name/description</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.DocumentStackDocumentType -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.DocumentStackDocumentType</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Junction table mapping document types to stacking orders. Defines which documents belong in each stack and their display order within the assembled bundle PDF.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.DocumentStack</code>: Many mappings for one stack</li>
+          <li><strong>Many-to-1</strong> with <code>dbo.DocumentType</code>: Many mappings for one document type</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">DocumentStackID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentStack</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentTypeCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentType</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DisplayOrder</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Sort order within the stack</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.DocumentCategory -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.DocumentCategory</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Document category structure with 20 predefined categories used for organizing and filtering documents in the Bundle Build Grid. Categories are displayed in a specific order defined by DisplayOrder field.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-Many</strong> with <code>dbo.DocumentType</code>: One category contains many document types</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">DocumentCategoryID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentCategoryCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Category code (e.g., "APP", "DISC", "CRED", "INC")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DisplayOrder</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Sort order (1-20) for category display</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.DocumentType -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.DocumentType</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Master list of document types (approximately 200+ types) defining all possible documents that can be included in bundles. Each document type is categorized and can be marked as active/inactive.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.DocumentCategory</code>: Many document types in one category</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.EmbeddedDoc</code>: One type has many actual document instances</li>
+          <li><strong>1-to-Many</strong> with <code>dbo.DocumentStackDocumentType</code>: One type appears in many stacks</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">DocumentTypeCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key - document type code</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Name</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Document type name/description</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentCategoryCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentCategory</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Inactive</span></td>
+            <td><span class="field-type">BIT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Active/inactive flag (0 = active, 1 = inactive)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.FileData -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.FileData</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Loan master table serving as the central record for each loan in the BytePro system. Contains the loan number identifier and origination channel information. Primary entity for all loan-related operations.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-Many</strong> with <code>dbo.EmbeddedDoc</code>: One loan has many documents</li>
+          <li><strong>1-to-1</strong> with <code>dbo.Loan</code>: Loan details</li>
+          <li><strong>1-to-1</strong> with <code>dbo.SubProp</code>: Property details</li>
+          <li><strong>1-to-1</strong> with <code>dbo.Status</code>: Loan status</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FileName</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Loan number/identifier (e.g., "TEST001", "100029238293")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">OriginationChannel</span></td>
+            <td><span class="field-type">ENUM</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Retail" (1), "Wholesale", "Correspondent" - used in Hide N/A logic</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.Loan -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.Loan</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Loan details table containing mortgage-specific information including loan type and purpose. Critical for Hide N/A conditional logic that determines which documents are applicable for each loan.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-1</strong> with <code>dbo.FileData</code>: Each loan record corresponds to one FileData entry</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key and foreign key to dbo.FileData</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">MortgageType</span></td>
+            <td><span class="field-type">ENUM</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Conventional" (3), "FHA" (1), "VA" (2), "USDA" (4)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LoanPurpose</span></td>
+            <td><span class="field-type">ENUM</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Purchase" (1), "Refinance" (2), "Second - Refinance" (10), "Third - Refinance" (11)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.SubProp -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.SubProp</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Property details table containing property-specific information including type, location, and flood zone status. Used extensively in Hide N/A logic to determine applicable documents based on property characteristics and state-specific requirements.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-1</strong> with <code>dbo.FileData</code>: Each property record corresponds to one loan</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key and foreign key to dbo.FileData</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">PropertyType</span></td>
+            <td><span class="field-type">ENUM</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>"Detached" (1), "Attached" (2), "PUD" (6), "Condo", "Co-op"</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">State</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Two-letter state code (e.g., "CA", "FL", "TX")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">SpecialFloodHazardArea</span></td>
+            <td><span class="field-type">BIT</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Flood zone flag - determines if flood documents required</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.Status -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.Status</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Loan status tracking table. Status codes 7, 8, and 9 indicate inactive or cancelled loans which are excluded from bundle populations on the landing page.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>1-to-1</strong> with <code>dbo.FileData</code>: Each status record corresponds to one loan</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Primary key and foreign key to dbo.FileData</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">LoanStatus</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Status code (7, 8, 9 = inactive/cancelled; other values vary)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- dbo.EmbeddedDoc -->
+    <div class="entity-card">
+      <div class="entity-header">
+        <h3>dbo.EmbeddedDoc</h3>
+        <span class="system-badge system-badge-existing">EXISTING TABLE</span>
+      </div>
+
+      <div class="entity-summary">
+        <p>Loan document storage table containing all scanned documents uploaded to the LOS. Each record represents a single document associated with a loan, including metadata like status, viewability, expiration date, and storage location.</p>
+      </div>
+
+      <div class="relationship-box">
+        <h4>Relationships</h4>
+        <ul>
+          <li><strong>Many-to-1</strong> with <code>dbo.FileData</code>: Many documents for one loan</li>
+          <li><strong>Many-to-1</strong> with <code>dbo.DocumentType</code>: Many document instances of one type</li>
+        </ul>
+      </div>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field Name</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">FileDataID</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.FileData (loan)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentTypeCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentType</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocumentCategoryCode</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Foreign key to dbo.DocumentCategory</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Status</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Document status code</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Viewable</span></td>
+            <td><span class="field-type">BIT</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Visibility flag (1 = visible, 0 = hidden)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">Description</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Document description or notes</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">ExpirationDate</span></td>
+            <td><span class="field-type">DATETIME</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Document expiration date (if applicable)</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DateCreated</span></td>
+            <td><span class="field-type">DATETIME</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Document creation/upload timestamp</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">FileExtension</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>File extension (e.g., ".pdf", ".docx")</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DocStorageSource</span></td>
+            <td><span class="field-type">VARCHAR</span></td>
+            <td><span class="required-badge">REQUIRED</span></td>
+            <td>Storage location reference/path</td>
+          </tr>
+          <tr>
+            <td><span class="field-name">DisplayOrder</span></td>
+            <td><span class="field-type">INT</span></td>
+            <td><span class="optional-badge">OPTIONAL</span></td>
+            <td>Sort order within category</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Enumerations Section -->
+    <h2>Enumerations</h2>
+
+    <div class="enum-section">
+      <h3>Job & Status Values</h3>
+
+      <div class="enum-group">
+        <h4>BulkBundleStatus (ActivityLog)</h4>
+        <div class="enum-list">
+          <span class="enum-item">Incomplete</span>
+          <span class="enum-item">In progress</span>
+          <span class="enum-item">Complete</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>BundleStatus (Grid Display)</h4>
+        <div class="enum-list">
+          <span class="enum-item">Not Bundled</span>
+          <span class="enum-item">Ready to Bundle</span>
+          <span class="enum-item">In Progress</span>
+          <span class="enum-item">Completed</span>
+          <span class="enum-item">Bundle Failed</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>BundleJobQueue Status</h4>
+        <div class="enum-list">
+          <span class="enum-item">Pending</span>
+          <span class="enum-item">Processing</span>
+          <span class="enum-item">Completed</span>
+          <span class="enum-item">Failed</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>JobStatus (Notifications)</h4>
+        <div class="enum-list">
+          <span class="enum-item">Complete</span>
+          <span class="enum-item">Incomplete</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="enum-section">
+      <h3>Delivery Status Values</h3>
+
+      <div class="enum-group">
+        <h4>DeliveryStatus</h4>
+        <div class="enum-list">
+          <span class="enum-item">Success</span>
+          <span class="enum-item">Failed</span>
+          <span class="enum-item">Fallback_TempFolder</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>DeliveryMethod</h4>
+        <div class="enum-list">
+          <span class="enum-item">NetworkShare</span>
+          <span class="enum-item">SFTP</span>
+          <span class="enum-item">FTP</span>
+          <span class="enum-item">TempFolder</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>EmailType / SentStatus</h4>
+        <div class="enum-list">
+          <span class="enum-item">Complete</span>
+          <span class="enum-item">Incomplete</span>
+          <span class="enum-item">Sent</span>
+          <span class="enum-item">Failed</span>
+          <span class="enum-item">Queued</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="enum-section">
+      <h3>Loan & Property Attributes</h3>
+
+      <div class="enum-group">
+        <h4>MortgageType (Loan)</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: FHA</span>
+          <span class="enum-item">2: VA</span>
+          <span class="enum-item">3: Conventional</span>
+          <span class="enum-item">4: USDA</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>LoanPurpose (Loan)</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: Purchase</span>
+          <span class="enum-item">2: Refinance</span>
+          <span class="enum-item">10: Second - Refinance</span>
+          <span class="enum-item">11: Third - Refinance</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>PropertyType (SubProp)</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: Detached</span>
+          <span class="enum-item">2: Attached</span>
+          <span class="enum-item">6: PUD</span>
+          <span class="enum-item">Condo</span>
+          <span class="enum-item">Co-op</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>OriginationChannel (FileData)</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: Retail</span>
+          <span class="enum-item">Wholesale</span>
+          <span class="enum-item">Correspondent</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>LoanMIMethod</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: None (no PMI)</span>
+        </div>
+      </div>
+
+      <div class="enum-group">
+        <h4>LoanStatus (Status)</h4>
+        <div class="enum-list">
+          <span class="enum-item">7: Inactive/Cancelled</span>
+          <span class="enum-item">8: Inactive/Cancelled</span>
+          <span class="enum-item">9: Inactive/Cancelled</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="enum-section">
+      <h3>Document Categories (20 Total)</h3>
+
+      <div class="enum-group">
+        <h4>All Document Categories</h4>
+        <div class="enum-list">
+          <span class="enum-item">1: APP (Application)</span>
+          <span class="enum-item">2: DISC (Disclosures)</span>
+          <span class="enum-item">3: CRED (Credit)</span>
+          <span class="enum-item">4: INC (Income)</span>
+          <span class="enum-item">5: ASSET (Assets)</span>
+          <span class="enum-item">6: PROP (Property)</span>
+          <span class="enum-item">7: DOCS (Documents)</span>
+          <span class="enum-item">8: GOV (Government)</span>
+          <span class="enum-item">9: TITLE (Title)</span>
+          <span class="enum-item">10: BOND SUB FIN</span>
+          <span class="enum-item">11: MCC</span>
+          <span class="enum-item">12: RENO (Renovation)</span>
+          <span class="enum-item">13: CONST (Construction)</span>
+          <span class="enum-item">14: MISC (Miscellaneous)</span>
+          <span class="enum-item">15: PTF DOCS</span>
+          <span class="enum-item">16: AUDIT</span>
+          <span class="enum-item">17: CORR (Correspondent)</span>
+          <span class="enum-item">18: WHS (Wholesale)</span>
+          <span class="enum-item">19: POST CLSNG</span>
+          <span class="enum-item">20: Unsigned</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflows Section -->
+    <h2>Data Flows & Business Logic</h2>
+
+    <div class="workflow-section">
+      <h3>Loan Processing Flow</h3>
+      <ol>
+        <li>User selects bundle configuration from <code>dbo.Bundle</code> on Landing Page</li>
+        <li>System applies Hide N/A logic based on loan attributes (<code>dbo.Loan</code>, <code>dbo.SubProp</code>)</li>
+        <li>System retrieves document stack from <code>dbo.DocumentStack</code> via <code>dbo.Bundle.DocumentStackID</code></li>
+        <li>System calculates Missing/Found document counts by comparing:
+          <ul>
+            <li>Required documents from <code>dbo.DocumentStackDocumentType</code></li>
+            <li>Available documents from <code>dbo.EmbeddedDoc</code> (where Viewable = 1)</li>
+          </ul>
+        </li>
+        <li>Loans with Missing Docs = 0 marked as "Ready to Bundle"</li>
+        <li>User initiates bundle build for selected loans</li>
+        <li>System creates <code>dbo.ActivityLog</code> entry with BulkBundleStatus = "In progress"</li>
+        <li>Background job processes loans sequentially (1 at a time, 3-5 minutes each)</li>
+      </ol>
+    </div>
+
+    <div class="workflow-section">
+      <h3>Bundle Creation & PDF Delivery Flow</h3>
+      <ol>
+        <li>System creates queue entries in <code>dbo.BundleJobQueue</code> for each loan</li>
+        <li>For each loan:
+          <ul>
+            <li>Generate PDF using BytePro Byte 25.2 API</li>
+            <li>Apply filename template from <code>dbo.Bundle.OutputFileNameFormat</code></li>
+            <li>Determine destination from <code>dbo.Bundle.ServerFolderName</code> (Column Q)</li>
+            <li>IF ServerFolderName IS NULL → deliver to temp folder</li>
+            <li>IF ServerFolderName contains "sftp://" → retrieve credentials from <code>dbo.BundleSFTPCredentials</code></li>
+            <li>IF ServerFolderName contains "\\\\" → use network share delivery</li>
+            <li>Attempt delivery with up to 3 retries on transient failures</li>
+            <li>Log delivery attempt to <code>dbo.BundleDeliveryLog</code></li>
+            <li>IF delivery fails → fallback to temp folder, log as "Fallback_TempFolder"</li>
+          </ul>
+        </li>
+        <li>After all loans processed:
+          <ul>
+            <li>Update <code>dbo.ActivityLog</code> with BulkBundleStatus = "Complete" or "Incomplete"</li>
+            <li>Create <code>dbo.BundleJobNotifications</code> entry for in-app banner</li>
+            <li>Send email notification via BoB Email Service (log to <code>dbo.EmailNotificationLog</code>)</li>
+            <li>Clean up <code>dbo.BundleJobQueue</code> entries</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="workflow-section">
+      <h3>Activity Log & Retention</h3>
+      <ol>
+        <li>Entry created in <code>dbo.ActivityLog</code> when user first views grid for bundle</li>
+        <li><code>LastViewed</code> timestamp updated each time user accesses the grid</li>
+        <li><code>LastBuildRequest</code> set to NULL initially ("Not built yet" display)</li>
+        <li>When user clicks "Build" button, <code>LastBuildRequest</code> set to current timestamp</li>
+        <li>Nightly job runs to delete entries where:
+          <ul>
+            <li><code>LastViewed</code> + 10 business days &lt; CURRENT_DATE</li>
+            <li>Business days exclude weekends and holidays</li>
+          </ul>
+        </li>
+        <li>Incomplete bundle badge on Activity Log tab shows count where <code>BulkBundleStatus = "Incomplete"</code></li>
+      </ol>
+    </div>
+
+  </div>
+</body>
+</html>

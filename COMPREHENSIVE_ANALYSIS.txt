@@ -1,0 +1,2075 @@
+# BoB Management Suite - Comprehensive Requirements Analysis
+Generated: 2026-01-15
+
+## EXECUTIVE SUMMARY
+
+The BoB (Builder of Bundles) Management Suite is a strategic initiative to decouple document bundling operations from the Byte LOS, eliminating a critical productivity bottleneck where users are locked out of the system for 5-90+ minutes during bundle processing. The suite comprises two parallel pathways:
+
+**Single Flow BoB**: Processes one loan at a time with synchronous user-waits pattern (3-5 minutes per operation)
+**Bulk Bundle Manager**: Processes multiple loans asynchronously via background jobs (hours-long operations, user can log out)
+
+### Project Scope & Goals
+- **Primary Goal**: Eliminate system lockouts during bundle operations
+- **Target Users**: Shippers, Trade Group, Post-Closing Review Group
+- **Operational Context**: Post-close operations, investor document delivery
+- **Technology Stack**: ASP.NET Core (standalone application), reuses BytePro engine queries
+- **MVP Delivery**: February 2026 (Phase 1)
+
+### Key Architectural Decisions
+1. **Standalone Application**: Separate from Byte LOS to prevent lockouts
+2. **Shared Business Logic**: Both Single Flow and Bulk reuse same stacking order validation, document category structure (20 categories), and Hide N/A conditional logic (9 rules)
+3. **Background Job Architecture**: Bulk processes loans sequentially (1 at a time) server-side, enabling user logout during processing
+4. **API Dependency**: All bundle operations contingent on BytePro Byte release 25.2
+5. **Automated PDF Delivery**: PDFs routed to investor-specific destinations (network shares, SFTP) based on dbo.Bundle.ServerFolderName mappings
+
+### Critical Findings
+- **Content Reuse**: 60% average content reuse from Single Flow BRDs into Bulk BRDs (70% for Bundle Build Grid)
+- **Net-New Features**: Activity Log (100% new), Background Jobs (adapted), Multi-select & Filter Tabs (new)
+- **Open Issues**: 15+ TBD placeholders requiring stakeholder resolution (database mappings, max population sizes, security roles)
+- **HARD BLOCKING DEPENDENCY**: BytePro Byte release 25.2 API availability gates entire project
+
+---
+
+## PROJECT PHASES
+
+### Phase 1: MVP (February 2026)
+**Scope**: Core bundling capabilities for both Single Flow and Bulk pathways
+
+#### Single Flow BoB (Reference - Already Documented)
+- Landing Page with bundle selection
+- Stacking order display with document validation
+- Hide N/A conditional logic (9 rules)
+- Synchronous bundle build (user waits 3-5 minutes)
+- PDF display on-screen with "Upload Final To Loan" button
+
+#### Bulk Bundle Manager (Primary Focus)
+- **BRD 1 - Landing Page**: Four loan identification methods (Manual Entry, Trade No, Custom Filter, Investor Commitment No)
+- **BRD 2 - Bundle Build Grid**: Multi-loan grid with validation summaries, filter tabs, multi-select, two build paths
+- **BRD 3 - Bundle Product Output**: Background job processing, PDF destination mapping (Column Q), no PDF display
+- **BRD 4 - Activity Log**: Job history audit trail (10-day retention), navigation hub, incomplete bundle tracking
+
+**MVP Success Criteria**:
+- Users can identify loan populations via 4 methods
+- Users can validate loans against stacking orders
+- Users can initiate bulk bundle jobs and log out
+- Jobs process sequentially (3-5 min/loan) server-side
+- PDFs auto-deliver to investor destinations
+- Activity Log tracks job history for 10 business days
+
+### Phase 2: Backlog (Post-MVP)
+**Features NOT in MVP but documented as future enhancements**:
+- Real-time job status updates (WebSocket/SSE instead of manual refresh)
+- Bulk bundle scheduling (recurring jobs, off-peak processing)
+- Concurrent loan processing (parallel instead of sequential)
+- Advanced error recovery (auto-retry with smart failure detection)
+- PDF encryption/digital signatures for investor requirements
+- Email notifications (currently in-app only)
+- Analytics dashboard (job metrics, success rates, peak usage)
+- Multi-region support for geographically distributed destinations
+
+### Phase 3: Future Enhancements (Long-term)
+- GraphQL API consideration
+- Event-driven architecture
+- Advanced machine learning for document classification
+- Mobile responsiveness (currently desktop-only)
+- WCAG 2.1 Level AA accessibility compliance
+
+---
+
+## FEATURE REQUIREMENTS (Categorized for Ticketing)
+
+### Tier 1: Platform Foundation (BOB-001 to BOB-020)
+
+#### BOB-001: Security & Access Control
+**Description**: Implement role-based access control for BoB applications
+**Requirements**:
+- Users MUST have 'Shipper' OR 'Limited Admin' permissions
+- Users MUST have BytePro / Post Close Responsibilities (Operations roles)
+- IF user lacks permissions THEN display error: "You do not have permission to access Bundle Builder. Please contact your administrator"
+- 3 approved security roles (TBD from Single Flow BRD 89567)
+**Acceptance Criteria**:
+- Given user has 'Shipper' OR 'Limited Admin' permissions
+  When user accesses Bulk Bundle Manager
+  Then landing page loads successfully
+- Given user lacks required permissions
+  When user attempts access
+  Then access denied with error message
+**API/DB Dependencies**: dbo.User, dbo.Permissions, authentication middleware
+**Related BRDs**: BRD-1 (Landing Page), Single Flow BRD 89567
+
+#### BOB-002: Bundle Configuration Dropdown
+**Description**: Populate bundle selection dropdown from dbo.Bundle table
+**Requirements**:
+- Dropdown populated from dbo.Bundle.Name (~80 bundle options)
+- Sort alphabetically
+- Data mappings: BundleID, Name, DocumentStackID, OutputFileNameFormat, ServerFolderName (Column Q)
+- Examples: Fannie Mae, Freddie Mac, Ginnie Mae, Wells Fargo, JP Morgan Chase, Bank of America, US Bank
+**Acceptance Criteria**:
+- Given user clicks Bundle Name dropdown
+  When dropdown opens
+  Then approximately 80 bundle options display alphabetically
+- Given user selects bundle
+  When selection made
+  Then BundleID stored for stacking order retrieval
+**API/DB Dependencies**: dbo.Bundle table
+**Related BRDs**: BRD-1 (Landing Page), Single Flow BRD 76335
+
+#### BOB-003: Tab Navigation (Bulk Bundle Builder / Activity Log)
+**Description**: Implement two-tab interface with incomplete bundle badge
+**Requirements**:
+- Tab 1: "Bulk Bundle Builder" (default active)
+- Tab 2: "Activity Log [X]" (badge displays incomplete bundle count)
+- Badge count logic: SELECT COUNT(*) FROM ActivityLog WHERE BulkBundleStatus = 'Incomplete' AND DATEDIFF(DAY, LastViewed, GETDATE()) <= 10
+- Display "[X] Incomplete Bundles" message when count > 0
+**Acceptance Criteria**:
+- Given user has 8 incomplete bundles
+  When user views Activity Log tab
+  Then tab displays "Activity Log 8"
+- Given user has 0 incomplete bundles
+  When user views tab
+  Then no badge displays (or "Activity Log 0")
+**API/DB Dependencies**: dbo.ActivityLog table
+**Related BRDs**: BRD-1 (Landing Page), BRD-4 (Activity Log)
+
+#### BOB-004: Logout Button with Background Job Support
+**Description**: Enable user logout while background jobs continue processing
+**Requirements**:
+- Button located upper-right corner
+- IF user logs out AND background jobs running THEN log user out AND jobs continue server-side
+- IF user logs back in THEN Activity Log reflects current statuses
+**Acceptance Criteria**:
+- Given user clicks logout button during active job
+  When logout occurs
+  Then user logged out AND job continues processing
+- Given user logs back in hours later
+  When user checks Activity Log
+  Then current job status displayed
+**API/DB Dependencies**: Session management, background job service
+**Related BRDs**: BRD-1 (Landing Page), BRD-3 (Background Jobs)
+
+#### BOB-005: Document Category Structure (20 Categories)
+**Description**: Implement document category table with DisplayOrder
+**Requirements**:
+- 20 categories: APP (1), DISC (2), CRED (3), INC (4), ASSET (5), PROP (6), DOCS (7), GOV (8), TITLE (9), MISC (14), AUDIT (16), CORR (17), PTF DOCS (15), WHS (18), POST CLSNG (19), BOND SUB FIN (10), Unsigned (20), MCC (11), RENO (12), CONST (13)
+- VERBATIM REUSE from Single Flow BRD 76336
+- Filter index uses: DocumentCategoryID, DocumentCategoryCode, DisplayOrder
+**Acceptance Criteria**:
+- Given system queries document categories
+  When categories retrieved
+  Then 20 categories returned sorted by DisplayOrder
+**API/DB Dependencies**: dbo.DocumentCategory table
+**Related BRDs**: BRD-2 (Bundle Build Grid), Single Flow BRD 76336
+
+#### BOB-006: Hide Not Applicable Docs - Conditional Logic Engine
+**Description**: Implement 9-rule conditional logic to hide N/A documents per-loan
+**Requirements**:
+- Rule 1: Mortgage Type = Conventional → hide FHA/VA/USDA docs (~108 docs)
+- Rule 2: Property Type = Detached/Attached/PUD → hide Condo/Co-op docs (~18 docs)
+- Rule 3: Origination Channel = Retail → hide Correspondent docs (~7 docs)
+- Rule 4: PMI Type = None → hide MI docs (~7 docs)
+- Rule 5: Flood Insurance = NULL → hide Flood docs (~6 docs)
+- Rule 6: State = CA → hide CA-specific docs (~8 docs)
+- Rule 7: State = FL → hide FL-specific docs (~3 docs)
+- Rule 8: State = TX → hide TX-specific docs (~3 docs)
+- Rule 9: Loan Purpose = Refinance → hide Purchase/Construction docs (~15 docs)
+- Applied PER-LOAN based on individual loan attributes
+- VERBATIM REUSE from Single Flow BRD 76336
+**Acceptance Criteria**:
+- Given Loan A has MortgageType = Conventional AND doc count = 0
+  When Hide N/A logic applied
+  Then FHA/VA/USDA documents excluded from validation counts
+- Given Loan B has MortgageType = FHA
+  When Hide N/A logic applied
+  Then FHA documents included in validation counts
+- Given any rule parameter NOT met (e.g., doc count > 0)
+  When system evaluates rules
+  Then document displays "as-is" and NOT hidden
+**API/DB Dependencies**: dbo.Loan, dbo.SubProp, dbo.FileData, dbo.LoanMIMethod, dbo.PartyMisc
+**Related BRDs**: BRD-2 (Bundle Build Grid), Single Flow BRD 76336
+
+#### BOB-007: BytePro API Integration - Byte 25.2 Dependency
+**Description**: Integrate with BytePro Byte release 25.2 APIs for bundle operations
+**Requirements**:
+- **CRITICAL BLOCKER**: "All API call effort associated to dbo.bundle is contingent on Byte release 25.2"
+- API Endpoint 1: Loan Document Retrieval (query dbo.EmbeddedDoc)
+- API Endpoint 2: Bundle Stacking Order Retrieval (query dbo.DocumentStack)
+- API Endpoint 3: Bulk Validation API (calculate Missing/Found doc counts)
+- API Endpoint 4: PDF Generation API (create bundle PDF per loan)
+**Acceptance Criteria**:
+- Given BytePro Byte 25.2 NOT deployed
+  When BoB attempts API calls
+  Then API calls fail with error message
+- Given Byte 25.2 deployed
+  When BoB makes API calls
+  Then bundle processing functions correctly
+**API/DB Dependencies**: BytePro Byte release 25.2, dbo.EmbeddedDoc, dbo.DocumentStack, dbo.Bundle
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Product Output), Single Flow BRD 77115
+
+#### BOB-008: Activity Log Database Schema
+**Description**: Create ActivityLog table for job history tracking
+**Requirements**:
+- Table: dbo.ActivityLog
+- Columns: ActivityLogID (PK), UserID, BundleID, BundleName, LastViewed, LastBuildRequest (nullable), NumberOfLoans, BulkBundleStatus, CreatedDate, LoanPopulationData (JSON)
+- Indexes: PK on ActivityLogID, Index on UserID, Index on LastViewed (retention queries), Index on BulkBundleStatus (badge count)
+- Retention: 10 business days, auto-delete via nightly job
+**Acceptance Criteria**:
+- Given job initiated
+  When Activity Log entry created
+  Then entry stored with BulkBundleStatus = "Incomplete"
+- Given entry 11 business days old
+  When nightly cleanup job runs
+  Then entry deleted from table
+**API/DB Dependencies**: New table creation, scheduled cleanup job
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-009: PDF Destination Mapping - Column Q Logic
+**Description**: Route generated PDFs to investor-specific destinations
+**Requirements**:
+- Data source: dbo.Bundle.ServerFolderName (Column Q, nullable)
+- IF Column Q NOT NULL AND != '' THEN send PDF to specified path
+- ELSE send PDF to C:\Users\{username}\Temp\
+- Destination types: UNC network paths (\\server\share\), SFTP (sftp://host/path/), FTP (ftp://host/path/), Local paths (C:\SharedFolders\)
+- Examples:
+  - Column Q = "\\FileServer01\InvestorDelivery\FannieMae\" → network share
+  - Column Q = "sftp://ginniemae.delivery.com/bundles/" → SFTP
+  - Column Q = NULL → temp folder
+**Acceptance Criteria**:
+- Given Column Q = "\\FileServer01\InvestorDelivery\FannieMae\"
+  When PDF generated
+  Then PDF delivered to network share path
+- Given Column Q = NULL
+  When PDF generated
+  Then PDF delivered to C:\Users\{username}\Temp\
+**API/DB Dependencies**: dbo.Bundle.ServerFolderName, file I/O libraries, SFTP client libraries
+**Related BRDs**: BRD-3 (Product Output), BRD-5 (PDF Delivery)
+
+#### BOB-010: Manual Refresh Pattern (No Real-Time Updates)
+**Description**: Implement manual refresh button to update loan statuses
+**Requirements**:
+- Button text: "Refresh Population"
+- NO automatic polling or WebSocket updates
+- IF user clicks refresh THEN re-query loan statuses AND update grid AND update tab counts AND preserve checkbox states
+- Use case: Check progress during long-running background jobs
+**Acceptance Criteria**:
+- Given job processing in background
+  When user clicks "Refresh Population"
+  Then grid updates with current loan statuses
+- Given job processing
+  When user does NOT click refresh
+  Then loan statuses remain at last-known state (no automatic updates)
+**API/DB Dependencies**: BytePro API, dbo.EmbeddedDoc query
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+---
+
+### Tier 2: Loan Identification & Selection (BOB-021 to BOB-030)
+
+#### BOB-021: Manual Entry - Loan Number Input with Fix Format
+**Description**: Allow users to paste/enter multiple loan numbers with flexible delimiters
+**Requirements**:
+- Textarea field labeled "Subject Loans"
+- Accepts delimiters: comma, space, backslash, period, semicolon, dash
+- "Fix Format" button: split by delimiters, trim whitespace, remove duplicates, validate alphanumeric
+- Error validations:
+  - Special characters → "Unable to format loan numbers, please remove any special characters and try again"
+  - Empty field → "No valid loan numbers found"
+  - No matches → "No active loans found matching entered loan numbers. Please verify loan numbers and try again"
+- Query: SELECT FileDataID FROM FileData WHERE FileName IN (cleaned array) AND Status.LoanStatus NOT IN (7, 8, 9)
+**Acceptance Criteria**:
+- Given user pastes "TEST001, TEST002; TEST003.TEST004"
+  When user clicks "Fix Format"
+  Then loan numbers cleaned to ["TEST001", "TEST002", "TEST003", "TEST004"]
+- Given user enters special characters
+  When user clicks "Fix Format"
+  Then error displays
+**API/DB Dependencies**: dbo.FileData, dbo.Status, sp_GetLoansByLoanNumbers
+**Related BRDs**: BRD-1 (Landing Page)
+
+#### BOB-022: Trade Number Identification Method
+**Description**: Retrieve loan population by trade number
+**Requirements**:
+- Textbox field labeled "Trade Number"
+- [TBD: Trade table name and field mapping]
+- IF trade number exists THEN retrieve associated loans
+- IF trade NOT found THEN error: "Trade number not found. Please verify and try again"
+- IF trade has no loans THEN error: "No loans found for this trade number"
+**Acceptance Criteria**:
+- Given user enters valid trade number
+  When system validates
+  Then associated loans retrieved
+- Given invalid trade number
+  When system validates
+  Then error message displays
+**API/DB Dependencies**: [TBD: Trade table mapping], dbo.FileData
+**Related BRDs**: BRD-1 (Landing Page)
+**OPEN ISSUE**: Database schema for trade number mapping unknown
+
+#### BOB-023: Custom Filter Identification Method
+**Description**: Dynamic filtering by loan attributes
+**Requirements**:
+- Two-part input: Dropdown (filter type) + Textbox (filter value)
+- [TBD: Filter type definitions table - options unknown]
+- Wildcard matching: WHERE [FilterField] LIKE '%@filterValue%'
+- IF filter type selected THEN enable textbox
+- IF no matches THEN error: "No loans found matching filter criteria. Please adjust filter and try again"
+**Acceptance Criteria**:
+- Given user selects filter type AND enters value
+  When query executes
+  Then matching loans returned
+- Given query returns zero results
+  When validation completes
+  Then error message displays
+**API/DB Dependencies**: [TBD: Filter definitions], dbo.FileData
+**Related BRDs**: BRD-1 (Landing Page)
+**OPEN ISSUE**: Available filter types and fields unknown
+
+#### BOB-024: Investor Commitment Number Identification Method
+**Description**: Retrieve loan population by investor commitment number
+**Requirements**:
+- Textbox field labeled "Investor Commitment Number"
+- [TBD: Commitment table name and field mapping]
+- IF commitment exists THEN retrieve associated loans
+- IF commitment NOT found THEN error: "Investor commitment number not found. Please verify and try again"
+- IF commitment has no loans THEN error: "No loans found for this investor commitment number"
+**Acceptance Criteria**:
+- Given user enters valid commitment number
+  When system validates
+  Then associated loans retrieved
+- Given invalid commitment number
+  When validation fails
+  Then error displays
+**API/DB Dependencies**: [TBD: Commitment table mapping], dbo.FileData
+**Related BRDs**: BRD-1 (Landing Page)
+**OPEN ISSUE**: Database schema for commitment mapping unknown
+
+#### BOB-025: View Loan Population - Validation & Navigation
+**Description**: Validate loan population against bundle stacking order and navigate to grid
+**Requirements**:
+- Button text: "View Loan Population"
+- Button enabled when: (loan population identified) AND (bundle selected)
+- Loading state: "Generating..." button text, spinner, "Loading Loan Population..." message
+- Processing time: 2-10 seconds for 50 loans
+- Validation logic: FOR EACH loan query documents, compare to stacking order, calculate Missing/Found counts
+- Create Activity Log entry with status "Incomplete" and "Not built yet"
+- Navigate to Bundle Build Grid (BRD 2) with results
+**Acceptance Criteria**:
+- Given user clicks enabled button AND validation succeeds
+  When processing completes
+  Then user navigates to grid with validation results
+- Given validation fails
+  When button clicked
+  Then error displays inline, no navigation
+**API/DB Dependencies**: dbo.EmbeddedDoc, dbo.DocumentStack, dbo.ActivityLog
+**Related BRDs**: BRD-1 (Landing Page), BRD-2 (Grid)
+
+#### BOB-026: Clear Form Button
+**Description**: Reset all landing page form inputs
+**Requirements**:
+- Button text: "Clear"
+- IF user clicks THEN reset all inputs, clear errors, revert to "Manual Entry" tab
+**Acceptance Criteria**:
+- Given user has entered form data
+  When user clicks "Clear"
+  Then all inputs reset to default state
+**API/DB Dependencies**: None (client-side only)
+**Related BRDs**: BRD-1 (Landing Page)
+
+#### BOB-027: Maximum Population Size Validation
+**Description**: Prevent oversized populations from causing performance issues
+**Requirements**:
+- [TBD: Define maximum loan count per bulk job based on system capacity]
+- IF population size > max THEN error: "Population size exceeds maximum limit of [X] loans. Please reduce population size"
+**Acceptance Criteria**:
+- Given user attempts population > max limit
+  When validation runs
+  Then error displays, no navigation to grid
+**API/DB Dependencies**: System capacity analysis required
+**Related BRDs**: BRD-1 (Landing Page)
+**OPEN ISSUE**: Maximum population size unknown, requires performance testing
+
+---
+
+### Tier 3: Bundle Build Grid & Multi-Loan Operations (BOB-031 to BOB-050)
+
+#### BOB-031: Grid Structure - Five Columns with Sortable Headers
+**Description**: Display loan-level validation summaries in multi-row grid
+**Requirements**:
+- Columns: Checkbox (master select), Loan Number (sortable), Missing Docs (sortable, red if > 0), Found Docs (sortable, green text), Bundle Status (sortable, color-coded)
+- One row per loan in population
+- Alternating row backgrounds (zebra striping)
+- Default sort: Loan Number ascending
+- Column header click: Toggle ascending/descending sort
+**Acceptance Criteria**:
+- Given grid loads with 50 loans
+  When user views grid
+  Then 50 rows display with 5 columns each
+- Given user clicks "Loan Number" column header
+  When sort triggers
+  Then grid re-sorts alphabetically
+**API/DB Dependencies**: Grid rendering library (React Data Grid, AG Grid, etc.)
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-032: Filter Tabs with Dynamic Counts
+**Description**: Three-tab filtering with real-time count updates
+**Requirements**:
+- Tab 1: "All Loans [X]" - total count
+- Tab 2: "Loans Missing Docs [X]" - count WHERE Missing Docs > 0
+- Tab 3: "Ready to Bundle [X]" - count WHERE Missing Docs = 0
+- Default active: "All Loans"
+- Tab click: Filter grid to matching loans
+- Count updates: Manual refresh only (not real-time)
+**Acceptance Criteria**:
+- Given grid displays 15 loans (10 missing docs, 5 ready)
+  When tabs load
+  Then display "All Loans 15", "Loans Missing Docs 10", "Ready to Bundle 5"
+- Given user clicks "Loans Missing Docs" tab
+  When tab activates
+  Then grid shows only 10 loans with Missing Docs > 0
+**API/DB Dependencies**: Client-side filtering, count calculations
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-033: Status Filter Dropdown (All / Fail / Pass)
+**Description**: Additional filtering layer for loan validation status
+**Requirements**:
+- Dropdown options: "All" (default), "Fail" (Missing Docs > 0), "Pass" (Missing Docs = 0)
+- Works in conjunction with filter tabs (AND logic)
+- Example: "All Loans" tab + "Fail" status = loans with Missing Docs > 0
+**Acceptance Criteria**:
+- Given user selects "Fail" status
+  When filter applied
+  Then grid shows only loans with Missing Docs > 0
+- Given "Loans Missing Docs" tab active AND "Fail" status selected
+  When filters combine
+  Then result set = loans with Missing Docs > 0 (same as tab alone)
+**API/DB Dependencies**: Client-side filtering logic
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-034: Hide Not Applicable Docs Checkbox Toggle
+**Description**: User-controlled toggle for Hide N/A logic application
+**Requirements**:
+- Checkbox labeled "Hide Not Applicable Docs"
+- Default state: Checked
+- IF checked THEN apply 9-rule Hide N/A logic per-loan, exclude N/A docs from counts
+- IF unchecked THEN include all stacking order docs (full "as-is" display)
+- IF toggled THEN recalculate all loan counts, refresh grid, update tab counts
+**Acceptance Criteria**:
+- Given checkbox checked AND Loan A has MortgageType = Conventional
+  When grid displays
+  Then FHA/VA/USDA docs excluded from Loan A's Missing/Found counts
+- Given user toggles checkbox to unchecked
+  When state changes
+  Then all docs included in counts, grid refreshes
+**API/DB Dependencies**: Hide N/A logic engine (BOB-006)
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-035: Multi-Select Checkboxes with Master Checkbox
+**Description**: Individual and bulk loan selection for targeted builds
+**Requirements**:
+- Master checkbox in header: Select/deselect all visible loans
+- Individual checkboxes: One per loan row
+- Default state: All checked
+- Intermediate state: Dash icon when some (not all) selected
+- State persistence: Checkbox states preserved during tab switches and refresh
+- Real-time count update: "Build [X] Selected Loans" button updates as user checks/unchecks
+**Acceptance Criteria**:
+- Given grid loads with 5 loans
+  When user views checkboxes
+  Then all 5 checkboxes checked by default
+- Given user clicks master checkbox (unchecked state)
+  When clicked
+  Then all visible loans deselected
+- Given user checks 3 of 5 loans
+  When master checkbox viewed
+  Then displays intermediate state (dash icon)
+**API/DB Dependencies**: Checkbox state management (client-side)
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-036: Add Loan to Population Modal
+**Description**: Allow users to add 1-2 forgotten loans without restarting
+**Requirements**:
+- Button: "+ Add Loan to Population"
+- Modal title: "Add Loan to Summary"
+- Modal content: Loan input field, "Fix Format" button (reuses Manual Entry logic 100%)
+- Modal buttons: "Cancel", "Add to Summary"
+- Validation: Duplicate detection, invalid loan detection, no active loans found
+- Success: Add loans to population, validate against stacking order, close modal, refresh grid
+**Acceptance Criteria**:
+- Given user clicks "+ Add Loan to Population"
+  When button clicked
+  Then modal opens
+- Given user enters loan numbers in modal
+  When user clicks "Add to Summary"
+  Then valid loans added, grid refreshes
+- Given user enters duplicates
+  When validation runs
+  Then error: "Loan(s) already exist in population: [loan numbers]"
+**API/DB Dependencies**: Manual Entry formatter (BOB-021), dbo.FileData
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+#### BOB-037: Build Ready to Bundle Loans (Status-Based Path)
+**Description**: Bulk operation to build all validated loans
+**Requirements**:
+- Button text: "Build Ready to Bundle Loans"
+- Button enabled IF at least one loan has Bundle Status = "Ready to Bundle"
+- Ignores checkbox selection (operates on status only)
+- Initiates background job to process all Ready loans sequentially
+- Updates loan statuses to "In Progress" during processing
+- Updates to "Completed" on success, "Bundle Failed" on failure
+**Acceptance Criteria**:
+- Given 5 loans with Ready to Bundle status
+  When user clicks button
+  Then background job initiates for all 5 loans
+- Given zero Ready to Bundle loans
+  When user views button
+  Then button disabled (gray)
+**API/DB Dependencies**: Background job service, PDF generation API
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### BOB-038: Build [X] Selected Loans (Manual Selection Path)
+**Description**: Targeted operation to build only checked loans
+**Requirements**:
+- Button text: "Build [X] Selected Loans" (dynamic count)
+- Button enabled IF at least one loan checked
+- [X] updates in real-time as user checks/unchecks
+- Allows building loans with Missing Docs > 0 (if intentionally selected)
+- Initiates background job for checked loans only
+**Acceptance Criteria**:
+- Given user checks 5 loans
+  When button displays
+  Then text = "Build 5 Selected Loans"
+- Given user unchecks 2 loans
+  When count updates
+  Then text = "Build 3 Selected Loans" (real-time)
+- Given user includes loans with Missing Docs > 0
+  When build initiates
+  Then all checked loans processed regardless of status
+**API/DB Dependencies**: Background job service, checkbox state
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### BOB-039: Bundle Status Enum Values
+**Description**: Track loan-level bundle processing status
+**Requirements**:
+- Enum values: "Not Bundled" (default), "Ready to Bundle" (Missing Docs = 0), "In Progress" (currently processing), "Completed" (success), "Bundle Failed" (error)
+- HARD RULE: At job completion, ONLY "Completed" or "Bundle Failed" allowed
+- IF job status = "Complete" THEN ALL loans MUST show "Completed"
+- IF job status = "Incomplete" THEN at least ONE loan shows "Bundle Failed"
+- Visual indicators: Not Bundled (gray), Ready (green), In Progress (blue + animation), Completed (green + checkmark), Failed (red + error icon)
+**Acceptance Criteria**:
+- Given job completes with 100% success
+  When user refreshes grid
+  Then ALL loans show Bundle Status = "Completed"
+- Given job completes with 2 failures out of 10 loans
+  When user refreshes grid
+  Then 2 loans show "Bundle Failed", 8 show "Completed"
+**API/DB Dependencies**: dbo.BulkBundleJob.LoanStatus
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### BOB-040: Grid Pagination (Optional Future Enhancement)
+**Description**: Handle very large populations (500+ loans)
+**Requirements**:
+- [TBD: Define pagination strategy - client-side or server-side?]
+- [TBD: Page size (e.g., 100 loans per page)?]
+- [TBD: Performance threshold where pagination required?]
+**Acceptance Criteria**: TBD
+**API/DB Dependencies**: TBD
+**Related BRDs**: BRD-2 (Grid)
+**OPEN ISSUE**: Pagination requirement unknown, requires performance testing with large populations
+
+---
+
+### Tier 4: Background Job Processing & PDF Delivery (BOB-051 to BOB-070)
+
+#### BOB-051: Background Job Initiation
+**Description**: Create server-side job when user clicks build button
+**Requirements**:
+- IF user clicks build button THEN create Activity Log entry with status "Incomplete"
+- Execute sp_InitiateBulkBundleJob with @bundleId, @loanList, @userId parameters
+- Create BundleJobQueue entries for each selected loan
+- Return jobId for tracking
+- Display brief "Generating..." state (2-3 seconds)
+- Return user to grid with updated statuses
+**Acceptance Criteria**:
+- Given user clicks build button
+  When job initiates
+  Then Activity Log entry created, grid shows "In Progress" statuses
+**API/DB Dependencies**: dbo.ActivityLog, dbo.BundleJobQueue, sp_InitiateBulkBundleJob
+**Related BRDs**: BRD-3 (Background Jobs)
+
+#### BOB-052: Sequential Loan Processing (3-5 Minutes Per Loan)
+**Description**: Process loans one at a time to prevent system overload
+**Requirements**:
+- Sequential processing (NOT parallel)
+- Processing time: 3-5 minutes per loan (varies by doc count/complexity)
+- Total job time = loan count × 3-5 minutes
+- Examples: 5 loans = 15-25 min, 50 loans = 2.5-4 hours, 100 loans = 5-8 hours
+- Per-loan steps: Retrieve docs → retrieve stacking order → apply Hide N/A → sort by DisplayOrder → generate PDF → deliver PDF → update status
+**Acceptance Criteria**:
+- Given job processing 50 loans
+  When job executes
+  Then loans processed one at a time (not parallel)
+- Given each loan takes 4 minutes average
+  When 50-loan job runs
+  Then total time ≈ 200 minutes (3.3 hours)
+**API/DB Dependencies**: Background job worker service
+**Related BRDs**: BRD-3 (Background Jobs)
+
+#### BOB-053: PDF Naming Convention
+**Description**: Generate PDF filenames from template
+**Requirements**:
+- Data source: dbo.Bundle.OutputFileNameFormat (template with placeholders)
+- Placeholders: {LoanNumber}, {InvestorLoanNumber}, {BorrowerLastName}, {PropertyAddress}, {Date} (YYYYMMDD), {DateTime} (YYYYMMDD_HHMMSS), {BundleName}, {BundleID}
+- Examples:
+  - Template: `{LoanNumber}_FNMA_{Date}.pdf` → Output: `1234567_FNMA_20251211.pdf`
+  - Template: `{InvestorLoanNumber}_FHLMC_{Date}.pdf` → Output: `INV987654_FHLMC_20251211.pdf`
+- Sanitization: Replace invalid chars (< > : " / \ | ? *) with underscores, trim whitespace, limit to 200 chars
+**Acceptance Criteria**:
+- Given template = `{LoanNumber}_FNMA_{Date}.pdf` AND LoanNumber = "1234567"
+  When PDF generated
+  Then filename = `1234567_FNMA_20251211.pdf`
+**API/DB Dependencies**: dbo.Bundle.OutputFileNameFormat, dbo.FileData.FileName
+**Related BRDs**: BRD-3 (Product Output), BRD-5 (PDF Delivery)
+
+#### BOB-054: Network Share PDF Delivery
+**Description**: Deliver PDFs to UNC network paths
+**Requirements**:
+- UNC path format: `\\ServerName\ShareName\SubFolder\`
+- Authentication: Windows Integrated Auth (service account with R/W permissions)
+- Validation: Directory.Exists(), test file creation
+- Retry logic: Up to 3 attempts with 5-second delay for transient errors
+- Error handling: Network path not found, access denied, disk full, file already exists
+- Fallback: IF delivery fails THEN deliver to temp folder
+**Acceptance Criteria**:
+- Given Column Q = `\\FileServer01\InvestorDelivery\FannieMae\`
+  When PDF delivered
+  Then PDF copied to network share path
+- Given network path inaccessible
+  When delivery attempted
+  Then retry 3 times, fallback to temp folder
+**API/DB Dependencies**: System.IO.File.Copy(), network credentials
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-055: SFTP PDF Delivery
+**Description**: Upload PDFs to investor SFTP servers
+**Requirements**:
+- SFTP URL format: `sftp://hostname[:port]/path/to/folder/`
+- Authentication: Username/Password (encrypted) OR SSH Private Key
+- Credential storage: dbo.BundleSFTPCredentials table (BundleID → SFTP credentials mapping)
+- Connection pooling: Reuse SFTP connection for all loans in same job
+- Retry logic: Up to 3 attempts with 10-second delay
+- Error handling: Connection timeout, authentication failed, remote path not found, upload permission denied
+- Fallback: IF delivery fails THEN deliver to temp folder
+**Acceptance Criteria**:
+- Given Column Q = `sftp://ginniemae.delivery.com/bundles/`
+  When PDF delivered
+  Then PDF uploaded via SFTP
+- Given SFTP authentication fails
+  When delivery attempted
+  Then fallback to temp folder immediately (no retry)
+**API/DB Dependencies**: SFTP client library (WinSCP .NET, SSH.NET), dbo.BundleSFTPCredentials
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-056: Temp Folder Fallback Delivery
+**Description**: Default destination when Column Q mapping fails or is null
+**Requirements**:
+- Path: `C:\Users\{username}\Temp\BoB_Bundles\{BundleName}\{YYYYMMDD}\`
+- Create folder if doesn't exist
+- Use case scenarios: Column Q NULL, blank, invalid format, destination unreachable, permissions denied
+- User notification: Bundle Status = "Completed" (generation succeeded), Audit log records fallback reason
+**Acceptance Criteria**:
+- Given Column Q = NULL
+  When PDF generated
+  Then PDF saved to `C:\Users\aolival\Temp\BoB_Bundles\FannieMae\20251211\`
+- Given destination path validation fails
+  When fallback triggered
+  Then PDF delivered to temp folder, audit log records reason
+**API/DB Dependencies**: File I/O, temp folder creation
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-057: Delivery Audit Logging
+**Description**: Track all PDF delivery transactions for compliance
+**Requirements**:
+- Table: dbo.BundleDeliveryLog
+- Columns: DeliveryLogID (PK), BundleID, LoanNumber, DestinationPath, FileName, FileSizeBytes, DeliveryTimestamp, DeliveryStatus (Success/Failed/Fallback_TempFolder), DeliveryDurationMS, ErrorMessage, DeliveryMethod (NetworkShare/SFTP/FTP/TempFolder), UserID, JobID, RetryAttempts, CreatedDate
+- Retention: 90 days minimum, archival to dbo.BundleDeliveryLog_Archive after 90 days, retain archive for 7 years (compliance)
+- Reports: Daily delivery summary, failed deliveries (last 7 days), temp folder fallback analysis
+**Acceptance Criteria**:
+- Given PDF delivered successfully
+  When delivery completes
+  Then audit log entry created with DeliveryStatus = "Success"
+- Given PDF delivery failed
+  When fallback occurs
+  Then audit log shows DeliveryStatus = "Fallback_TempFolder" with error reason
+**API/DB Dependencies**: dbo.BundleDeliveryLog table
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-058: Email Notification on Job Completion
+**Description**: Send SMTP email when bulk bundle job finishes
+**Requirements**:
+- Trigger: Job completes (all loans processed)
+- Recipient: User who initiated job (retrieve from dbo.User.EmailAddress)
+- SMTP service: Existing BoB Email Service (http://localhost:3001)
+- Email template 1 (Complete): Subject = "BoB Bundle Job Complete - {BundleName} - {TotalLoanCount} Loans Processed", Body includes job summary table (Bundle Name, Total Loans, Successfully Bundled, Job Status = Complete, Completed At timestamp)
+- Email template 2 (Incomplete): Subject = "BoB Bundle Job Incomplete - {BundleName} - {FailedLoanCount} of {TotalLoanCount} Loans Failed", Body includes failed loans table (Loan Number, Error Reason)
+- HTML + plain text versions
+- Rate limiting: Max 10 emails per user per hour
+**Acceptance Criteria**:
+- Given job completes with 100% success
+  When job finishes
+  Then SMTP email sent with subject "Bundle Job Complete: {BundleName}"
+- Given job completes with 2 failures
+  When job finishes
+  Then email sent with subject "Bundle Job Incomplete: {BundleName} - 2 of 17 Loans Failed"
+**API/DB Dependencies**: BoB Email Service (port 3001), CMG SMTP relay, dbo.EmailNotificationLog
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-059: In-App Notification Banners (Complete/Incomplete)
+**Description**: Display job completion banners at top of grid page
+**Requirements**:
+- Banner location: Top of Bundle Build Grid page (below header, above loan grid)
+- Banner trigger: Job completes (status = Complete OR Incomplete)
+- Banner dismissible: User clicks "X" to close permanently for that job
+- Banner persistence: Session-based, reappears on login if job completed within 24 hours
+- Complete banner: Light green background, green left border, checkmark icon, text: "All {TotalLoanCount} loans in your '{BundleName}' bulk bundle were successfully processed and delivered to their designated destinations. Job completed at: {CompletionTimestamp}", Actions: [View Activity Log] [Dismiss]
+- Incomplete banner: Light yellow background, amber left border, warning icon, text: "Your '{BundleName}' bulk bundle job completed with {FailedLoanCount} of {TotalLoanCount} loans failing to bundle. {CompletedLoanCount} loans were successfully processed. Failed loans: {LoanNumber1}, {LoanNumber2}... Please review the failed loans below and retry if needed. Job completed at: {CompletionTimestamp}", Actions: [View Failed Loans] [View Activity Log] [Dismiss]
+**Acceptance Criteria**:
+- Given job completes with 100% success
+  When user refreshes page
+  Then green "Complete" banner displays
+- Given job completes with failures
+  When user refreshes page
+  Then yellow "Incomplete" banner displays with failed loan numbers
+**API/DB Dependencies**: dbo.BundleJobNotifications table
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### BOB-060: Error Handling - Loan-Level Failures
+**Description**: Continue job processing when individual loans fail
+**Requirements**:
+- IF one loan fails THEN job continues processing remaining loans
+- Failed loan: Update Bundle Status = "Bundle Failed", log error with failure details
+- Successful loans: Update Bundle Status = "Completed"
+- Error types: Missing required documents, PDF generation failure, destination delivery failure, BytePro API unavailable
+- Retry logic: Transient errors (network timeout) → retry 3 times; Configuration errors (permissions, auth) → no retry, immediate fallback
+**Acceptance Criteria**:
+- Given 1 of 5 loans fails during processing
+  When job continues
+  Then 4 loans marked "Completed", 1 loan marked "Bundle Failed", Activity Log shows "Incomplete"
+- Given all loans succeed
+  When job completes
+  Then all loans "Completed", Activity Log shows "Complete"
+**API/DB Dependencies**: Error logging, dbo.BundleJobErrors
+**Related BRDs**: BRD-3 (Background Jobs), BRD-5 (PDF Delivery)
+
+---
+
+### Tier 5: Activity Log & Job History (BOB-071 to BOB-080)
+
+#### BOB-071: Activity Log Table Display
+**Description**: Display job history in sortable table
+**Requirements**:
+- Columns: Bundle Name (hyperlink), Last Viewed (timestamp MM/DD/YY HH:MMam/pm TZ), Last Build Request (timestamp or "Not built yet"), Number of Loans (integer), Bulk Bundle Status (color-coded: Incomplete=red, In progress=blue, Complete=green)
+- Default sort: Last Viewed descending (most recent first)
+- Sortable: All columns (click header to toggle ascending/descending)
+- Query: SELECT * FROM ActivityLog WHERE UserID = @currentUser AND DATEDIFF(DAY, LastViewed, GETDATE()) <= 10 ORDER BY LastViewed DESC
+**Acceptance Criteria**:
+- Given user clicks Activity Log tab
+  When table loads
+  Then displays 5 columns with job history sorted by Last Viewed descending
+- Given user clicks "Bundle Name" column header
+  When sort triggered
+  Then table re-sorts alphabetically by bundle name
+**API/DB Dependencies**: dbo.ActivityLog table
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-072: Hyperlink Navigation from Activity Log to Grid
+**Description**: Enable users to navigate from Activity Log to Bundle Build Grid
+**Requirements**:
+- Each Bundle Name is clickable hyperlink
+- Click behavior IDENTICAL for all statuses (Incomplete/In progress/Complete)
+- Navigation destination: "Bulk Bundle Builder" tab, displays Bundle Build Grid for clicked bundle
+- Grid displays: All loans from that bundle with current statuses (user must refresh to see latest)
+- Update Last Viewed timestamp to current time on navigation
+**Acceptance Criteria**:
+- Given user clicks "Fannie Mae" bundle hyperlink (status = Incomplete)
+  When navigation occurs
+  Then user returned to Bulk Bundle Builder tab showing Fannie Mae grid
+- Given user clicks bundle hyperlink
+  When Activity Log entry updates
+  Then Last Viewed timestamp = current timestamp
+**API/DB Dependencies**: dbo.ActivityLog, navigation routing
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-073: "Not Built Yet" Display Logic
+**Description**: Show placeholder when job created but not yet initiated
+**Requirements**:
+- IF LastBuildRequest IS NULL THEN display "Not built yet" in Last Build Request column
+- IF LastBuildRequest IS NOT NULL THEN display formatted timestamp
+- Use case: User identified loan population, viewed grid, logged out WITHOUT clicking build button
+- BulkBundleStatus = "Incomplete" when "Not built yet"
+**Acceptance Criteria**:
+- Given user created population but never clicked build
+  When Activity Log displays
+  Then Last Build Request shows "Not built yet"
+- Given user clicked build button
+  When Activity Log displays
+  Then Last Build Request shows timestamp (e.g., "12/03/25 10:08am EST")
+**API/DB Dependencies**: dbo.ActivityLog.LastBuildRequest (nullable)
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-074: 10-Business-Day Retention Policy
+**Description**: Auto-delete Activity Log entries after retention period
+**Requirements**:
+- Retention period: 10 business days (excludes weekends and company holidays)
+- Calculation starts from: LastViewed timestamp (most recent user access)
+- Auto-removal: Nightly scheduled job runs at 2:00am EST
+- Query: DELETE FROM ActivityLog WHERE DATEDIFF(DAY, LastViewed, GETDATE()) > 10 AND DATEPART(WEEKDAY, LastViewed) NOT IN (1, 7) [additional holiday exclusion logic]
+- Display note: "Dashboard history entries will be retained for 10 business days and automatically removed thereafter"
+**Acceptance Criteria**:
+- Given entry 10 business days old
+  When nightly job runs
+  Then entry retained
+- Given entry 11 business days old
+  When nightly job runs
+  Then entry deleted
+**API/DB Dependencies**: Scheduled job (Windows Task Scheduler, Hangfire, etc.), company holiday calendar
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-075: Last Viewed Timestamp Update
+**Description**: Track when user last accessed bundle grid
+**Requirements**:
+- IF user clicks bundle hyperlink THEN UPDATE ActivityLog SET LastViewed = GETDATE() WHERE ActivityLogID = @selectedActivityLogID
+- IF LastViewed updates THEN 10-day retention countdown restarts
+- Use case: Helps users identify recently reviewed bundles, prevents premature deletion of active work
+**Acceptance Criteria**:
+- Given user clicks bundle hyperlink
+  When navigation occurs
+  Then Last Viewed timestamp updates to current time
+- Given entry 9 days old
+  When user clicks hyperlink (Last Viewed updates)
+  Then retention countdown restarts from day 0
+**API/DB Dependencies**: dbo.ActivityLog.LastViewed
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### BOB-076: Bulk Bundle Status Values & Color Coding
+**Description**: Visual indicators for job completion status
+**Requirements**:
+- Status "Incomplete" (Red): Job not started (LastBuildRequest = NULL) OR job completed with failures
+- Status "In progress" (Blue): Job currently processing loans
+- Status "Complete" (Green): ALL loans successfully bundled (100% success rate)
+- HARD RULE: IF Complete THEN ALL loans MUST show Bundle Status = "Completed"
+- HARD RULE: IF Incomplete (after job finishes) THEN at least ONE loan shows Bundle Status = "Bundle Failed"
+**Acceptance Criteria**:
+- Given job not yet initiated
+  When Activity Log displays
+  Then Bulk Bundle Status = "Incomplete" (red text)
+- Given job processing
+  When Activity Log displays
+  Then Bulk Bundle Status = "In progress" (blue text)
+- Given job completes with 100% success
+  When Activity Log displays
+  Then Bulk Bundle Status = "Complete" (green text)
+**API/DB Dependencies**: dbo.ActivityLog.BulkBundleStatus (enum)
+**Related BRDs**: BRD-4 (Activity Log)
+
+---
+
+## OPEN ISSUES & QUESTIONS
+
+### HIGH PRIORITY (Blocks Development)
+
+#### OI-001: BytePro Byte Release 25.2 API Availability
+**Issue**: "All API call effort associated to dbo.bundle is contingent on Byte release 25.2"
+**Impact**: CRITICAL BLOCKER - Entire BoB suite non-functional without API availability
+**Questions**:
+- What is the release date for Byte 25.2?
+- Are API contracts/specs available for parallel development?
+- Can mock APIs be provided for development/testing?
+**Stakeholder**: BytePro API Team
+**Related BRDs**: BRD-2, BRD-3, Single Flow BRD 77115
+
+#### OI-002: Trade Number Database Mapping
+**Issue**: Trade table name and field mapping unknown
+**Impact**: Cannot implement Trade No identification method (BRD-1)
+**Questions**:
+- What is the table name for trade data?
+- What is the field name for trade number?
+- What is the relationship table mapping trades to loans?
+**Stakeholder**: DBA Team
+**Related BRDs**: BRD-1 (Landing Page), Requirement #3b
+
+#### OI-003: Custom Filter Options & Database Mapping
+**Issue**: Filter type definitions and field mappings unknown
+**Impact**: Cannot implement Custom Filter identification method (BRD-1)
+**Questions**:
+- What filter types are available (e.g., Loan Officer, Branch, Product Type)?
+- What database tables/fields correspond to each filter type?
+- How should dynamic query construction work?
+**Stakeholder**: Product Team, DBA Team
+**Related BRDs**: BRD-1 (Landing Page), Requirement #3c
+
+#### OI-004: Investor Commitment Number Database Mapping
+**Issue**: Commitment table name and field mapping unknown
+**Impact**: Cannot implement Investor Commit No identification method (BRD-1)
+**Questions**:
+- What is the table name for commitment data?
+- What is the field name for commitment number?
+- What is the relationship table mapping commitments to loans?
+**Stakeholder**: DBA Team
+**Related BRDs**: BRD-1 (Landing Page), Requirement #3d
+
+#### OI-005: Maximum Loan Population Size
+**Issue**: Max loan count per bulk job unknown
+**Impact**: Cannot implement population size validation, risk of performance issues
+**Questions**:
+- What is the maximum loan count per bulk job based on system capacity?
+- Should pagination be implemented for large populations (500+ loans)?
+- What is the performance threshold where pagination required?
+**Stakeholder**: Dev Lead, Performance Testing Team
+**Related BRDs**: BRD-1 (Landing Page), BRD-2 (Bundle Build Grid)
+
+#### OI-006: Three Approved Security Roles
+**Issue**: Specific security role names from Single Flow BRD 89567 not documented
+**Impact**: Cannot implement role-based access control
+**Questions**:
+- What are the 3 approved security roles from Single Flow BRD 89567?
+- Are these roles already defined in Active Directory/DB?
+**Stakeholder**: Security Team, Single Flow BRD Author
+**Related BRDs**: BRD-1 (Landing Page), Single Flow BRD 89567
+
+### MEDIUM PRIORITY (Needs Clarification)
+
+#### OI-007: SFTP Authentication Configuration
+**Issue**: SFTP authentication mechanism for investor destinations not fully specified
+**Questions**:
+- How are SFTP credentials managed (Azure Key Vault, encrypted config)?
+- Is dbo.BundleSFTPCredentials table schema approved?
+- What is the encryption algorithm for stored passwords (AES-256)?
+**Stakeholder**: Security Team, Infrastructure Team
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #4
+
+#### OI-008: Business Day Calculation for Retention Policy
+**Issue**: Company holiday calendar integration for 10-day retention unknown
+**Questions**:
+- How should system exclude company holidays from business day calculation?
+- Is there an existing holiday calendar table/API?
+- What happens on edge cases (holiday on 10th day)?
+**Stakeholder**: DBA Team, HR/Payroll Team (holiday calendar owners)
+**Related BRDs**: BRD-4 (Activity Log), Requirement #7
+
+#### OI-009: Email Notification Opt-Out
+**Issue**: No user preference setting for email notifications
+**Questions**:
+- Should users be able to opt out of email notifications?
+- Is there a user preferences table?
+- Should opt-out be per-user or per-job-type?
+**Stakeholder**: Product Team, UX Designer
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #8
+
+#### OI-010: Activity Log User-Specific vs Team-Wide
+**Issue**: Unclear if Activity Log shows only current user's jobs or all team members' jobs
+**Questions**:
+- Should Activity Log be user-specific (only shows current user's jobs)?
+- Or team-wide (shows all team members' jobs for transparency)?
+- Should "Who initiated job" be tracked (UserID) for multi-user audit scenarios?
+**Stakeholder**: Product Owner, Operations Manager
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### OI-011: Job Cancel/Stop Mechanism
+**Issue**: No documented way to cancel running job
+**Questions**:
+- Should users be able to cancel/stop a running bundle job?
+- What happens to partially processed loans if job cancelled?
+- Is this MVP or Phase 2 feature?
+**Stakeholder**: Product Owner, Dev Lead
+**Related BRDs**: BRD-3 (Background Jobs)
+
+#### OI-012: Error Log Accessibility
+**Issue**: Unclear where detailed error log is accessible
+**Questions**:
+- Where can users view detailed error logs (grid drill-down vs separate error report)?
+- Should failed loans show error tooltips on hover?
+- Is dbo.BundleJobErrors table schema approved?
+**Stakeholder**: UX Designer, Product Team
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### OI-013: CMG SMTP Relay Configuration
+**Issue**: Production SMTP settings unknown
+**Questions**:
+- What is the CMG SMTP relay server hostname?
+- What port (587/465/25)?
+- What authentication method (Windows Integrated Auth or credentials)?
+- Has noreply-bob@cmgfi.com sender address been approved?
+**Stakeholder**: IT Service Desk, Email Infrastructure Team
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #8
+
+### LOW PRIORITY (Nice-to-Have Clarifications)
+
+#### OI-014: Real-Time Updates Future Enhancement
+**Issue**: Manual refresh only in MVP, real-time updates Phase 2
+**Questions**:
+- Is Phase 2 timeline defined for WebSocket/SSE implementation?
+- What is the priority level (must-have vs nice-to-have)?
+**Stakeholder**: Product Owner
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### OI-015: Pagination Strategy for Large Populations
+**Issue**: Pagination not required for MVP but may be needed
+**Questions**:
+- At what population size should pagination be implemented (500+ loans)?
+- Client-side or server-side pagination?
+- What page size (100 loans per page)?
+**Stakeholder**: Dev Lead, UX Designer
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+---
+
+## TECHNICAL DECISIONS
+
+### TD-001: Standalone Application Architecture
+**Decision**: BoB applications (Single Flow & Bulk) built as standalone ASP.NET Core applications separate from Byte LOS
+**Rationale**: "Eliminate system lockouts during bundle operations" - decoupling from Byte prevents 5-90+ minute lockouts
+**Alternatives Considered**: None documented
+**Source**: BRD-1, BRD-2 Summary sections
+**Impact**: Requires separate deployment, authentication, session management
+
+### TD-002: Sequential Processing (Not Parallel)
+**Decision**: Process loans one at a time in background jobs (3-5 min per loan)
+**Rationale**: "Prevent system overload" - avoid overwhelming BytePro API and PDF generation engine
+**Alternatives Considered**: Parallel processing (rejected due to capacity concerns)
+**Source**: BRD-3 (Background Jobs), Requirement #2
+**Impact**: Job duration = loan count × 3-5 minutes (e.g., 50 loans = 2.5-4 hours)
+
+### TD-003: Manual Refresh Only (No Real-Time Updates in MVP)
+**Decision**: Users must click "Refresh Population" to see updated statuses; no automatic polling or WebSocket
+**Rationale**: "Simplify MVP implementation, reduce server load"
+**Alternatives Considered**: WebSocket/SSE (deferred to Phase 2)
+**Source**: BRD-2 (Grid), BRD-3 (Background Jobs), Q&A Clarifications Q3
+**Impact**: Users must manually check progress during long-running jobs
+
+### TD-004: In-App Notifications Only (No Email in MVP - UPDATED)
+**Decision**: UPDATED - Email notifications NOW INCLUDED in MVP via existing BoB Email Service
+**Rationale**: "Leverage existing SMTP infrastructure, user feedback indicated email notifications critical for long-running jobs"
+**Alternatives Considered**: Originally planned in-app only, updated to include email
+**Source**: BRD-5 (PDF Delivery), Requirement #8 (Email Notification)
+**Impact**: Requires integration with existing BoB Email Service (http://localhost:3001), CMG SMTP relay configuration
+
+### TD-005: No PDF Display (Automatic Delivery Only)
+**Decision**: Bulk does NOT display PDFs on-screen; auto-delivers to investor-specific destinations
+**Rationale**: "Background job pattern, user can log out; investor delivery is primary use case"
+**Alternatives Considered**: Single Flow pattern (PDF on-screen with upload button) - rejected for Bulk due to hours-long processing
+**Source**: BRD-3 (Product Output), BRD-5 (PDF Delivery), Q&A Clarifications Q5
+**Impact**: No "Upload Final To Loan" button in Bulk (unlike Single Flow)
+
+### TD-006: 10-Business-Day Retention for Activity Log
+**Decision**: Auto-delete Activity Log entries after 10 business days (excludes weekends/holidays)
+**Rationale**: "Balance audit trail need with database performance; 10 days sufficient for post-close operations"
+**Alternatives Considered**: 30 days (rejected as too long), 7 days (rejected as too short)
+**Source**: BRD-4 (Activity Log), Requirement #7
+**Impact**: Requires nightly scheduled job, holiday calendar integration
+
+### TD-007: Activity Log as Audit Dashboard (Not Action Interface)
+**Decision**: Activity Log is read-only audit trail with hyperlink navigation; no "Retry" or "Rebuild" buttons
+**Rationale**: "Separate concerns - Activity Log tracks history, Bundle Build Grid handles actions"
+**Alternatives Considered**: Combined interface with retry buttons (rejected for clarity)
+**Source**: BRD-4 (Activity Log), Q&A Clarifications Q5/Q6
+**Impact**: Users must navigate to grid to take action on failed jobs
+
+### TD-008: Column Q Destination Mapping with Temp Folder Fallback
+**Decision**: Route PDFs based on dbo.Bundle.ServerFolderName (Column Q); fallback to C:\Users\{username}\Temp\ if null/blank/unreachable
+**Rationale**: "Investor-specific delivery requirements vary (network shares, SFTP, etc.); graceful degradation ensures bundle generation never fails due to delivery issues"
+**Alternatives Considered**: Hard failure on delivery error (rejected - too disruptive)
+**Source**: BRD-3 (Product Output), BRD-5 (PDF Delivery), Q&A Clarifications Q1
+**Impact**: Admins must monitor temp folder fallback rate to identify delivery configuration issues
+
+### TD-009: 100% Verbatim Reuse of Single Flow Logic
+**Decision**: Document Category table (20 categories), Hide N/A logic (9 rules), BytePro SQL queries copied word-for-word from Single Flow BRDs
+**Rationale**: "Ensure 100% consistency in document validation across single-loan and bulk-loan pathways"
+**Alternatives Considered**: Rebuild logic from scratch (rejected - reinventing wheel, risk of divergence)
+**Source**: BRD-2 (Bundle Build Grid), BRD Mapping Strategy document
+**Impact**: Changes to Single Flow logic must be propagated to Bulk BRDs to maintain consistency
+
+### TD-010: Two Distinct Build Paths (Status-Based vs Manual Selection)
+**Decision**: Provide two build buttons: "Build Ready to Bundle Loans" (ignores checkboxes, operates on status) and "Build [X] Selected Loans" (respects checkboxes, allows building loans with Missing Docs > 0)
+**Rationale**: "Support both bulk operations (all validated loans) and targeted operations (specific loans regardless of status)"
+**Alternatives Considered**: Single build button with checkbox-only logic (rejected - less flexible for bulk operations)
+**Source**: BRD-2 (Bundle Build Grid), Requirement #11, Q&A Clarifications Q2
+**Impact**: Users can intentionally build incomplete loans if needed (e.g., for investor communication)
+
+---
+
+## DATA MODEL OVERVIEW
+
+### Entities Identified
+
+#### dbo.Bundle (Existing)
+**Description**: Bundle configuration table storing stacking order mappings and PDF output settings
+**Primary Key**: BundleID (INT)
+**Key Fields**:
+- Name (VARCHAR) - Bundle display name (e.g., "Fannie Mae")
+- DocumentStackID (INT, FK) - Foreign key to dbo.DocumentStack
+- OutputFileNameFormat (VARCHAR) - PDF naming template with placeholders
+- **ServerFolderName (Column Q, NVARCHAR(500), NULLABLE)** - PDF destination path (network share/SFTP/local)
+**Relationships**: 1-to-Many with dbo.ActivityLog, 1-to-1 with dbo.DocumentStack
+
+#### dbo.ActivityLog (NEW - 100% Net-New)
+**Description**: Audit trail for bulk bundle job history
+**Primary Key**: ActivityLogID (BIGINT, Identity)
+**Key Fields**:
+- UserID (INT, FK) - User who initiated job
+- BundleID (INT, FK) - Reference to dbo.Bundle
+- BundleName (NVARCHAR(100)) - Denormalized for display performance
+- LastViewed (DATETIME, NOT NULL) - Timestamp when user last accessed grid
+- LastBuildRequest (DATETIME, NULLABLE) - Timestamp when build initiated (NULL = "Not built yet")
+- NumberOfLoans (INT, NOT NULL) - Total loan count in population
+- BulkBundleStatus (NVARCHAR(20), NOT NULL) - Job status: "Incomplete", "In progress", "Complete"
+- CreatedDate (DATETIME, NOT NULL) - Entry creation timestamp
+- LoanPopulationData (NVARCHAR(MAX), NULLABLE) - Serialized loan numbers for grid reconstruction
+**Indexes**: PK on ActivityLogID, Index on UserID, Index on LastViewed (retention queries), Index on BulkBundleStatus (badge count queries)
+**Retention**: 10 business days, auto-delete via nightly job
+**Relationships**: Many-to-1 with dbo.User, Many-to-1 with dbo.Bundle
+
+#### dbo.BundleDeliveryLog (NEW)
+**Description**: Audit log for PDF delivery transactions (compliance, troubleshooting)
+**Primary Key**: DeliveryLogID (BIGINT, Identity)
+**Key Fields**:
+- BundleID (INT, FK)
+- LoanNumber (NVARCHAR(50))
+- DestinationPath (NVARCHAR(500)) - Full path where PDF delivered
+- FileName (NVARCHAR(250)) - Generated PDF filename
+- FileSizeBytes (BIGINT)
+- DeliveryTimestamp (DATETIME2)
+- DeliveryStatus (NVARCHAR(50)) - "Success", "Failed", "Fallback_TempFolder"
+- DeliveryDurationMS (INT) - Delivery time in milliseconds
+- ErrorMessage (NVARCHAR(MAX), NULLABLE) - Error details if failed
+- DeliveryMethod (NVARCHAR(50)) - "NetworkShare", "SFTP", "FTP", "TempFolder"
+- UserID (NVARCHAR(100))
+- JobID (NVARCHAR(100)) - Background job reference
+- RetryAttempts (INT) - Number of retries before success/failure
+- CreatedDate (DATETIME2)
+**Retention**: 90 days minimum, archival to dbo.BundleDeliveryLog_Archive, 7-year archive retention (compliance)
+**Relationships**: Many-to-1 with dbo.Bundle
+
+#### dbo.BundleSFTPCredentials (NEW)
+**Description**: Encrypted SFTP credentials for investor-specific destinations
+**Primary Key**: BundleID (INT)
+**Key Fields**:
+- BundleID (INT, FK) - Reference to dbo.Bundle
+- SFTPHost (NVARCHAR(200)) - Hostname (e.g., "ginniemae.delivery.com")
+- SFTPPort (INT) - Port (default 22)
+- SFTPUsername (NVARCHAR(100))
+- SFTPPasswordEncrypted (NVARCHAR(500)) - AES-256 encrypted password
+- SSHKeyFilePath (NVARCHAR(500), NULLABLE) - Path to SSH private key file
+**Security**: Passwords encrypted at rest (AES-256), encryption key stored in Azure Key Vault
+**Relationships**: 1-to-1 with dbo.Bundle (optional - only for SFTP destinations)
+
+#### dbo.BundleJobNotifications (NEW)
+**Description**: Tracks job completion banners displayed to users
+**Primary Key**: NotificationID (BIGINT, Identity)
+**Key Fields**:
+- JobID (NVARCHAR(100), FK) - Background job ID
+- UserID (NVARCHAR(100)) - User who initiated job
+- BundleID (INT) - Bundle being processed
+- BundleName (NVARCHAR(200))
+- TotalLoanCount (INT)
+- CompletedLoanCount (INT)
+- FailedLoanCount (INT)
+- JobStatus (NVARCHAR(50)) - "Complete" or "Incomplete"
+- CompletionTimestamp (DATETIME2)
+- Dismissed (BIT) - User dismissed banner?
+- DismissedAt (DATETIME2, NULLABLE)
+- CreatedDate (DATETIME2)
+**Retention**: 24 hours (banners auto-hide after 24 hours)
+**Relationships**: Many-to-1 with dbo.Bundle
+
+#### dbo.EmailNotificationLog (NEW)
+**Description**: Audit log for email notification delivery
+**Primary Key**: EmailLogID (BIGINT, Identity)
+**Key Fields**:
+- JobID (NVARCHAR(100), FK)
+- UserID (NVARCHAR(100))
+- EmailAddress (NVARCHAR(200))
+- EmailSubject (NVARCHAR(500))
+- EmailType (NVARCHAR(50)) - "Complete" or "Incomplete"
+- SentStatus (NVARCHAR(50)) - "Sent", "Failed", "Queued"
+- MessageID (NVARCHAR(200)) - SMTP message ID
+- SentAt (DATETIME2, NULLABLE)
+- ErrorMessage (NVARCHAR(MAX), NULLABLE)
+- RetryAttempts (INT)
+- CreatedDate (DATETIME2)
+**Retention**: 90 days minimum
+**Relationships**: N/A (logging only)
+
+#### dbo.BundleJobQueue (NEW)
+**Description**: Queue of loans awaiting background processing
+**Key Fields**:
+- JobID (NVARCHAR(100), FK) - Background job ID
+- FileDataID (INT, FK) - Loan to process
+- Status (NVARCHAR(50)) - "Pending", "Processing", "Completed", "Failed"
+- ProcessingStartTime (DATETIME2, NULLABLE)
+- ProcessingEndTime (DATETIME2, NULLABLE)
+**Lifecycle**: Entries created when job initiates, deleted after job completes (or archived)
+**Relationships**: Many-to-1 with dbo.FileData
+
+#### dbo.DocumentCategory (Existing - REUSED)
+**Description**: Document category structure (20 categories)
+**Primary Key**: DocumentCategoryID (INT)
+**Key Fields**:
+- DocumentCategoryCode (VARCHAR) - Category code (e.g., "APP", "DISC", "CRED")
+- DisplayOrder (INT) - Sort order (1-20)
+**Relationships**: 1-to-Many with dbo.DocumentType
+**Source**: Single Flow BRD 76336 (verbatim reuse)
+
+#### dbo.DocumentStack (Existing - REUSED)
+**Description**: Stacking order definitions (which documents required for each bundle type)
+**Primary Key**: DocumentStackID (INT)
+**Key Fields**:
+- Name (VARCHAR) - Stack name/description
+**Relationships**: 1-to-Many with dbo.Bundle, 1-to-Many with dbo.DocumentStackDocumentType
+**Source**: Single Flow BRD 76336
+
+#### dbo.DocumentStackDocumentType (Existing - REUSED)
+**Description**: Junction table mapping document types to stacking orders
+**Key Fields**:
+- DocumentStackID (INT, FK)
+- DocumentTypeCode (VARCHAR, FK)
+- DisplayOrder (INT) - Sort order within stack
+**Relationships**: Many-to-1 with dbo.DocumentStack, Many-to-1 with dbo.DocumentType
+**Source**: Single Flow BRD 76336
+
+#### dbo.DocumentType (Existing - REUSED)
+**Description**: Master list of document types (~200+ types)
+**Primary Key**: DocumentTypeCode (VARCHAR)
+**Key Fields**:
+- Name (VARCHAR) - Document type name
+- DocumentCategoryCode (VARCHAR, FK) - Category code
+- Inactive (BIT) - Active/inactive flag (0 = active, 1 = inactive)
+**Relationships**: Many-to-1 with dbo.DocumentCategory, 1-to-Many with dbo.EmbeddedDoc
+**Source**: Single Flow BRD 76336
+
+#### dbo.EmbeddedDoc (Existing - REUSED)
+**Description**: Loan document storage (scanned docs uploaded to LOS)
+**Key Fields**:
+- FileDataID (INT, FK) - Foreign key to dbo.FileData (loan)
+- DocumentTypeCode (VARCHAR, FK)
+- DocumentCategoryCode (VARCHAR, FK)
+- Status (INT) - Document status
+- Viewable (BIT) - Visibility flag (1 = visible, 0 = hidden)
+- Description (VARCHAR)
+- ExpirationDate (DATETIME)
+- DateCreated (DATETIME)
+- FileExtension (VARCHAR) - e.g., ".pdf"
+- DocStorageSource (VARCHAR) - Storage location reference
+- DisplayOrder (INT) - Sort order within category
+**Relationships**: Many-to-1 with dbo.FileData, Many-to-1 with dbo.DocumentType
+**Source**: Single Flow BRD 76336
+
+#### dbo.FileData (Existing - REUSED)
+**Description**: Loan master table
+**Primary Key**: FileDataID (INT)
+**Key Fields**:
+- FileName (VARCHAR) - Loan number/identifier (e.g., "TEST001", "100029238293")
+- OriginationChannel (ENUM) - "Retail" (1), "Wholesale", "Correspondent"
+**Relationships**: 1-to-Many with dbo.EmbeddedDoc, 1-to-1 with dbo.Loan, 1-to-1 with dbo.SubProp, 1-to-1 with dbo.Status
+**Source**: Single Flow BRD 76336
+
+#### dbo.Loan (Existing - REUSED)
+**Description**: Loan details table
+**Key Fields**:
+- FileDataID (INT, FK)
+- MortgageType (ENUM) - "Conventional" (3), "FHA", "VA", "USDA"
+- LoanPurpose (ENUM) - "Purchase" (1), "Refinance" (2), "Second - Refinance" (10), "Third - Refinance" (11)
+**Relationships**: 1-to-1 with dbo.FileData
+**Source**: Single Flow BRD 76336 (Hide N/A logic)
+
+#### dbo.SubProp (Existing - REUSED)
+**Description**: Property details table
+**Key Fields**:
+- FileDataID (INT, FK)
+- PropertyType (ENUM) - "Detached" (1), "Attached" (2), "PUD" (6), "Condo", "Co-op"
+- State (VARCHAR) - Two-letter state code (e.g., "CA", "FL", "TX")
+- SpecialFloodHazardArea (BIT, NULLABLE) - Flood zone flag
+**Relationships**: 1-to-1 with dbo.FileData
+**Source**: Single Flow BRD 76336 (Hide N/A logic)
+
+#### dbo.Status (Existing - REUSED)
+**Description**: Loan status tracking
+**Key Fields**:
+- FileDataID (INT, FK)
+- LoanStatus (INT) - Status code (7, 8, 9 = inactive/cancelled)
+**Relationships**: 1-to-1 with dbo.FileData
+**Source**: BRD-1 (Landing Page)
+
+### Key Relationships
+- **dbo.Bundle → dbo.DocumentStack** (1-to-1): Each bundle references one stacking order
+- **dbo.Bundle → dbo.ActivityLog** (1-to-Many): One bundle has many job history entries
+- **dbo.ActivityLog → dbo.User** (Many-to-1): Many jobs initiated by one user
+- **dbo.FileData → dbo.EmbeddedDoc** (1-to-Many): One loan has many documents
+- **dbo.FileData → dbo.Loan/SubProp/Status** (1-to-1): Loan attributes for Hide N/A logic
+- **dbo.DocumentStack → dbo.DocumentStackDocumentType** (1-to-Many): One stack defines many required docs
+- **dbo.DocumentType → dbo.DocumentCategory** (Many-to-1): Many doc types in one category
+- **dbo.Bundle → dbo.BundleSFTPCredentials** (1-to-1 optional): SFTP-based bundles have credentials
+
+### Enumerations
+
+#### Loan.MortgageType (ENUM)
+- 1: FHA
+- 2: VA
+- 3: Conventional
+- 4: USDA
+**Source**: Single Flow BRD 76336 (Hide N/A logic Rule 1)
+
+#### SubProp.PropertyType (ENUM)
+- 1: Detached
+- 2: Attached
+- 6: PUD (Planned Unit Development)
+- Other: Condo, Co-op (values TBD)
+**Source**: Single Flow BRD 76336 (Hide N/A logic Rule 2)
+
+#### FileData.OriginationChannel (ENUM)
+- 1: Retail
+- Other: Wholesale, Correspondent (values TBD)
+**Source**: Single Flow BRD 76336 (Hide N/A logic Rule 3)
+
+#### LoanMIMethod (ENUM)
+- 1: None (no PMI)
+- Other: Values TBD
+**Source**: Single Flow BRD 76336 (Hide N/A logic Rule 4)
+
+#### Loan.LoanPurpose (ENUM)
+- 1: Purchase
+- 2: Refinance
+- 10: Second - Refinance
+- 11: Third - Refinance
+**Source**: Single Flow BRD 76336 (Hide N/A logic Rule 9)
+
+#### Status.LoanStatus (INT)
+- 7, 8, 9: Inactive/cancelled loans (excluded from populations)
+- Other values TBD
+**Source**: BRD-1 (Landing Page)
+
+#### ActivityLog.BulkBundleStatus (NVARCHAR)
+- "Incomplete": Job not started OR completed with failures
+- "In progress": Job currently processing
+- "Complete": All loans successfully bundled
+**Source**: BRD-4 (Activity Log)
+
+#### BundleStatus (Grid Display, NVARCHAR)
+- "Not Bundled": Loan not yet bundled (Missing Docs > 0)
+- "Ready to Bundle": Loan eligible for bundling (Missing Docs = 0)
+- "In Progress": Loan currently being processed
+- "Completed": Bundle successfully created
+- "Bundle Failed": Bundle creation failed
+**Source**: BRD-2 (Bundle Build Grid)
+
+#### DeliveryStatus (BundleDeliveryLog, NVARCHAR)
+- "Success": PDF delivered to configured destination
+- "Failed": Delivery failed, no fallback
+- "Fallback_TempFolder": Delivered to temp folder due to delivery issue
+**Source**: BRD-5 (PDF Delivery)
+
+---
+
+## API & INTEGRATION REQUIREMENTS
+
+### External Systems
+
+#### BytePro Byte LOS
+**Integration Type**: API (REST/SOAP)
+**Dependency**: Byte release 25.2 (CRITICAL BLOCKER)
+**Purpose**: Loan data retrieval, document queries, stacking order retrieval
+**API Endpoints Required**:
+1. Loan Document Retrieval API (query dbo.EmbeddedDoc)
+2. Bundle Stacking Order Retrieval API (query dbo.DocumentStack)
+3. Bulk Validation API (calculate Missing/Found doc counts)
+4. PDF Generation API (create bundle PDF per loan)
+**Authentication**: TBD (likely Windows Integrated Auth or OAuth2)
+**Related BRDs**: BRD-2, BRD-3, Single Flow BRD 77115
+
+#### BoB Email Service
+**Integration Type**: HTTP REST API (existing service)
+**URL**: http://localhost:3001
+**Dependency**: Existing service (already deployed)
+**Purpose**: Send SMTP email notifications when jobs complete
+**API Endpoint**: POST /send-demo-notification
+**Request Payload**:
+```json
+{
+  "appName": "Bulk Bundle Manager",
+  "action": "Bundle Job Complete" | "Bundle Job Incomplete",
+  "to": "user@cmgfi.com",
+  "details": {
+    "bundleName": "Fannie Mae",
+    "totalLoanCount": 17,
+    "completedLoanCount": 17,
+    "failedLoanCount": 0,
+    "jobStatus": "Complete" | "Incomplete",
+    "completionTimestamp": "2025-12-11 2:45 PM EST",
+    "failedLoans": ["1234567", "9876543"]
+  }
+}
+```
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #8
+
+#### CMG SMTP Relay
+**Integration Type**: SMTP
+**Dependency**: CMG corporate email infrastructure
+**Purpose**: Deliver email notifications to users
+**Configuration Required**:
+- SMTP Host: [TBD - CMG SMTP server]
+- SMTP Port: 587 (TLS) or 465 (SSL) or 25 (internal relay)
+- Authentication: Windows Integrated Auth OR Username/Password
+- Encryption: TLS 1.2 or higher
+- Sender Address: noreply-bob@cmgfi.com (requires approval)
+**Related BRDs**: BRD-5 (PDF Delivery)
+
+#### Network File Shares
+**Integration Type**: SMB/CIFS (UNC paths)
+**Purpose**: Deliver PDFs to investor-specific network locations
+**Authentication**: Windows Integrated Auth (application service account)
+**Path Examples**: `\\FileServer01\InvestorDelivery\FannieMae\`
+**Requirements**: Application service account must have Read/Write permissions on all target shares
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #3
+
+#### SFTP Servers
+**Integration Type**: SFTP (SSH File Transfer Protocol)
+**Purpose**: Deliver PDFs to investor-specific SFTP locations
+**Authentication**: Username/Password (encrypted) OR SSH Private Key
+**Library**: WinSCP .NET, SSH.NET, or FluentFTP
+**Credential Storage**: dbo.BundleSFTPCredentials (encrypted), Azure Key Vault (production)
+**Related BRDs**: BRD-5 (PDF Delivery), Requirement #4
+
+### API Endpoints Needed (BoB Backend)
+
+#### POST /api/bundle/validate-population
+**Purpose**: Validate loan population against bundle stacking order
+**Request Body**:
+```json
+{
+  "bundleId": 1001,
+  "loanNumbers": ["TEST001", "TEST002", "TEST003"],
+  "hideNotApplicable": true
+}
+```
+**Response**:
+```json
+{
+  "results": [
+    {
+      "loanNumber": "TEST001",
+      "fileDataId": 123456,
+      "missingDocs": 0,
+      "foundDocs": 15,
+      "bundleStatus": "Ready to Bundle"
+    },
+    {
+      "loanNumber": "TEST002",
+      "fileDataId": 123457,
+      "missingDocs": 3,
+      "foundDocs": 12,
+      "bundleStatus": "Not Bundled"
+    }
+  ]
+}
+```
+**Related BRDs**: BRD-1 (Landing Page), BRD-2 (Grid)
+
+#### POST /api/bundle/initiate-job
+**Purpose**: Initiate background bundle job
+**Request Body**:
+```json
+{
+  "bundleId": 1001,
+  "loanNumbers": ["TEST001", "TEST002"],
+  "userId": 12345,
+  "buildMode": "status-based" | "manual-selection"
+}
+```
+**Response**:
+```json
+{
+  "jobId": "JOB-2025-12-11-ABC123",
+  "status": "In progress",
+  "activityLogId": 987654
+}
+```
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+#### GET /api/bundle/job-status/{jobId}
+**Purpose**: Check status of background job
+**Response**:
+```json
+{
+  "jobId": "JOB-2025-12-11-ABC123",
+  "status": "In progress",
+  "totalLoans": 5,
+  "completedLoans": 3,
+  "failedLoans": 0,
+  "inProgressLoans": 2,
+  "estimatedTimeRemaining": "8 minutes"
+}
+```
+**Related BRDs**: BRD-3 (Background Jobs)
+
+#### GET /api/activity-log
+**Purpose**: Retrieve Activity Log entries for current user
+**Query Parameters**: ?userId=12345
+**Response**:
+```json
+{
+  "entries": [
+    {
+      "activityLogId": 987654,
+      "bundleName": "Fannie Mae",
+      "lastViewed": "2025-12-11T15:30:00Z",
+      "lastBuildRequest": "2025-12-11T14:45:00Z",
+      "numberOfLoans": 17,
+      "bulkBundleStatus": "Complete"
+    }
+  ]
+}
+```
+**Related BRDs**: BRD-4 (Activity Log)
+
+#### POST /api/activity-log/update-last-viewed
+**Purpose**: Update LastViewed timestamp when user clicks bundle hyperlink
+**Request Body**:
+```json
+{
+  "activityLogId": 987654,
+  "timestamp": "2025-12-11T16:00:00Z"
+}
+```
+**Related BRDs**: BRD-4 (Activity Log)
+
+---
+
+## WORKFLOW RULES
+
+### Workflow 1: Loan Population Identification (Landing Page)
+**Steps**:
+1. User accesses Bulk Bundle Manager (security validation: Shipper OR Limited Admin permissions)
+2. User sees two tabs: "Bulk Bundle Builder" (active), "Activity Log [X]" (badge shows incomplete count)
+3. User selects one of four identification methods:
+   - **Manual Entry**: Paste loan numbers, click "Fix Format" to clean/validate
+   - **Trade No**: Enter trade number to retrieve associated loans
+   - **Custom Filter**: Select filter type + enter filter value
+   - **Investor Commit No**: Enter commitment number to retrieve loans
+4. User selects bundle name from dropdown (~80 options alphabetically sorted)
+5. User clicks "View Loan Population" button
+6. System validates inputs, queries loan population, creates Activity Log entry with status "Incomplete" and "Not built yet"
+7. System navigates to Bundle Build Grid with validation results
+**Business Rules**:
+- Button enabled ONLY when: (loan population identified) AND (bundle selected)
+- IF invalid loans THEN display error, prevent navigation
+- IF population > max limit [TBD] THEN display error, prevent navigation
+**Related BRDs**: BRD-1 (Landing Page)
+
+### Workflow 2: Loan Validation & Filtering (Bundle Build Grid)
+**Steps**:
+1. Grid loads with all loans in population (default: "All Loans" tab active, all checkboxes checked, "Hide N/A Docs" checked)
+2. For each loan: System calculates Missing Docs (required docs NOT found), Found Docs (required docs found), Bundle Status
+3. User applies filters to focus on specific subsets:
+   - Click filter tabs: "All Loans [X]", "Loans Missing Docs [X]", "Ready to Bundle [X]"
+   - Use status dropdown: "All", "Fail", "Pass"
+4. User toggles "Hide Not Applicable Docs" checkbox to include/exclude N/A docs from counts
+5. Grid recalculates counts dynamically when checkbox toggled
+6. User clicks "Refresh Population" to manually update statuses (no real-time updates)
+**Business Rules**:
+- Hide N/A logic applied PER-LOAN based on individual loan attributes (MortgageType, PropertyType, State, etc.)
+- IF checkbox checked THEN apply 9-rule conditional logic
+- IF checkbox unchecked THEN display full "as-is" stacking order
+- Tab counts update ONLY on manual refresh (not real-time)
+**Related BRDs**: BRD-2 (Bundle Build Grid)
+
+### Workflow 3: Background Bundle Job Execution (Two Paths)
+**Path A: Status-Based Build (Bulk Operation)**
+**Steps**:
+1. User clicks "Build Ready to Bundle Loans" button (enabled IF at least one loan has Missing Docs = 0)
+2. System queries all loans WHERE Bundle Status = "Ready to Bundle"
+3. System initiates background job, creates Activity Log entry, updates job status to "In progress"
+4. System processes each loan sequentially (3-5 min per loan):
+   - Retrieve loan documents from BytePro API
+   - Retrieve stacking order for selected bundle
+   - Apply Hide N/A logic IF checkbox checked
+   - Sort documents by DisplayOrder
+   - Generate PDF bundle
+   - Deliver PDF to destination (Column Q mapping or temp folder)
+   - Update loan Bundle Status: "In Progress" → "Completed" (success) OR "Bundle Failed" (error)
+5. User can log out during processing; job continues server-side
+6. System sends email notification when job completes (Complete or Incomplete status)
+7. User logs back in, checks Activity Log or refreshes grid to see results
+**Business Rules**:
+- Ignores checkbox selection (operates on status only)
+- IF any loan fails THEN job continues processing remaining loans
+- IF all loans succeed THEN Activity Log status = "Complete"
+- IF any loan fails THEN Activity Log status = "Incomplete"
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs), BRD-5 (PDF Delivery)
+
+**Path B: Manual Selection Build (Targeted Operation)**
+**Steps**:
+1. User checks specific loan checkboxes (1 or more)
+2. Button displays "Build [X] Selected Loans" with real-time count updates
+3. User clicks button (enabled IF at least one loan checked)
+4. System queries all loans WHERE checkbox = checked (regardless of Bundle Status)
+5. System initiates background job (same processing logic as Path A)
+6. Allows building loans with Missing Docs > 0 IF intentionally selected
+**Business Rules**:
+- Respects checkbox selection (operates on checked loans only)
+- Use case: User wants to build specific loans regardless of validation status (e.g., investor communication needs)
+**Related BRDs**: BRD-2 (Grid), BRD-3 (Background Jobs)
+
+### Workflow 4: PDF Destination Mapping & Delivery
+**Steps**:
+1. PDF generation completes for loan
+2. System retrieves dbo.Bundle.ServerFolderName (Column Q) for selected bundle
+3. System evaluates destination:
+   - **IF Column Q NOT NULL AND != ''** THEN deliver to specified path
+   - **ELSE** deliver to `C:\Users\{username}\Temp\BoB_Bundles\{BundleName}\{YYYYMMDD}\`
+4. System determines destination type:
+   - UNC path (`\\server\share\`) → Network share delivery (validate path, authenticate, copy file)
+   - SFTP URL (`sftp://host/path/`) → SFTP upload (connect, authenticate, upload file)
+   - FTP URL (`ftp://host/path/`) → FTP upload (similar to SFTP)
+   - Local path (`C:\`) → Local file copy
+   - NULL/blank → Temp folder delivery
+5. System attempts delivery with retry logic (up to 3 attempts for transient errors)
+6. IF delivery succeeds THEN log success in dbo.BundleDeliveryLog
+7. IF delivery fails THEN fallback to temp folder, log error
+8. System updates loan Bundle Status: "Completed" (delivery succeeded) OR "Bundle Failed" (delivery failed after fallback)
+**Business Rules**:
+- Retry logic: Transient errors (network timeout) → 3 retries with exponential backoff (5s, 10s, 20s)
+- Configuration errors (permissions, auth) → No retry, immediate fallback
+- Fallback ensures bundle generation NEVER fails due to delivery issues
+- User notification: Bundle Status = "Completed" even if delivered to temp folder
+**Related BRDs**: BRD-3 (Product Output), BRD-5 (PDF Delivery)
+
+### Workflow 5: Activity Log Review & Retry
+**Steps**:
+1. User clicks "Activity Log [X]" tab (badge shows incomplete bundle count)
+2. System displays table with job history (10-day retention):
+   - Sorted by Last Viewed descending (most recent first)
+   - Color-coded status: Incomplete (red), In progress (blue), Complete (green)
+3. User clicks bundle name hyperlink (e.g., "Fannie Mae")
+4. System updates Last Viewed timestamp to current time
+5. System navigates to "Bulk Bundle Builder" tab, displays Bundle Build Grid for clicked bundle
+6. User reviews loan statuses (must click "Refresh Population" to see latest if job completed since last view)
+7. User takes action based on status:
+   - **IF job incomplete** THEN filter to "Loans Missing Docs" tab, check failed loans, click "Build [X] Selected Loans" to retry
+   - **IF job in progress** THEN click "Refresh Population" periodically to check progress
+   - **IF job complete** THEN review results, verify PDFs delivered
+**Business Rules**:
+- Hyperlink behavior IDENTICAL for all statuses (Incomplete/In progress/Complete)
+- Activity Log is audit dashboard (read-only), NOT action interface
+- Users take action from Bundle Build Grid (not from Activity Log)
+- "Not built yet" display: IF LastBuildRequest IS NULL THEN display "Not built yet" instead of timestamp
+**Related BRDs**: BRD-4 (Activity Log)
+
+---
+
+## ACCEPTANCE CRITERIA PATTERNS
+
+### Pattern 1: Given/When/Then (Standard BDD Format)
+**Structure**:
+- **Given** [precondition/context]
+  **When** [action/trigger]
+  **Then** [expected outcome/result]
+
+**Example from BRD-1 (Landing Page)**:
+- **Given** user pastes loan numbers with mixed delimiters
+  **When** user clicks "Fix Format" button
+  **Then** loan numbers are cleaned, formatted, and duplicates removed
+
+**Example from BRD-2 (Bundle Build Grid)**:
+- **Given** user clicks "Loans Missing Docs" tab
+  **When** tab is activated
+  **Then** grid displays only loans with Missing Docs > 0
+
+**Example from BRD-4 (Activity Log)**:
+- **Given** user clicks bundle name hyperlink (any status)
+  **When** hyperlink is clicked
+  **Then** user navigates to "Bulk Bundle Builder" tab and Bundle Build Grid displays for that bundle
+
+### Pattern 2: Conditional Logic (IF/THEN/ELSE)
+**Structure**: IF [condition] THEN [action/outcome] [ELSE [alternative action]]
+
+**Example from BRD-1 (Landing Page - Manual Entry)**:
+- IF input contains ANY delimiter (comma, space, backslash, period, semicolon, dash)
+  THEN split input into array AND trim whitespace from each element
+
+**Example from BRD-2 (Grid - Hide N/A Logic)**:
+- IF Loan.MortgageType = 'Conventional' (3) AND 'Hide Not Applicable Docs' checkbox = checked AND doc count = 0
+  THEN hide entire line item(s) (FHA/VA/USDA docs excluded)
+- IF any one of the above-mentioned parameters is NOT met
+  THEN display line item in question 'as-is' AND do NOT hide doc line item
+
+**Example from BRD-3 (Background Jobs - Destination Mapping)**:
+- IF dbo.Bundle.ServerFolderName IS NOT NULL AND ServerFolderName != ''
+  THEN send PDF to specified path
+- ELSE
+  send PDF to C:\Users\{username}\Temp\
+
+### Pattern 3: Validation & Error Handling
+**Structure**: Test valid inputs, invalid inputs, edge cases, error messages
+
+**Example from BRD-1 (Landing Page - Fix Format)**:
+- **Given** user enters special characters in loan input
+  **When** user clicks "Fix Format" button
+  **Then** error message displays: "Unable to format loan numbers, please remove any special characters and try again"
+
+**Example from BRD-2 (Grid - Add Loan Modal)**:
+- **Given** user enters loan numbers that already exist in population
+  **When** user clicks "Add to Summary" button
+  **Then** error displays: "Loan(s) already exist in population: [loan numbers]"
+
+**Example from BRD-5 (PDF Delivery - Network Share)**:
+- **Given** destination path does not exist
+  **When** system attempts PDF delivery
+  **Then** error is logged and loan Bundle Status updates to "Bundle Failed"
+
+### Pattern 4: Multi-State Validation
+**Structure**: Test all possible states/status values
+
+**Example from BRD-2 (Grid - Bundle Status Enum)**:
+- **Given** job completes with 100% success
+  **When** user refreshes grid
+  **Then** ALL loans show Bundle Status = "Completed"
+- **Given** job completes with 2 failures out of 10 loans
+  **When** user refreshes grid
+  **Then** 2 loans show "Bundle Failed", 8 show "Completed"
+
+**Example from BRD-4 (Activity Log - Bulk Bundle Status)**:
+- **Given** job not yet initiated
+  **When** Activity Log displays
+  **Then** Bulk Bundle Status = "Incomplete" (red text)
+- **Given** job processing
+  **When** Activity Log displays
+  **Then** Bulk Bundle Status = "In progress" (blue text)
+- **Given** job completes with 100% success
+  **When** Activity Log displays
+  **Then** Bulk Bundle Status = "Complete" (green text)
+
+### Pattern 5: Count/Dynamic Update Validation
+**Structure**: Test real-time or calculated count updates
+
+**Example from BRD-2 (Grid - Multi-Select Checkboxes)**:
+- **Given** user checks 5 loans
+  **When** button displays
+  **Then** text = "Build 5 Selected Loans"
+- **Given** user unchecks 2 loans
+  **When** count updates
+  **Then** text = "Build 3 Selected Loans" (real-time)
+
+**Example from BRD-2 (Grid - Filter Tab Counts)**:
+- **Given** grid displays 15 loans (10 missing docs, 5 ready)
+  **When** tabs load
+  **Then** display "All Loans 15", "Loans Missing Docs 10", "Ready to Bundle 5"
+
+### Pattern 6: Persistence & State Management
+**Structure**: Test state preservation across actions
+
+**Example from BRD-2 (Grid - Checkbox State Persistence)**:
+- **Given** user switches filter tabs
+  **When** tab changes
+  **Then** checkbox states persist (checked loans remain checked even if filtered from view)
+- **Given** user clicks "Refresh Population" button
+  **When** refresh completes
+  **Then** all checkbox states are preserved
+
+**Example from BRD-4 (Activity Log - Last Viewed Timestamp)**:
+- **Given** user clicks bundle hyperlink
+  **When** navigation occurs
+  **Then** Last Viewed timestamp updates to current time
+- **Given** entry 9 days old
+  **When** user clicks hyperlink (Last Viewed updates)
+  **Then** retention countdown restarts from day 0
+
+### Pattern 7: HARD RULES (Non-Negotiable Requirements)
+**Structure**: State absolute requirements with no exceptions
+
+**Example from BRD-2 (Grid - Bundle Status at Job Completion)**:
+- **HARD RULE**: When a bundle job finishes, ONLY two loan statuses are allowed:
+  - "Completed": Loan bundled successfully
+  - "Bundle Failed": Loan failed to bundle
+- Statuses "In Progress" and "Not Bundled" NEVER appear for loans in completed jobs
+- IF job status = "Complete" THEN ALL loans MUST show Bundle Status = "Completed" (100% success rate)
+
+**Example from BRD-4 (Activity Log - Job Status Requirements)**:
+- **HARD RULE**: IF BulkBundleStatus = "Complete" THEN all loans MUST have Bundle Status = "Completed" (no exceptions)
+- IF BulkBundleStatus = "Incomplete" (after job completes) THEN at least ONE loan MUST show Bundle Status = "Bundle Failed"
+
+---
+
+## REFERENCES
+
+### Primary BRD Documents
+
+#### BRD-1: Bulk Flow Path - Landing Page & Loan Population Selection (REVISED)
+**File**: `BRD-Bulk-BRD-1-Landing-Page-REVISED.md`
+**Version**: 2 (12/05/2025)
+**Author**: Aza Olival
+**Key Sections**: Tab Navigation, Logout Button, Four Identification Methods (Manual Entry, Trade No, Custom Filter, Investor Commit No), Bundle Name Selection, View Loan Population Button
+**Key Insights**:
+- Four distinct loan identification methods (net-new compared to Single Flow)
+- Manual Entry reuses formatter logic from Single Flow but with multi-line textarea
+- Trade No, Custom Filter, Investor Commit No have [TBD] database mappings
+- "View Loan Population" initiates validation and creates Activity Log entry with "Not built yet" status
+
+#### BRD-2: Bulk Flow Path - Bundle Build Grid & Document Validation (REVISED)
+**File**: `BRD-Bulk-BRD-2-Bundle-Build-Grid-REVISED.md`
+**Version**: 2 (12/08/2025)
+**Author**: Aza Olival
+**Key Sections**: Filter Tabs, Hide N/A Docs Checkbox, Grid Structure (5 columns), Multi-Select, Add Loan Modal, Build Button Logic (Two Paths)
+**Key Insights**:
+- 70% content reuse from Single Flow BRD 76336 (Document Category table, Hide N/A logic, SQL queries)
+- Grid displays loan-level summaries (not document-level detail like Single Flow)
+- Two build paths: Status-based (ignores checkboxes) vs Manual selection (respects checkboxes)
+- HARD RULE: At job completion, ONLY "Completed" or "Bundle Failed" statuses allowed
+
+#### BRD-3: Bulk Flow Path - Bundle Product Output & Background Job Processing (REVISED)
+**File**: `BRD-Bulk-BRD-3-Bundle-Product-Output-REVISED.md`
+**Version**: 2 (12/08/2025)
+**Author**: Aza Olival
+**Key Sections**: Background Job Initiation, Sequential Processing (3-5 min/loan), PDF Destination Mapping (Column Q), Manual Refresh Pattern, Error Handling, Activity Log Integration, No PDF Display
+**Key Insights**:
+- Sequential processing (NOT parallel) to prevent system overload
+- Column Q logic: IF NOT NULL THEN send to specified path ELSE send to temp folder
+- Manual refresh only (no real-time updates) - user must click "Refresh Population"
+- Users can log out during processing; jobs continue server-side
+- NO PDF display on-screen (unlike Single Flow), NO upload button
+- BytePro Byte release 25.2 API dependency (CRITICAL BLOCKER)
+
+#### BRD-4: Bulk Flow Path - Activity Log & Job Audit Dashboard (REVISED)
+**File**: `BRD-Bulk-BRD-4-Activity-Log-REVISED.md`
+**Version**: 2 (12/08/2025)
+**Author**: Aza Olival
+**Key Sections**: Activity Log Table Structure, Hyperlink Navigation Pattern, "Not Built Yet" Display, 10-Day Retention Policy, Bulk Bundle Status Values, No Upload Functionality
+**Key Insights**:
+- 100% net-new feature (no Single Flow equivalent)
+- Activity Log is audit dashboard (read-only), NOT action interface
+- Hyperlink navigation IDENTICAL for all statuses (Incomplete/In progress/Complete)
+- 10 business days retention (excludes weekends/holidays), auto-delete via nightly job
+- "Not built yet" displays when LastBuildRequest IS NULL
+
+#### BRD-5: Bulk Flow Path - PDF Output Delivery & Location Mapping Configuration
+**File**: `BRD-5-PDF-Delivery.md`
+**Version**: 1 (12/11/2025)
+**Author**: Aza Olival
+**Key Sections**: Database Configuration (Column Q), Destination Routing Logic, Network Share Delivery, SFTP/FTP Delivery, PDF Naming Convention, Delivery Audit Logging, Error Handling, Email Notifications, Job Completion Banners
+**Key Insights**:
+- Column Q (ServerFolderName) drives PDF routing: network shares (\\server\share\), SFTP (sftp://host/path/), FTP, local paths, NULL/blank → temp folder
+- dbo.BundleSFTPCredentials table for encrypted SFTP credentials (BundleID → SFTP mapping)
+- dbo.BundleDeliveryLog audit table (90-day retention, 7-year archive for compliance)
+- Email notifications NOW INCLUDED in MVP (via BoB Email Service on port 3001)
+- In-app notification banners (Complete=green, Incomplete=yellow) displayed at top of grid page
+- Graceful degradation: IF delivery fails THEN fallback to temp folder (bundle generation NEVER fails due to delivery issues)
+
+### Supporting Documents
+
+#### BRD Mapping Strategy
+**File**: `BRD-Bulk-Mapping-Strategy.md`
+**Version**: 1.0 (12/04/2025)
+**Key Insights**:
+- 60% average content reuse from Single Flow BRDs
+- 100% verbatim reuse: Document Category table (20 categories), Hide N/A logic (9 rules), BytePro SQL queries (3 queries), Byte 25.2 dependency note
+- Q&A Clarifications (Q1-Q7 answered): Column Q destination mapping, build button logic, manual refresh, in-app notifications only, no upload, hyperlink navigation, add loan modal
+- Source of truth hierarchy: Figma (UI/UX) → Bolt (function/context/data) → Single Flow BRDs (business logic) → Q&A
+
+#### User Story 77477: Bundle Build Grid
+**File**: `BRD-UserStory_77477__BoB-BulkFlowPath_BundleBuildGrid.md`
+**Version**: 1 (12/10/2025)
+**Key Insights**:
+- Alternative formatting of BRD-2 content
+- More verbose acceptance criteria (additional Given/When/Then examples)
+- Emphasizes per-loan Hide N/A logic application
+- Includes SQL query examples for grid population validation
+
+#### User Story 77478: Bundle Product Output
+**File**: `BRD-UserStory_77478__BoB-BulkFlowPath_BundleProductOutput.md`
+**Key Insights** (inferred from BRD-3 cross-references):
+- Background job processing details
+- Activity Log integration from job execution perspective
+
+#### Improvement Opportunities Analysis
+**File**: `Improvement-Opportunities-Analysis.md`
+**Version**: 1 (12/04/2025)
+**Key Insights**:
+- High Priority: TBD Placeholder Tracking (prevents blockers), API Contract Documentation (enables parallel dev), Stakeholder Review Matrix (efficient reviews)
+- Medium Priority: BRD Review Checklist, Error Handling Strategy Document, Dependency Risk Register
+- Future Enhancements (Phase 2+): Real-time updates, bulk bundle scheduling, analytics dashboard
+- Pagination consideration for 500+ loan populations
+
+#### CMG Ecosystem Documentation
+**File**: `CMG_Ecosystem_Documentation.md`
+**Key Insights**:
+- CMG Servicing Ecosystem Architecture (5 layers)
+- APIM Security Gateway, APIHub/Suite (OData, SOAP/REST), Sagent Brain (mainframe System of Record)
+- Data flow patterns: External → APIM → APIHub → LoanServ → Sagent Brain → Data Warehouse → Snowflake
+- BoB applications sit in "API Management & Integration Layer" consuming Sagent/BytePro APIs
+
+### Single Flow BRD References (Verbatim Reuse Sources)
+
+#### Single Flow BRD 76335: Landing Page & Bundle Selection
+**Key Reused Content**:
+- Bundle Name dropdown logic (dbo.Bundle.Name, ~80 options)
+- Bundle selection validation
+
+#### Single Flow BRD 76336: Stacking Order Display & Filtering
+**Key Reused Content** (100% VERBATIM):
+- Document Category table (20 categories with DisplayOrder)
+- Hide N/A Docs logic (9 conditional rules, ~200 documents excluded)
+- BytePro SQL queries (loan document retrieval, stacking order retrieval, bulk testing)
+- Document filtering logic (category sorting, viewable flag)
+
+#### Single Flow BRD 77115: Build Bundle & PDF Output
+**Key Reused Content**:
+- PDF naming convention (OutputFileNameFormat with placeholders)
+- **Byte 25.2 API dependency note** (CRITICAL: "All API call effort associated to dbo.bundle is contingent on Byte release 25.2")
+- Error handling patterns
+
+#### Single Flow BRD 77244: Upload Functionality
+**Key Insight**: Single Flow has "Upload Final To Loan" button; Bulk does NOT (automatic delivery only)
+
+#### Single Flow BRD 89567: UI Adjustments (Security Roles)
+**Key Reused Content**:
+- 3 approved security roles [TBD - specific role names not documented]
+- Permission requirements: 'Shipper' OR 'Limited Admin'
+- BytePro / Post Close Responsibilities requirement
+
+---
+
+## NEXT STEPS & RECOMMENDATIONS
+
+### Immediate Actions (Before Development Starts)
+
+#### 1. Resolve HIGH PRIORITY Open Issues
+**Timeline**: Week 1-2
+**Actions**:
+- **OI-001**: Confirm BytePro Byte release 25.2 delivery date, obtain API contract specs
+- **OI-002**: DBA provides Trade table mapping
+- **OI-003**: Product team defines Custom Filter options
+- **OI-004**: DBA provides Investor Commitment table mapping
+- **OI-005**: Performance testing determines max population size, pagination threshold
+- **OI-006**: Obtain 3 approved security role names from Single Flow BRD 89567
+
+#### 2. Create TBD Tracking Sheet
+**Format**: Spreadsheet or Markdown table
+**Columns**: BRD #, Section, TBD Question, Priority, Assigned To, Target Date, Status
+**Purpose**: Systematic resolution of 15+ TBD placeholders
+**Owner**: Product Owner / BA
+
+#### 3. Stakeholder Review Matrix
+**Action**: Define who reviews which BRD sections
+**Matrix Example**:
+| BRD Section | Product Owner | Dev Lead | DBA | QA Lead | UX Designer | Compliance |
+|-------------|---------------|----------|-----|---------|-------------|------------|
+| BRD-1: Landing Page | ✓ | ✓ |   | ✓ | ✓ |   |
+| BRD-2: Grid & Filters | ✓ | ✓ |   | ✓ | ✓ |   |
+| BRD-2: Hide N/A Logic | ✓ | ✓ | ✓ | ✓ |   |   |
+| BRD-3: Background Jobs | ✓ | ✓ | ✓ | ✓ |   |   |
+| BRD-5: Column Q Mapping |   | ✓ | ✓ |   |   | ✓ |
+
+#### 4. API Contract Documentation
+**Action**: Create separate API contract specification document
+**Sections**: Endpoint definitions, request/response schemas, error codes, authentication
+**Purpose**: Enable parallel development (front-end can mock APIs while BytePro team builds them)
+**Owner**: Dev Lead / API Architect
+
+### Development Phase Actions
+
+#### 5. Phased Review & Approval Process
+**Phase 1: High-Level Review** (Week 3)
+- Review BRD Mapping Strategy document (confirm structure and reuse approach)
+- Identify major gaps or misalignments
+**Phase 2: Section-by-Section Deep Dive** (Week 4-5)
+- Session 1: BRD-1 Landing Page (focus: 4 identification methods)
+- Session 2: BRD-2 Grid & Filters (focus: multi-select, filter tabs, status dropdown)
+- Session 3: BRD-2 Hide N/A Logic (focus: verify 9 rules correct - verbatim reuse)
+- Session 4: BRD-3 Background Jobs (focus: destination mapping, error handling)
+- Session 5: BRD-4 Activity Log (focus: navigation pattern, retention policy)
+- Session 6: BRD-5 PDF Delivery (focus: network/SFTP delivery, audit logging, email notifications)
+**Phase 3: TBD Resolution & Finalization** (Week 6)
+- Resolve remaining TBD placeholders
+- Final approval sign-off
+
+#### 6. Error Handling Strategy Document
+**Action**: Create centralized error handling guide
+**Sections**: Error categories (Validation, Network, Permission, Data, System), user message templates, error logging requirements, retry logic standards, user-facing error message style guide
+**Purpose**: Consistent UX across all error scenarios
+**Owner**: UX Designer / Dev Lead
+
+#### 7. Performance Testing & Capacity Planning
+**Action**: Performance testing with large populations
+**Tests**:
+- Grid rendering: 100 loans, 500 loans, 1000 loans
+- Background job processing: 50 loans, 100 loans (monitor CPU, memory, network)
+- Concurrent jobs: 5 users running 50-loan jobs simultaneously
+**Deliverable**: Max population size recommendation, pagination threshold
+**Owner**: Dev Lead / QA Lead
+
+### Post-MVP Considerations
+
+#### 8. Phase 2 Feature Prioritization
+**Candidates** (from Improvement Opportunities Analysis):
+- Real-time job status updates (WebSocket/SSE)
+- Bulk bundle scheduling (recurring jobs)
+- Concurrent loan processing (parallel instead of sequential)
+- Analytics dashboard (job metrics, success rates)
+**Action**: Product Owner prioritizes Phase 2 features based on user feedback from MVP
+
+#### 9. User Training & Documentation
+**Action**: Generate user guides from BRDs
+**Format**: Step-by-step guides with screenshots (Figma/Bolt/built UI)
+**Distribution**: Internal training portal, inline help tooltips
+**Owner**: Technical Writer / Product Team
+
+#### 10. Monitoring & Alerting Setup
+**Metrics to Monitor**:
+- Delivery success rate (per hour, per day)
+- Delivery duration (average, p95, p99)
+- Fallback rate (temp folder deliveries / total deliveries)
+- SFTP connection failures
+- Network share access errors
+**Alert Thresholds**:
+- Delivery success rate < 90% in any 1-hour period
+- Fallback rate > 20% in any 1-hour period
+- Specific bundle destination fails > 5 consecutive times
+**Owner**: DevOps / Infrastructure Team
+
+---
+
+## APPENDIX: DOCUMENT INVENTORY
+
+### BRD Documents (Bulk Bundle Manager)
+1. BRD-Bulk-BRD-1-Landing-Page-REVISED.md (Version 2, 12/05/2025)
+2. BRD-Bulk-BRD-2-Bundle-Build-Grid-REVISED.md (Version 2, 12/08/2025)
+3. BRD-Bulk-BRD-3-Bundle-Product-Output-REVISED.md (Version 2, 12/08/2025)
+4. BRD-Bulk-BRD-4-Activity-Log-REVISED.md (Version 2, 12/08/2025)
+5. BRD-5-PDF-Delivery.md (Version 1, 12/11/2025)
+
+### Supporting Documents
+6. BRD-Bulk-Mapping-Strategy.md (Version 1.0, 12/04/2025)
+7. BRD-UserStory_77477__BoB-BulkFlowPath_BundleBuildGrid.md (Version 1, 12/10/2025)
+8. BRD-UserStory_77478__BoB-BulkFlowPath_BundleProductOutput.md (Version 1, 12/10/2025)
+9. Improvement-Opportunities-Analysis.md (Version 1, 12/04/2025)
+10. CMG_Ecosystem_Documentation.md (Version 1.0, 2024-2025)
+
+### Single Flow BRD References (Reuse Sources)
+11. Single Flow BRD 76335: Landing Page & Bundle Selection
+12. Single Flow BRD 76336: Stacking Order Display & Filtering
+13. Single Flow BRD 77115: Build Bundle & PDF Output
+14. Single Flow BRD 77244: Upload Functionality
+15. Single Flow BRD 89567: UI Adjustments (Security Roles)
+
+### Existing Documentation
+16. bulk-bundle-manager-brd-user-stories.md (November 2025)
+17. bulk-bundle-manager-workflow-diagram.md (November 2025)
+
+### Total Documents Analyzed: 17 files
+**Total Content Reviewed**: ~100,000+ lines of requirements, technical specifications, workflows, and acceptance criteria
+
+---
+
+**END OF COMPREHENSIVE ANALYSIS**
+
+**Document Status**: Complete - Ready for Ticket Creation
+**Generated By**: Claude Sonnet 4.5
+**Generated Date**: 2026-01-15
+**Next Action**: Review with Product Owner, create 30-50+ feature tickets (BOB-001 to BOB-080+) in Azure DevOps

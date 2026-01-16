@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Issues - BoB Management Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 60px 80px;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent-teal);
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+    }
+
+    .stat-value.high {
+      color: var(--accent-red);
+    }
+
+    .stat-value.medium {
+      color: var(--accent-amber);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%);
+      border: 2px solid var(--accent-red);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .warning-box h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .warning-box p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .warning-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .warning-box ul li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .warning-box ul li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      color: var(--accent-red);
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 3rem 0 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    .issue-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .issue-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    }
+
+    .issue-card.high-priority {
+      border-left: 4px solid var(--accent-red);
+    }
+
+    .issue-card.medium-priority {
+      border-left: 4px solid var(--accent-amber);
+    }
+
+    .issue-card.low-priority {
+      border-left: 4px solid var(--accent-teal);
+    }
+
+    .issue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .issue-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .issue-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0.25rem 0 0 0;
+    }
+
+    .issue-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .priority-high {
+      background: var(--accent-red);
+      color: white;
+    }
+
+    .priority-medium {
+      background: var(--accent-amber);
+      color: white;
+    }
+
+    .priority-low {
+      background: var(--accent-teal);
+      color: white;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .issue-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .issue-questions {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .issue-questions h4 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .issue-questions ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .issue-questions li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .issue-questions li::before {
+      content: '?';
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+      font-weight: 700;
+      background: rgba(59, 130, 246, 0.2);
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .impact-tag {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+      border: 1px solid var(--accent-red);
+      color: var(--accent-red);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .impact-tag.integration {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+
+    .impact-tag.clarification {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(20, 184, 166, 0.1) 100%);
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
+    .issue-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .related-tickets {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-teal);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px 30px;
+      }
+      h1 {
+        font-size: 2.25rem;
+      }
+      .stats-bar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="label">BOB MANAGEMENT SUITE</div>
+    <h1>⚠️ Open Issues</h1>
+    <p class="subtitle">Outstanding questions and blockers requiring stakeholder decisions</p>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value">15</span>
+        <span class="stat-label">Total Open Issues</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value high">6</span>
+        <span class="stat-label">High Priority</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value medium">7</span>
+        <span class="stat-label">Medium Priority</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">2</span>
+        <span class="stat-label">Low Priority</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value high">4</span>
+        <span class="stat-label">Critical Blockers</span>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <h2>🚨 Critical Blockers</h2>
+      <p>The following issues MUST be resolved before MVP deployment in February 2026:</p>
+      <ul>
+        <li><strong>OI-001:</strong> BytePro Byte Release 25.2 API Availability - Entire BoB suite non-functional without API</li>
+        <li><strong>OI-002:</strong> Trade Number Database Mapping - Cannot implement Trade No identification method</li>
+        <li><strong>OI-003:</strong> Custom Filter Options & Database Mapping - Cannot implement Custom Filter identification</li>
+        <li><strong>OI-004:</strong> Investor Commitment Number Database Mapping - Cannot implement Investor Commit No identification</li>
+      </ul>
+    </div>
+
+    <h2>High Priority Issues</h2>
+
+    <!-- OI-001 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-001</div>
+          <h3 class="issue-title">BytePro Byte Release 25.2 API Availability</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        All API call effort associated to dbo.bundle is contingent on Byte release 25.2. Without this API availability, the entire BoB suite is non-functional. This is the single most critical blocker for the project.
+      </div>
+
+      <span class="impact-tag">CRITICAL BLOCKER</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What is the release date for Byte 25.2?</li>
+          <li>Are API contracts/specs available for parallel development?</li>
+          <li>Can mock APIs be provided for development/testing?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">BytePro API Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Entire BoB suite non-functional</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BRD-2, BRD-3, Single Flow BRD 77115</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-002 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-002</div>
+          <h3 class="issue-title">Trade Number Database Mapping</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Trade table name and field mapping unknown. Cannot implement Trade No identification method (BRD-1, Requirement #3b) without database schema information.
+      </div>
+
+      <span class="impact-tag">BLOCKER</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What is the table name for trade data?</li>
+          <li>What is the field name for trade number?</li>
+          <li>What is the relationship table mapping trades to loans?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">DBA Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement Trade No identification</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-002, BOB-003, BRD-1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-003 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-003</div>
+          <h3 class="issue-title">Custom Filter Options & Database Mapping</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Filter type definitions and field mappings unknown. Cannot implement Custom Filter identification method (BRD-1, Requirement #3c) without knowing available filter types and their database mappings.
+      </div>
+
+      <span class="impact-tag">BLOCKER</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What filter types are available (e.g., Loan Officer, Branch, Product Type)?</li>
+          <li>What database tables/fields correspond to each filter type?</li>
+          <li>How should dynamic query construction work?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Product Team, DBA Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement Custom Filter identification</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-004, BRD-1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-004 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-004</div>
+          <h3 class="issue-title">Investor Commitment Number Database Mapping</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Commitment table name and field mapping unknown. Cannot implement Investor Commit No identification method (BRD-1, Requirement #3d) without database schema information.
+      </div>
+
+      <span class="impact-tag">BLOCKER</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What is the table name for commitment data?</li>
+          <li>What is the field name for commitment number?</li>
+          <li>What is the relationship table mapping commitments to loans?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">DBA Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement Investor Commit No identification</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-005, BRD-1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-005 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-005</div>
+          <h3 class="issue-title">Maximum Loan Population Size</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Maximum loan count per bulk job unknown. Cannot implement population size validation without knowing system capacity limits. Risk of performance issues if large populations processed without proper constraints.
+      </div>
+
+      <span class="impact-tag integration">PERFORMANCE RISK</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What is the maximum loan count per bulk job based on system capacity?</li>
+          <li>Should pagination be implemented for large populations (500+ loans)?</li>
+          <li>What is the performance threshold where pagination required?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Dev Lead, Performance Testing Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement validation, performance risk</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-006, BOB-007, BRD-1, BRD-2</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-006 -->
+    <div class="issue-card high-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-006</div>
+          <h3 class="issue-title">Three Approved Security Roles</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-high">HIGH PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Specific security role names from Single Flow BRD 89567 not documented. Cannot implement role-based access control without knowing the approved security roles and their definitions.
+      </div>
+
+      <span class="impact-tag">SECURITY BLOCKER</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What are the 3 approved security roles from Single Flow BRD 89567?</li>
+          <li>Are these roles already defined in Active Directory/DB?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Security Team, Single Flow BRD Author</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement role-based access control</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-001, BRD-1, Single Flow BRD 89567</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>Medium Priority Issues</h2>
+
+    <!-- OI-007 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-007</div>
+          <h3 class="issue-title">SFTP Authentication Configuration</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        SFTP authentication mechanism for investor destinations not fully specified. Need to clarify credential management and security approach before implementing PDF delivery functionality.
+      </div>
+
+      <span class="impact-tag integration">INTEGRATION RISK</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>How are SFTP credentials managed (Azure Key Vault, encrypted config)?</li>
+          <li>Is dbo.BundleSFTPCredentials table schema approved?</li>
+          <li>What is the encryption algorithm for stored passwords (AES-256)?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Security Team, Infrastructure Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot fully implement PDF delivery security</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-066, BOB-067, BRD-5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-008 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-008</div>
+          <h3 class="issue-title">Business Day Calculation for Retention Policy</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Company holiday calendar integration for 10-day retention unknown. Need to clarify how to exclude company holidays from business day calculation for Activity Log retention policy.
+      </div>
+
+      <span class="impact-tag clarification">NEEDS CLARIFICATION</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>How should system exclude company holidays from business day calculation?</li>
+          <li>Is there an existing holiday calendar table/API?</li>
+          <li>What happens on edge cases (holiday on 10th day)?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">DBA Team, HR/Payroll Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot implement accurate retention policy</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-074, BRD-4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-009 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-009</div>
+          <h3 class="issue-title">Email Notification Opt-Out</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        No user preference setting for email notifications. Need to clarify if users should have ability to opt out of email notifications and how preferences should be stored.
+      </div>
+
+      <span class="impact-tag clarification">NEEDS CLARIFICATION</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>Should users be able to opt out of email notifications?</li>
+          <li>Is there a user preferences table?</li>
+          <li>Should opt-out be per-user or per-job-type?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Product Team, UX Designer</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">User experience, notification management</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-070, BRD-5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-010 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-010</div>
+          <h3 class="issue-title">Activity Log User-Specific vs Team-Wide</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Unclear if Activity Log shows only current user's jobs or all team members' jobs. This impacts database queries, filtering logic, and audit trail requirements.
+      </div>
+
+      <span class="impact-tag clarification">NEEDS CLARIFICATION</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>Should Activity Log be user-specific (only shows current user's jobs)?</li>
+          <li>Or team-wide (shows all team members' jobs for transparency)?</li>
+          <li>Should "Who initiated job" be tracked (UserID) for multi-user audit scenarios?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Product Owner, Operations Manager</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Database schema, query logic, audit trail</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-071, BRD-4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-011 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-011</div>
+          <h3 class="issue-title">Job Cancel/Stop Mechanism</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        No documented way to cancel running job. Need to clarify if users should be able to cancel/stop a running bundle job and what happens to partially processed loans.
+      </div>
+
+      <span class="impact-tag clarification">NEEDS CLARIFICATION</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>Should users be able to cancel/stop a running bundle job?</li>
+          <li>What happens to partially processed loans if job cancelled?</li>
+          <li>Is this MVP or Phase 2 feature?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Product Owner, Dev Lead</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">User control, job management</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-058, BRD-3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-012 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-012</div>
+          <h3 class="issue-title">Error Log Accessibility</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Unclear where detailed error log is accessible. Need to clarify if users view detailed error logs via grid drill-down, separate error report, or tooltips on hover.
+      </div>
+
+      <span class="impact-tag clarification">NEEDS CLARIFICATION</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>Where can users view detailed error logs (grid drill-down vs separate error report)?</li>
+          <li>Should failed loans show error tooltips on hover?</li>
+          <li>Is dbo.BundleJobErrors table schema approved?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">UX Designer, Product Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">User experience, error visibility</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-047, BRD-2, BRD-3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-013 -->
+    <div class="issue-card medium-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-013</div>
+          <h3 class="issue-title">CMG SMTP Relay Configuration</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-medium">MEDIUM PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Production SMTP settings unknown. Cannot fully configure email notification system without SMTP relay server information and authentication details.
+      </div>
+
+      <span class="impact-tag integration">INTEGRATION RISK</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>What is the CMG SMTP relay server hostname?</li>
+          <li>What port (587/465/25)?</li>
+          <li>What authentication method (Windows Integrated Auth or credentials)?</li>
+          <li>Has noreply-bob@cmgfi.com sender address been approved?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">IT Service Desk, Email Infrastructure Team</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Cannot configure email notifications</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-070, BRD-5</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>Low Priority Issues</h2>
+
+    <!-- OI-014 -->
+    <div class="issue-card low-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-014</div>
+          <h3 class="issue-title">Real-Time Updates Future Enhancement</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-low">LOW PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Manual refresh only in MVP, real-time updates Phase 2. Need to clarify Phase 2 timeline for WebSocket/SSE implementation and priority level.
+      </div>
+
+      <span class="impact-tag clarification">PHASE 2</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>Is Phase 2 timeline defined for WebSocket/SSE implementation?</li>
+          <li>What is the priority level (must-have vs nice-to-have)?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Product Owner</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Phase 2 planning, user experience</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BRD-2, BRD-3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OI-015 -->
+    <div class="issue-card low-priority">
+      <div class="issue-header">
+        <div>
+          <div class="issue-number">ISSUE #OI-015</div>
+          <h3 class="issue-title">Pagination Strategy for Large Populations</h3>
+        </div>
+        <div class="issue-badges">
+          <span class="priority-badge priority-low">LOW PRIORITY</span>
+          <span class="status-badge">NOT STARTED</span>
+        </div>
+      </div>
+
+      <div class="issue-description">
+        Pagination not required for MVP but may be needed based on OI-005 (Maximum Loan Population Size) decision. Need to clarify pagination strategy if large populations are supported.
+      </div>
+
+      <span class="impact-tag clarification">CONDITIONAL</span>
+
+      <div class="issue-questions">
+        <h4>Questions Requiring Answers:</h4>
+        <ul>
+          <li>At what population size should pagination be implemented (500+ loans)?</li>
+          <li>Client-side or server-side pagination?</li>
+          <li>What page size (100 loans per page)?</li>
+        </ul>
+      </div>
+
+      <div class="issue-meta">
+        <div class="meta-item">
+          <span class="meta-label">Owner</span>
+          <span class="meta-value">Dev Lead, UX Designer</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Not Started</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Impact</span>
+          <span class="meta-value">Dependent on OI-005 decision</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Related Tickets</span>
+          <span class="meta-value related-tickets">BOB-006, BRD-2</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dependency Management - BoB Management Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2234;
+      --accent-blue: #3b82f6;
+      --accent-teal: #14b8a6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-subtle: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 60px 80px;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent-teal);
+    }
+
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 3rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .diagram-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      overflow-x: auto;
+    }
+
+    .diagram-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 3rem 0 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    .breakdown-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .breakdown-table thead {
+      background: var(--bg-secondary);
+    }
+
+    .breakdown-table th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--accent-blue);
+    }
+
+    .breakdown-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    .breakdown-table tr:hover {
+      background: var(--bg-secondary);
+    }
+
+    .tier-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.5rem;
+    }
+
+    .tier-1 {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .tier-2 {
+      background: var(--accent-teal);
+      color: white;
+    }
+
+    .tier-3 {
+      background: var(--accent-amber);
+      color: white;
+    }
+
+    .strategy-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .strategy-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+    }
+
+    .strategy-section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .strategy-section ul li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .strategy-section ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-teal);
+      font-weight: 700;
+    }
+
+    .critical-path {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+      border-left: 3px solid var(--accent-red);
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .parallel-work {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+      border-left: 3px solid var(--accent-teal);
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .ticket-list {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-teal);
+      line-height: 1.8;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-secondary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent-teal);
+    }
+
+    .phase-marker {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px 30px;
+      }
+      h1 {
+        font-size: 2.25rem;
+      }
+      .stats-bar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="label">BOB MANAGEMENT SUITE</div>
+    <h1>Dependency Management</h1>
+    <p class="subtitle">Three-tier implementation strategy with parallel work opportunities</p>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">43</div>
+        <div class="stat-label">Total Tickets</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Tier 1 (Foundation)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">7</div>
+        <div class="stat-label">Tier 2 (Identification)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">26</div>
+        <div class="stat-label">Tier 3+ (Features)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Sequential Layers</div>
+      </div>
+    </div>
+
+    <h2>Dependency Flow Visualization</h2>
+    <div class="diagram-container">
+      <svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+        <!-- Legend -->
+        <g id="legend">
+          <rect x="20" y="20" width="200" height="120" fill="#1a2234" stroke="rgba(255,255,255,0.1)" rx="8"/>
+          <text x="40" y="45" font-family="Plus Jakarta Sans" font-size="14" font-weight="600" fill="#f1f5f9">Legend</text>
+
+          <rect x="40" y="55" width="60" height="20" fill="#3b82f6" rx="4"/>
+          <text x="110" y="69" font-family="Plus Jakarta Sans" font-size="12" fill="#94a3b8">Tier 1: Foundation</text>
+
+          <rect x="40" y="80" width="60" height="20" fill="#14b8a6" rx="4"/>
+          <text x="110" y="94" font-family="Plus Jakarta Sans" font-size="12" fill="#94a3b8">Tier 2: Identification</text>
+
+          <rect x="40" y="105" width="60" height="20" fill="#f59e0b" rx="4"/>
+          <text x="110" y="119" font-family="Plus Jakarta Sans" font-size="12" fill="#94a3b8">Tier 3+: Features</text>
+        </g>
+
+        <!-- TIER 1: Platform Foundation -->
+        <g id="tier-1">
+          <text x="600" y="180" font-family="Plus Jakarta Sans" font-size="18" font-weight="700" fill="#3b82f6" text-anchor="middle">TIER 1: PLATFORM FOUNDATION</text>
+
+          <!-- Row 1 -->
+          <rect x="50" y="200" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="105" y="230" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-001</text>
+          <text x="105" y="248" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Security &amp;</text>
+          <text x="105" y="262" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Access Control</text>
+
+          <rect x="180" y="200" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="235" y="230" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-002</text>
+          <text x="235" y="248" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Bundle Config</text>
+          <text x="235" y="262" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Dropdown</text>
+
+          <rect x="310" y="200" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="365" y="230" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-003</text>
+          <text x="365" y="248" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Tab Navigation</text>
+
+          <rect x="440" y="200" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="495" y="230" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-004</text>
+          <text x="495" y="248" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Logout Button</text>
+
+          <rect x="570" y="200" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="625" y="230" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-005</text>
+          <text x="625" y="248" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Document</text>
+          <text x="625" y="262" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Categories</text>
+
+          <!-- Row 2 -->
+          <rect x="180" y="300" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="235" y="330" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-006</text>
+          <text x="235" y="348" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Hide N/A</text>
+          <text x="235" y="362" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Logic Engine</text>
+
+          <rect x="310" y="300" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="365" y="330" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-007</text>
+          <text x="365" y="348" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">BytePro API</text>
+          <text x="365" y="362" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Integration</text>
+
+          <rect x="440" y="300" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="495" y="330" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-008</text>
+          <text x="495" y="348" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Activity Log</text>
+          <text x="495" y="362" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Schema</text>
+
+          <rect x="570" y="300" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="625" y="330" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-009</text>
+          <text x="625" y="348" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">PDF Destination</text>
+          <text x="625" y="362" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Mapping</text>
+
+          <rect x="700" y="300" width="110" height="80" fill="#3b82f6" rx="6"/>
+          <text x="755" y="330" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-010</text>
+          <text x="755" y="348" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Manual Refresh</text>
+          <text x="755" y="362" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Pattern</text>
+        </g>
+
+        <!-- Arrows from Tier 1 to Tier 2 -->
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#14b8a6" />
+          </marker>
+        </defs>
+
+        <line x1="400" y1="380" x2="400" y2="430" stroke="#14b8a6" stroke-width="3" marker-end="url(#arrowhead)" opacity="0.6"/>
+
+        <!-- TIER 2: Loan Identification & Selection -->
+        <g id="tier-2">
+          <text x="600" y="460" font-family="Plus Jakarta Sans" font-size="18" font-weight="700" fill="#14b8a6" text-anchor="middle">TIER 2: LOAN IDENTIFICATION &amp; SELECTION</text>
+
+          <rect x="100" y="480" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="165" y="510" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-021</text>
+          <text x="165" y="528" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Manual Entry</text>
+
+          <rect x="250" y="480" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="315" y="510" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-022</text>
+          <text x="315" y="528" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Trade Number</text>
+
+          <rect x="400" y="480" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="465" y="510" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-023</text>
+          <text x="465" y="528" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Custom Filter</text>
+
+          <rect x="550" y="480" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="615" y="510" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-024</text>
+          <text x="615" y="528" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Investor Commit</text>
+
+          <rect x="250" y="580" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="315" y="610" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-025</text>
+          <text x="315" y="628" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">View Population</text>
+
+          <rect x="400" y="580" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="465" y="610" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-026</text>
+          <text x="465" y="628" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Clear Form</text>
+
+          <rect x="550" y="580" width="130" height="80" fill="#14b8a6" rx="6"/>
+          <text x="615" y="610" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">BOB-027</text>
+          <text x="615" y="628" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">Max Population</text>
+        </g>
+
+        <!-- Arrows from Tier 2 to Tier 3 -->
+        <line x1="465" y1="660" x2="465" y2="710" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowhead)" opacity="0.6"/>
+
+        <!-- TIER 3+: Bundle Build Grid & Features -->
+        <g id="tier-3">
+          <text x="600" y="740" font-family="Plus Jakarta Sans" font-size="18" font-weight="700" fill="#f59e0b" text-anchor="middle">TIER 3+: BUNDLE BUILD GRID &amp; FEATURES</text>
+
+          <rect x="50" y="760" width="180" height="60" fill="#f59e0b" rx="6"/>
+          <text x="140" y="785" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">Grid &amp; Display</text>
+          <text x="140" y="802" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">BOB-031 to BOB-040 (10 tickets)</text>
+
+          <rect x="260" y="760" width="180" height="60" fill="#f59e0b" rx="6"/>
+          <text x="350" y="785" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">Background Jobs</text>
+          <text x="350" y="802" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">BOB-051 to BOB-060 (10 tickets)</text>
+
+          <rect x="470" y="760" width="180" height="60" fill="#f59e0b" rx="6"/>
+          <text x="560" y="785" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">Activity Log</text>
+          <text x="560" y="802" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">BOB-071 to BOB-076 (6 tickets)</text>
+
+          <rect x="680" y="760" width="180" height="60" fill="#f59e0b" rx="6"/>
+          <text x="770" y="785" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="white" text-anchor="middle">PDF Delivery</text>
+          <text x="770" y="802" font-family="Plus Jakarta Sans" font-size="9" fill="white" text-anchor="middle">BOB-053 to BOB-057 (included)</text>
+        </g>
+
+        <!-- Flow indicators -->
+        <text x="900" y="240" font-family="Plus Jakarta Sans" font-size="12" fill="#64748b" font-style="italic">Build First</text>
+        <text x="900" y="520" font-family="Plus Jakarta Sans" font-size="12" fill="#64748b" font-style="italic">Build Second</text>
+        <text x="900" y="790" font-family="Plus Jakarta Sans" font-size="12" fill="#64748b" font-style="italic">Build Last</text>
+
+        <text x="600" y="870" font-family="Plus Jakarta Sans" font-size="14" font-weight="600" fill="#3b82f6" text-anchor="middle">Dependencies flow downward: Each tier depends on completion of all previous tiers</text>
+      </svg>
+    </div>
+
+    <h2>Tier Breakdown</h2>
+    <table class="breakdown-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Ticket IDs</th>
+          <th>Count</th>
+          <th>Purpose / Description</th>
+          <th>Blocking Dependencies</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier-badge tier-1">TIER 1</span></td>
+          <td class="ticket-list">
+            BOB-001, BOB-002, BOB-003, BOB-004, BOB-005,<br>
+            BOB-006, BOB-007, BOB-008, BOB-009, BOB-010
+          </td>
+          <td><strong>10 tickets</strong></td>
+          <td>
+            <strong>Platform Foundation</strong><br>
+            Core infrastructure, security, shared capabilities, API integration, database schema, and configuration that all features depend on. This includes security/access control, bundle configuration, document categories, BytePro API integration, Activity Log schema, and the foundational logic engines.
+          </td>
+          <td>
+            <strong>None</strong> - This is the foundation layer.<br><br>
+            <strong>External:</strong><br>
+            • dbo.User, dbo.Permissions, dbo.Bundle<br>
+            • BytePro Byte release 25.2<br>
+            • Authentication middleware
+          </td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-2">TIER 2</span></td>
+          <td class="ticket-list">
+            BOB-021, BOB-022, BOB-023, BOB-024,<br>
+            BOB-025, BOB-026, BOB-027
+          </td>
+          <td><strong>7 tickets</strong></td>
+          <td>
+            <strong>Loan Identification &amp; Selection</strong><br>
+            Methods for identifying and selecting loan populations (Manual Entry, Trade Number, Custom Filter, Investor Commitment Number). Includes validation, population viewing, form management, and maximum size constraints. These features enable users to define which loans to process.
+          </td>
+          <td>
+            <strong>Requires ALL of Tier 1</strong><br><br>
+            Specifically depends on:<br>
+            • BOB-002 (Bundle Config) - needed for validation<br>
+            • BOB-007 (BytePro API) - for loan data retrieval<br>
+            • BOB-008 (Activity Log Schema) - for tracking populations
+          </td>
+        </tr>
+        <tr>
+          <td><span class="tier-badge tier-3">TIER 3+</span></td>
+          <td class="ticket-list">
+            <strong>Grid &amp; Display (10):</strong><br>
+            BOB-031, BOB-032, BOB-033, BOB-034, BOB-035,<br>
+            BOB-036, BOB-037, BOB-038, BOB-039, BOB-040<br><br>
+            <strong>Background Jobs &amp; PDF (10):</strong><br>
+            BOB-051, BOB-052, BOB-053, BOB-054, BOB-055,<br>
+            BOB-056, BOB-057, BOB-058, BOB-059, BOB-060<br><br>
+            <strong>Activity Log Features (6):</strong><br>
+            BOB-071, BOB-072, BOB-073, BOB-074, BOB-075, BOB-076
+          </td>
+          <td><strong>26 tickets</strong><br>(19 listed + sub-features)</td>
+          <td>
+            <strong>Bundle Build Grid &amp; Multi-Loan Operations</strong><br>
+            Complete bundle building workflow including grid display, filtering, multi-select, background job processing, PDF generation/delivery, notifications, error handling, and activity log management. These are the user-facing features that provide the full bundle building experience.
+          </td>
+          <td>
+            <strong>Requires ALL of Tier 1 &amp; Tier 2</strong><br><br>
+            Critical dependencies:<br>
+            • BOB-006 (Hide N/A Logic) - for grid display<br>
+            • BOB-007 (BytePro API) - for processing<br>
+            • BOB-008 (Activity Log) - for job tracking<br>
+            • BOB-009 (PDF Mapping) - for delivery<br>
+            • BOB-021 (Manual Entry) - for Add Loan modal<br>
+            • BOB-025 (View Population) - for grid initialization
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Implementation Strategy</h2>
+
+    <div class="strategy-section">
+      <h3>Critical Path (Sequential Dependencies)</h3>
+      <div class="critical-path">
+        <p style="color: var(--text-primary); font-weight: 600; margin-bottom: 1rem;">These tickets MUST be completed in sequence. Each level blocks the next.</p>
+
+        <h4 style="color: var(--accent-red); font-size: 1rem; margin-top: 1rem; margin-bottom: 0.5rem;">Level 1: Foundation (Start Here)</h4>
+        <ul>
+          <li><code>BOB-001</code> Security & Access Control - Gate for all user interactions</li>
+          <li><code>BOB-002</code> Bundle Configuration Dropdown - Required for bundle selection throughout app</li>
+          <li><code>BOB-005</code> Document Category Structure - Foundation for document organization</li>
+          <li><code>BOB-008</code> Activity Log Database Schema - Must exist before any job tracking</li>
+          <li><code>BOB-007</code> BytePro API Integration (Byte 25.2) - External dependency, critical blocker for all processing</li>
+        </ul>
+
+        <h4 style="color: var(--accent-red); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Level 2: Logic Engines (Build After Level 1)</h4>
+        <ul>
+          <li><code>BOB-006</code> Hide Not Applicable Docs Logic Engine - Needed by grid display (BOB-034)</li>
+          <li><code>BOB-009</code> PDF Destination Mapping - Required for PDF delivery (BOB-054, BOB-055, BOB-056)</li>
+          <li><code>BOB-010</code> Manual Refresh Pattern - Needed by grid operations</li>
+        </ul>
+
+        <h4 style="color: var(--accent-red); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Level 3: Loan Identification (Build After Level 2)</h4>
+        <ul>
+          <li><code>BOB-021</code> Manual Entry - Foundation for all identification methods</li>
+          <li><code>BOB-025</code> View Loan Population - Gate to grid view (depends on validation logic)</li>
+          <li><code>BOB-027</code> Maximum Population Size Validation - Must be enforced before grid loads</li>
+        </ul>
+
+        <h4 style="color: var(--accent-red); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Level 4: Grid Foundation (Build After Level 3)</h4>
+        <ul>
+          <li><code>BOB-031</code> Grid Structure - Base for all grid features</li>
+          <li><code>BOB-032</code> Filter Tabs - Core navigation within grid</li>
+          <li><code>BOB-035</code> Multi-Select Checkboxes - Required by BOB-038 (Build Selected)</li>
+        </ul>
+
+        <h4 style="color: var(--accent-red); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Level 5: Background Jobs (Build After Level 4)</h4>
+        <ul>
+          <li><code>BOB-051</code> Background Job Initiation - Foundation for all processing</li>
+          <li><code>BOB-052</code> Sequential Loan Processing - Core processing loop</li>
+          <li><code>BOB-053</code> PDF Naming Convention - Required before delivery</li>
+          <li><code>BOB-054/055/056</code> PDF Delivery Methods - Sequential fallback chain</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="strategy-section">
+      <h3>Parallel Work Opportunities</h3>
+      <div class="parallel-work">
+        <p style="color: var(--text-primary); font-weight: 600; margin-bottom: 1rem;">These tickets can be developed simultaneously by different team members to maximize velocity.</p>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1rem; margin-bottom: 0.5rem;">Parallel Stream 1: UI Foundation (After BOB-001, BOB-002 complete)</h4>
+        <ul>
+          <li><code>BOB-003</code> Tab Navigation (UI developer)</li>
+          <li><code>BOB-004</code> Logout Button (UI developer)</li>
+          <li><code>BOB-026</code> Clear Form Button (UI developer)</li>
+        </ul>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Parallel Stream 2: Identification Methods (After BOB-021 complete)</h4>
+        <ul>
+          <li><code>BOB-022</code> Trade Number Identification (Developer A)</li>
+          <li><code>BOB-023</code> Custom Filter Identification (Developer B)</li>
+          <li><code>BOB-024</code> Investor Commitment Number Identification (Developer C)</li>
+        </ul>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; font-style: italic;">Note: All three use similar patterns, can be developed independently</p>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Parallel Stream 3: Grid Features (After BOB-031 complete)</h4>
+        <ul>
+          <li><code>BOB-033</code> Status Filter Dropdown (UI developer)</li>
+          <li><code>BOB-034</code> Hide Not Applicable Docs Checkbox (depends on BOB-006)</li>
+          <li><code>BOB-036</code> Add Loan to Population Modal (depends on BOB-021)</li>
+          <li><code>BOB-039</code> Bundle Status Enum Values (Backend developer)</li>
+          <li><code>BOB-040</code> Grid Pagination (Optional - Future enhancement)</li>
+        </ul>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Parallel Stream 4: Build Operations (After BOB-051 complete)</h4>
+        <ul>
+          <li><code>BOB-037</code> Build Ready to Bundle Loans (Developer A)</li>
+          <li><code>BOB-038</code> Build Selected Loans (Developer B - depends on BOB-035)</li>
+        </ul>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Parallel Stream 5: Notifications & Error Handling (After BOB-051 complete)</h4>
+        <ul>
+          <li><code>BOB-057</code> Delivery Audit Logging (Backend developer)</li>
+          <li><code>BOB-058</code> Email Notification on Job Completion (Backend developer)</li>
+          <li><code>BOB-059</code> In-App Notification Banners (UI developer)</li>
+          <li><code>BOB-060</code> Error Handling - Loan-Level Failures (Backend developer)</li>
+        </ul>
+
+        <h4 style="color: var(--accent-teal); font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Parallel Stream 6: Activity Log Features (After BOB-008, BOB-071 complete)</h4>
+        <ul>
+          <li><code>BOB-072</code> Hyperlink Navigation (UI developer)</li>
+          <li><code>BOB-073</code> "Not Built Yet" Display Logic (UI developer)</li>
+          <li><code>BOB-074</code> 10-Business-Day Retention Policy (Backend developer)</li>
+          <li><code>BOB-075</code> Last Viewed Timestamp Update (Backend developer)</li>
+          <li><code>BOB-076</code> Bulk Bundle Status Values & Color Coding (UI developer)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="strategy-section">
+      <h3>Phase Alignment (MVP Strategy)</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">All 36 tickets are designated as <span class="phase-marker">PHASE 1 MVP</span>. The three-tier approach ensures proper sequencing within the MVP phase.</p>
+
+      <h4 style="color: var(--accent-blue); font-size: 1.1rem; margin-top: 1rem; margin-bottom: 0.5rem;">MVP Delivery Approach</h4>
+      <ul>
+        <li><strong>Sprint 1 (Tier 1):</strong> Complete all foundation tickets (BOB-001 to BOB-010). Establishes platform capabilities.</li>
+        <li><strong>Sprint 2 (Tier 2):</strong> Complete all identification methods (BOB-021 to BOB-027). Enables loan population selection.</li>
+        <li><strong>Sprint 3-4 (Tier 3):</strong> Complete grid display (BOB-031 to BOB-040). Users can view loan validation summaries.</li>
+        <li><strong>Sprint 5-6 (Tier 4):</strong> Complete background jobs & PDF delivery (BOB-051 to BOB-060). Full bundle building capability.</li>
+        <li><strong>Sprint 7 (Tier 5):</strong> Complete Activity Log features (BOB-071 to BOB-076). Job history & tracking.</li>
+      </ul>
+
+      <h4 style="color: var(--accent-blue); font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">MVP Success Criteria</h4>
+      <ul>
+        <li>Users can select loan populations via Manual Entry (minimum)</li>
+        <li>Users can view loan validation summaries in grid</li>
+        <li>Users can initiate bundle builds (Ready to Bundle OR Selected Loans)</li>
+        <li>System processes loans in background and delivers PDFs to destinations</li>
+        <li>Users can track job history via Activity Log</li>
+      </ul>
+    </div>
+
+    <div class="strategy-section">
+      <h3>Blocking Relationship Summary</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">Key blocking relationships that must be respected during implementation:</p>
+
+      <table class="breakdown-table" style="margin-top: 1rem;">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Blocked By</th>
+            <th>Blocks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>BOB-001</code></td>
+            <td>None (start here)</td>
+            <td>All other tickets (security gate)</td>
+          </tr>
+          <tr>
+            <td><code>BOB-007</code></td>
+            <td>BytePro Byte 25.2 release</td>
+            <td>BOB-025, BOB-052, all processing features</td>
+          </tr>
+          <tr>
+            <td><code>BOB-006</code></td>
+            <td>BOB-005 (Document Categories)</td>
+            <td>BOB-034 (Hide N/A Checkbox), grid display logic</td>
+          </tr>
+          <tr>
+            <td><code>BOB-008</code></td>
+            <td>None (database schema)</td>
+            <td>BOB-003, BOB-025, BOB-051, all Activity Log features</td>
+          </tr>
+          <tr>
+            <td><code>BOB-021</code></td>
+            <td>BOB-001, BOB-002, BOB-005</td>
+            <td>BOB-036 (Add Loan Modal), all identification methods</td>
+          </tr>
+          <tr>
+            <td><code>BOB-025</code></td>
+            <td>BOB-007 (BytePro API), BOB-021 (population)</td>
+            <td>BOB-031 (Grid cannot load without View Population)</td>
+          </tr>
+          <tr>
+            <td><code>BOB-031</code></td>
+            <td>BOB-025 (View Population)</td>
+            <td>All grid features (BOB-032 to BOB-040)</td>
+          </tr>
+          <tr>
+            <td><code>BOB-035</code></td>
+            <td>BOB-031 (Grid Structure)</td>
+            <td>BOB-038 (Build Selected Loans)</td>
+          </tr>
+          <tr>
+            <td><code>BOB-051</code></td>
+            <td>BOB-008, BOB-037 or BOB-038</td>
+            <td>BOB-052, all background job features</td>
+          </tr>
+          <tr>
+            <td><code>BOB-053</code></td>
+            <td>BOB-002 (OutputFileNameFormat)</td>
+            <td>BOB-054, BOB-055, BOB-056 (cannot deliver without filename)</td>
+          </tr>
+          <tr>
+            <td><code>BOB-071</code></td>
+            <td>BOB-008 (Activity Log Schema)</td>
+            <td>BOB-072 to BOB-076 (all Activity Log features)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="strategy-section">
+      <h3>Risk Mitigation & Recommendations</h3>
+      <ul>
+        <li><strong>BytePro API Dependency (BOB-007):</strong> This is a CRITICAL external dependency. Coordinate closely with BytePro team to ensure Byte 25.2 API availability. Consider building mock API endpoints for parallel development if API is delayed.</li>
+        <li><strong>Database Schema Changes (BOB-008):</strong> Activity Log table must be deployed to all environments early. Include in initial database migration scripts to avoid blocking downstream features.</li>
+        <li><strong>Trade/Filter/Commitment Schemas (BOB-022, BOB-023, BOB-024):</strong> These tickets have OPEN ISSUES regarding database schema. Resolve these unknowns during Tier 1 development to prevent delays in Tier 2.</li>
+        <li><strong>Performance Testing (BOB-027, BOB-040):</strong> Maximum population size is unknown. Conduct load testing during Tier 2 to determine limits before building Tier 3 features.</li>
+        <li><strong>Security Review (BOB-001):</strong> Three approved security roles are TBD. Complete security design review early to avoid rework in dependent tickets.</li>
+        <li><strong>SFTP Credentials (BOB-055):</strong> Requires dbo.BundleSFTPCredentials table and secure credential storage. Plan encryption strategy during Tier 1.</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
