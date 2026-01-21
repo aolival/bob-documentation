@@ -137,30 +137,30 @@
         .status-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 10px 0;
+            gap: 10px;
+            margin: 8px 0;
         }
 
         .status-card {
             background: white;
             border-radius: 8px;
-            padding: 18px;
+            padding: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.2s;
         }
 
         .status-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(74, 144, 164, 0.2);
         }
 
         .status-card-label {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             color: #546E7A;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .status-card-value {
@@ -170,9 +170,9 @@
         }
 
         .status-card-description {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             color: #78909C;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         /* Content cards */
@@ -803,18 +803,18 @@
 <body>
     <!-- Breadcrumb Navigation -->
     <div class="breadcrumb-nav">
-        <a href="#" class="breadcrumb-btn active" onclick="showSlide(0); return false;">
-            📦 BoB Builder
+        <a href="#" class="breadcrumb-btn active" data-deck="bob" onclick="switchDeck('bob'); return false;">
+            📦 BoB Suite - BoB
         </a>
-        <a href="#" class="breadcrumb-btn">
-            ✅ Clear to Close
+        <a href="#" class="breadcrumb-btn" data-deck="ctc" onclick="switchDeck('ctc'); return false;">
+            👨‍⚕️ BoB Suite - C2C (Dr. BoB)
         </a>
     </div>
 
     <div class="presentation-container">
 
         <!-- Slide 1: Title -->
-        <div class="slide active title-slide">
+        <div class="slide active title-slide" data-deck="bob">
             <div class="slide-header">
                 <div class="slide-number">EXECUTIVE SUMMARY</div>
                 <h1 class="slide-title">BoB Management Suite</h1>
@@ -837,97 +837,181 @@
         </div>
 
         <!-- Slide 2: Project Overview with Screenshots -->
-        <div class="slide">
+        <div class="slide" data-deck="bob">
             <div class="slide-header">
                 <div class="slide-number">SLIDE 2 OF 6</div>
                 <h1 class="slide-title">Project Overview</h1>
                 <p class="slide-subtitle">Eliminating productivity bottlenecks in post-close operations</p>
             </div>
             <div class="slide-content">
-                <div class="content-card">
-                    <h3>🎯 Business Problem</h3>
-                    <p>Bundle operations lock users out of Byte LOS for 5-90+ minutes, creating critical productivity bottlenecks in post-close shipping.</p>
+                <div class="clickable" onclick="openModal('slide2-problem')" style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">🎯</span>
+                            Business Problem
+                        </h3>
+                        <span style="background: #E53935; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">CRITICAL</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Bundle operations lock users out of Byte LOS for 5-90+ minutes, creating critical productivity bottlenecks in post-close shipping.</p>
                 </div>
 
-                <div class="content-card">
-                    <h3>💡 Solution</h3>
-                    <p>BoB Management Suite decouples bundling from Byte LOS, enabling background processing. Users remain productive, process multiple loans asynchronously, and can log out during operations. Built using our proven CLEAR portal approach.</p>
+                <div class="clickable" onclick="openModal('slide2-solution')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #4CAF50; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">💡</span>
+                            Solution
+                        </h3>
+                        <span style="background: #4CAF50; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">INNOVATIVE</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">BoB Management Suite decouples bundling from Byte LOS, enabling background processing. Users remain productive, process multiple loans asynchronously, and can log out during operations. Built using our proven CLEAR portal approach.</p>
                 </div>
 
-                <div class="content-card">
-                    <h3>📊 Team & Impact Summary</h3>
-                    <p><strong>Target Users:</strong> Shippers, Trade Group, Post-Closing Review Group<br><br>
-                    <strong>Key Stakeholders:</strong><br>
-                    Business - Colleen Schofield, Ashley Kempe, Carol Overton, Scott Fine, Adam Covey<br>
-                    Development - CMG Docs & Design Teams<br>
-                    Product Manager - Aza Olival<br><br>
-                    <strong>Productivity Gain:</strong> Eliminates 5-90 minute Byte lockouts per bundle operation. Users benefit from background task processing and parallel work streams</p>
+                <div class="clickable" onclick="openModal('slide2-team')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #2196F3; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">📊</span>
+                            Team & Impact Summary
+                        </h3>
+                        <span style="background: #2196F3; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">STRATEGIC</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">
+                        <strong style="color: #2C3E50;">Target Users:</strong> Shippers, Trade Group, Post-Closing Review Group<br><br>
+                        <strong style="color: #2C3E50;">Key Stakeholders:</strong><br>
+                        Business - Colleen Schofield, Ashley Kempe, Carol Overton, Scott Fine, Adam Covey<br>
+                        Development - CMG Docs & Design Teams | Product Manager - Aza Olival<br><br>
+                        <strong style="color: #2C3E50;">Productivity Gain:</strong> Eliminates 5-90 minute Byte lockouts per bundle operation. Users benefit from background task processing and parallel work streams
+                    </p>
                 </div>
             </div>
         </div>
 
         <!-- Slide 3: Project Pulse -->
-        <div class="slide">
-            <div class="slide-header">
+        <div class="slide" data-deck="bob">
+            <div class="slide-header" style="padding: 12px 30px;">
                 <div class="slide-number">SLIDE 3 OF 6</div>
-                <h1 class="slide-title">Project Pulse: Status, Insights & Path Forward</h1>
-                <p class="slide-subtitle">Current state, achievements, and delivery trajectory</p>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 4px;">Project Pulse: Status, Insights & Path Forward</h1>
+                <p class="slide-subtitle" style="font-size: 0.875rem;">Current state, achievements, and delivery trajectory</p>
             </div>
-            <div class="slide-content">
+            <div class="slide-content" style="gap: 8px;">
                 <div class="status-cards">
                     <div class="status-card">
                         <div class="status-card-label">Feature Tickets</div>
-                        <div class="status-card-value" style="font-size: 0.875rem; line-height: 1.4;">
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
                             Phase 1: Single Flow Bundle<br>
-                            <span style="font-size: 0.75rem; color: #78909C;">22 Tickets - Testing in Progress or Owner Accepted</span><br><br>
+                            <span style="font-size: 0.7rem; color: #78909C;">22 Tickets - Testing in Progress or Owner Accepted</span><br>
                             Phase 2: Bulk Flow Bundle<br>
-                            <span style="font-size: 0.75rem; color: #78909C;">15 Tickets - Ready for Development (Feb 2026)</span><br><br>
+                            <span style="font-size: 0.7rem; color: #78909C;">15 Tickets - Ready for Development (Feb 2026)</span><br>
                             Phase 3: Document Manager Integration<br>
-                            <span style="font-size: 0.75rem; color: #78909C;">TBD - 60+ Days Out</span>
+                            <span style="font-size: 0.7rem; color: #78909C;">TBD - 60+ Days Out</span>
                         </div>
                     </div>
                     <div class="status-card">
                         <div class="status-card-label">Database / Backend Dependency</div>
-                        <div class="status-card-value" style="font-size: 0.875rem; line-height: 1.4;">
-                            18 new EPS connections<br><br>
-                            <span style="font-size: 0.75rem; color: #2C3E50;">Byte 25.2 API Integration</span><br>
-                            <span style="font-size: 0.75rem; color: #D32F2F; font-weight: 600;">🔴 CRITICAL BLOCKER:</span><br>
-                            <span style="font-size: 0.75rem; color: #78909C;">Byte 25.2 Prod Release targeted for Sprint 2026.2 (End of Jan)</span><br><br>
-                            <span style="font-size: 0.75rem; color: #E65100; font-weight: 600;">⚠️ Pending Blockers:</span><br>
-                            <span style="font-size: 0.7rem; color: #78909C;">OI-002: Trade Number Mapping | OI-003: Custom Filter Mapping | OI-004: Investor Commitment Mapping</span>
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                            18 new EPS connections<br>
+                            <span style="font-size: 0.7rem; color: #2C3E50;">Byte 25.2 API Integration</span><br>
+                            <span style="font-size: 0.7rem; color: #D32F2F; font-weight: 600;">🔴 CRITICAL BLOCKER:</span><br>
+                            <span style="font-size: 0.65rem; color: #78909C;">Byte 25.2 Prod Release targeted for Sprint 2026.2 (End of Jan)</span><br>
+                            <span style="font-size: 0.7rem; color: #E65100; font-weight: 600;">⚠️ Pending Blockers:</span><br>
+                            <span style="font-size: 0.65rem; color: #78909C;">OI-002: Trade Number Mapping | OI-003: Custom Filter Mapping | OI-004: Investor Commitment Mapping</span>
                         </div>
                     </div>
                     <div class="status-card">
                         <div class="status-card-label">Readiness Score</div>
-                        <div class="status-card-value" style="font-size: 0.875rem; line-height: 1.4;">
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
                             Phase 1: >90%<br>
-                            <span style="font-size: 0.75rem; color: #2C3E50;">Single Flow Bundle</span><br>
-                            <span style="font-size: 0.75rem; color: #78909C;">User Interface in testing awaiting <span style="color: #D32F2F; font-weight: 600;">Critical Blocker</span> removal</span><br><br>
+                            <span style="font-size: 0.7rem; color: #2C3E50;">Single Flow Bundle</span><br>
+                            <span style="font-size: 0.65rem; color: #78909C;">UI testing awaiting <span style="color: #D32F2F; font-weight: 600;">Critical Blocker</span> removal</span><br>
                             Phase 2: 50%<br>
-                            <span style="font-size: 0.75rem; color: #2C3E50;">Bulk Flow Bundle</span><br>
-                            <span style="font-size: 0.75rem; color: #78909C;">Documentation complete / approved awaiting development start (Feb 2026)</span><br><br>
-                            Phase 3: 15%<br>
-                            <span style="font-size: 0.75rem; color: #2C3E50;">Document Manager Integration</span><br>
-                            <span style="font-size: 0.75rem; color: #78909C;">Discovery slotted for Sprint 2026.3 (late Feb) | Requirements gathering with business early March</span>
+                            <span style="font-size: 0.7rem; color: #2C3E50;">Bulk Flow Bundle</span><br>
+                            <span style="font-size: 0.65rem; color: #78909C;">Documentation complete awaiting development (Feb 2026)</span><br>
+                            Phase 3: <20%<br>
+                            <span style="font-size: 0.7rem; color: #2C3E50;">Document Manager Integration</span><br>
+                            <span style="font-size: 0.65rem; color: #78909C;">Discovery Sprint 2026.3 (late Feb) | Requirements early March</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="content-card">
-                    <h3>💡 Key Insights, Timeline & Milestones</h3>
-                    <ul>
-                        <li><strong>Massive Documentation Milestone (Q4 2025):</strong> Phase 1 & 2 documentation completed - 37 feature tickets representing hundreds of user stories, acceptance criteria, and technical specifications. Phase 3 discovery slotted for Sprint 2026.3 (late February) with requirements gathering scheduled for early March</li>
-                        <li><strong>Aggressive Market Timeline (Q1 2026):</strong> Target goal to deliver Phase 1 (MVP) Single Flow Bundle and Phase 2 Bulk Flow Bundle to production within Q1 2026, with Document Manager Integration (Phase 3) targeted for early Q2 2026 - enabling immediate productivity gains for Shippers and post-close operations teams</li>
-                        <li><strong>Sprint 2026.1 (Current):</strong> Phase 1 MVP final testing in flight, awaiting Critical Blocker (Byte 25.2 API) resolution targeted for end of January</li>
-                        <li><strong>Sprint 2026.2 (Feb):</strong> Phase 1 Single Flow Bundle production deployment - delivering immediate productivity gains per bundle operation</li>
-                        <li><strong>Enterprise Alignment:</strong> Cross-functional stakeholder alignment achieved across Business operations, Development teams, Product Management, MVP Support channels, and Learning & Development - critical for execution velocity and user adoption success</li>
-                    </ul>
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px;">
+                    <h3 style="color: #2C3E50; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; border-bottom: 2px solid #17a2b8; padding-bottom: 6px;">💡 Key Insights, Timeline & Milestones</h3>
+
+                    <div style="display: grid; gap: 6px;">
+                        <!-- Insight 1 -->
+                        <div class="clickable" onclick="openModal('slide3-insight1')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #4CAF50; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">📚</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Documentation Milestone (Q4 2025)</strong>
+                                <span style="background: #4CAF50; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">COMPLETED</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 & 2 complete - 37 feature tickets with full specifications</p>
+                        </div>
+
+                        <!-- Insight 2 -->
+                        <div class="clickable" onclick="openModal('slide3-insight2')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🎯</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Aggressive Market Timeline (Q1 2026)</strong>
+                                <span style="background: #FF9800; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">TARGET</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Delivering Phase 1 & 2 to production within Q1 2026</p>
+                        </div>
+
+                        <!-- Insight 3 -->
+                        <div class="clickable" onclick="openModal('slide3-insight3')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🔄</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.2 (Current / Day-1)</strong>
+                                <span style="background: #2196F3; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">IN PROGRESS</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 MVP in final testing, blocked by Byte 25.2 API release</p>
+                        </div>
+
+                        <!-- Insight 4 -->
+                        <div class="clickable" onclick="openModal('slide3-insight4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #9C27B0; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🚀</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.2 (Day-15)</strong>
+                                <span style="background: #9C27B0; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">DEPLOY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 Single Flow Bundle production deployment</p>
+                        </div>
+
+                        <!-- Insight 5 -->
+                        <div class="clickable" onclick="openModal('slide3-insight5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #009688; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">💻</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.3 (Day-1)</strong>
+                                <span style="background: #009688; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PHASE 2</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 2 Bulk Bundle development (FE/BE) begins</p>
+                        </div>
+
+                        <!-- Insight 6 -->
+                        <div class="clickable" onclick="openModal('slide3-insight6')" style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #E91E63; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🔍</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.3 (Day-1)</strong>
+                                <span style="background: #E91E63; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PHASE 3</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 3 discovery sessions kick off</p>
+                        </div>
+
+                        <!-- Insight 7 -->
+                        <div class="clickable" onclick="openModal('slide3-insight7')" style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #FBC02D; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🤝</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Enterprise Alignment</strong>
+                                <span style="background: #FBC02D; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">STRATEGIC</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Cross-functional stakeholder alignment achieved - critical for execution velocity</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 4: BoB Single Flow Delivery -->
-        <div class="slide">
+        <div class="slide" data-deck="bob">
             <div class="slide-header">
                 <div class="slide-number">SLIDE 4 OF 6</div>
                 <h1 class="slide-title">BoB - Single Flow Delivery</h1>
@@ -1007,17 +1091,73 @@
                 </div>
 
                 <!-- Right: Key Features Box -->
-                <div style="background: white; border-radius: 8px; padding: 25px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow-y: auto;">
-                    <h3 style="color: #2C3E50; font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; border-bottom: 3px solid #17a2b8; padding-bottom: 10px;">Key Features & Functions</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0; color: #546E7A; font-size: 0.875rem; line-height: 1.8;">
-                        <!-- User will fill in bullet points tomorrow -->
-                    </ul>
+                <div style="background: white; border-radius: 8px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
+                    <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px; border-bottom: 3px solid #17a2b8; padding-bottom: 8px;">Key Features & Functions</h3>
+
+                    <!-- Feature Cards -->
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Feature 1 -->
+                        <div class="clickable" onclick="openModal('slide4-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-size: 1.2rem;">🔓</span>
+                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Separate from Byte</strong>
+                                <span style="background: #2196F3; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">FLEXIBILITY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Work in both platforms simultaneously</p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="clickable" onclick="openModal('slide4-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #4CAF50; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-size: 1.2rem;">⚡</span>
+                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Parallel Processing</strong>
+                                <span style="background: #4CAF50; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Run multiple bundle operations concurrently</p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="clickable" onclick="openModal('slide4-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-size: 1.2rem;">🎯</span>
+                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Document Filtering</strong>
+                                <span style="background: #FF9800; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">EFFICIENCY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Isolate by type, status, or category</p>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="clickable" onclick="openModal('slide4-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #9C27B0; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-size: 1.2rem;">🧠</span>
+                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Smart Display Rules</strong>
+                                <span style="background: #9C27B0; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Auto-hide non-applicable loan program documents</p>
+                        </div>
+                    </div>
+
+                    <!-- Demo Links Section -->
+                    <div style="margin-top: 12px; background: #f8f9fa; border-radius: 6px; padding: 10px; border-left: 3px solid #17a2b8;">
+                        <h4 style="color: #2C3E50; font-size: 0.75rem; font-weight: 600; margin-bottom: 6px;">Additional Demo Details Available Here</h4>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.7rem; color: #546E7A;">
+                            <li style="margin-bottom: 6px;">
+                                <a href="#" style="color: #17a2b8; text-decoration: none;">Demo Link (Coming Soon) ↗</a>
+                            </li>
+                            <li style="margin-bottom: 3px;">
+                                <span style="color: #95a5a6;">Clear Docs - BoB Application UAT coming soon</span>
+                            </li>
+                            <li>
+                                <a href="https://www.figma.com/proto/xSFU4rfMs2uHsPuUnzuFNU/Bundle-Builder?page-id=184%3A35861&node-id=758-23130&viewport=5763%2C2528%2C0.66&t=z4jRqPUh8PGtXPTW-1&scaling=contain&content-scaling=fixed&starting-point-node-id=454%3A45082&show-proto-sidebar=1" style="color: #17a2b8; text-decoration: none;" target="_blank">Figma Prototype ↗</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 5: BoB Bulk Bundle Delivery -->
-        <div class="slide">
+        <div class="slide" data-deck="bob">
             <div class="slide-header">
                 <div class="slide-number">SLIDE 5 OF 6</div>
                 <h1 class="slide-title">BoB - Bulk Bundle Delivery</h1>
@@ -1141,25 +1281,421 @@
                 </div>
 
                 <!-- Right: Key Features Box -->
-                <div style="background: white; border-radius: 8px; padding: 25px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow-y: auto;">
-                    <h3 style="color: #2C3E50; font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; border-bottom: 3px solid #17a2b8; padding-bottom: 10px;">Key Features & Functions</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0; color: #546E7A; font-size: 0.875rem; line-height: 1.8;">
-                        <!-- User will fill in bullet points tomorrow -->
-                    </ul>
+                <div style="background: white; border-radius: 8px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
+                    <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px; border-bottom: 3px solid #17a2b8; padding-bottom: 8px;">Key Features & Functions</h3>
+
+                    <!-- Feature Cards -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <!-- Feature 1 -->
+                        <div class="clickable" onclick="openModal('slide5-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">✨</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">All Single Flow Features</strong>
+                                <span style="background: #2196F3; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">COMPLETE</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Plus additional bulk capabilities</p>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="clickable" onclick="openModal('slide5-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #4CAF50; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">📋</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Manual Upload with Auto-Fix</strong>
+                                <span style="background: #4CAF50; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Raw loan number input with format cleanup</p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="clickable" onclick="openModal('slide5-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">📁</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Legacy Population Options</strong>
+                                <span style="background: #FF9800; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">OPTIONS</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Trade No, Custom Filter, Investor Commitment</p>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="clickable" onclick="openModal('slide5-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #9C27B0; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">🚀</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Background Processing</strong>
+                                <span style="background: #9C27B0; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Set it & forget it, logout without interruption</p>
+                        </div>
+
+                        <!-- Feature 5 -->
+                        <div class="clickable" onclick="openModal('slide5-feature5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #009688; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">📊</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Activity Log</strong>
+                                <span style="background: #009688; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">TRACKING</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">10-day job history and status tracking</p>
+                        </div>
+
+                        <!-- Feature 6 -->
+                        <div class="clickable" onclick="openModal('slide5-feature6')" style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #E91E63; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
+                                <span style="font-size: 1rem;">🔗</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Hyperlinked Loans</strong>
+                                <span style="background: #E91E63; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">NAVIGATION</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Drill down to individual loan level in single flow</p>
+                        </div>
+                    </div>
+
+                    <!-- Demo Links Section -->
+                    <div style="margin-top: 12px; background: #f8f9fa; border-radius: 6px; padding: 10px; border-left: 3px solid #17a2b8;">
+                        <h4 style="color: #2C3E50; font-size: 0.75rem; font-weight: 600; margin-bottom: 6px;">Additional Demo Details Available Here</h4>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.7rem; color: #546E7A;">
+                            <li style="margin-bottom: 6px;">
+                                <a href="#" style="color: #17a2b8; text-decoration: none;">Demo Link (Coming Soon) ↗</a>
+                            </li>
+                            <li style="margin-bottom: 3px;">
+                                <span style="color: #95a5a6;">Clear Docs - BoB Application UAT coming soon</span>
+                            </li>
+                            <li>
+                                <a href="https://www.figma.com/proto/xSFU4rfMs2uHsPuUnzuFNU/Bundle-Builder?page-id=1090%3A51697&node-id=1317-58783&viewport=5763%2C2528%2C0.66&t=8XEfUYmCjYTC8WtV-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1317%3A58985&show-proto-sidebar=1" style="color: #17a2b8; text-decoration: none;" target="_blank">Figma Prototype ↗</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slide 6: Questions -->
-        <div class="slide questions-slide">
-            <div>
-                <h1 class="slide-title">Questions?</h1>
-                <div class="contact-info">
-                    <p><strong>Documentation Available:</strong></p>
-                    <p>CMG Clear Docs Portal</p>
-                    <p style="margin-top: 20px;"><strong>Ready for:</strong></p>
-                    <p>Sprint Planning • Development Kickoff • Stakeholder Review</p>
-                    <p style="margin-top: 30px; font-size: 1.5rem;">Thank You</p>
+        <div class="slide questions-slide" data-deck="bob">
+            <div style="max-width: 900px; margin: 0 auto; width: 100%;">
+                <!-- Questions Header -->
+                <div style="background: linear-gradient(135deg, #4A90A4 0%, #2C3E50 100%); border-radius: 12px; padding: 25px 30px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(74, 144, 164, 0.3); border-left: 6px solid #2C3E50;">
+                    <h1 style="font-size: 2.75rem; font-weight: 700; color: white; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Questions?</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 10px;">We're here to discuss any aspects of the BoB Management Suite</p>
+                </div>
+
+                <!-- Special Thanks - Enhanced -->
+                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 50%, #C8E6C9 100%); border-radius: 12px; padding: 30px; box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3); border: 4px solid #4CAF50; margin-bottom: 20px; position: relative; overflow: hidden;">
+                    <!-- Decorative Elements -->
+                    <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(76,175,80,0.2) 0%, transparent 70%); border-radius: 50%;"></div>
+                    <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(76,175,80,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+
+                    <div style="position: relative; z-index: 1;">
+                        <h3 style="color: #1B5E20; font-size: 1.75rem; margin-bottom: 10px; text-align: center; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                            🙏 Special Thanks to Our Key Stakeholders
+                        </h3>
+                        <p style="text-align: center; color: #2E7D32; font-size: 0.9375rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.5px;">
+                            This Success is a Testament to Outstanding Collaboration
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <span style="font-size: 1.25rem;">🤝</span> Business Partners
+                                </p>
+                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                    Colleen Schofield<br>
+                                    Ashley Kempe<br>
+                                    Carol Overton<br>
+                                    Scott Fine<br>
+                                    Adam Covey
+                                </p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <span style="font-size: 1.25rem;">💻</span> Development Teams
+                                </p>
+                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                    CMG Docs Team<br>
+                                    Design Team
+                                </p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <span style="font-size: 1.25rem;">📚</span> Support & Documentation
+                                </p>
+                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                    Product Enterprise Group
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 15px;">
+                            <p style="color: #2E7D32; font-size: 0.875rem; font-style: italic; margin: 0; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.05); white-space: nowrap;">
+                                ✨ Your collaboration and insights have been instrumental to this initiative's success ✨
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documentation Section -->
+                <div style="background: white; border-radius: 12px; padding: 25px 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #4A90A4;">
+                    <h3 style="color: #2C3E50; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        📋 Documentation
+                    </h3>
+                    <p style="color: #546E7A; font-size: 0.9375rem; line-height: 1.6; margin-bottom: 12px;">
+                        All tickets, requirements, and specifications available in Azure DevOps
+                    </p>
+                    <a href="https://cmgfidev.visualstudio.com/CMG%20Docs/_backlogs/backlog/CMG%20Docs%20Team/Epics?workitem=72742" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #4A90A4 0%, #3d7a8a 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(74, 144, 164, 0.3);">
+                        View Parent Epic in ADO ↗
+                    </a>
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 8px; border-left: 3px solid #4A90A4;">
+                        <p style="color: #2C3E50; font-size: 0.8125rem; margin: 0; line-height: 1.6;">
+                            <strong>Questions or Needs?</strong><br>
+                            Please feel free to reach out to BoB's Product Manager<br>
+                            <strong>Aza Olival</strong> • <a href="mailto:aolival@cmgfi.com" style="color: #4A90A4; text-decoration: none; font-weight: 600;">aolival@cmgfi.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTC Slide 1: Title -->
+        <div class="slide title-slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
+            <div class="slide-header">
+                <div class="slide-number">CONCEPT PRESENTATION</div>
+                <h1 class="slide-title">Clear to Close - Dr. BoB</h1>
+                <p class="slide-subtitle">Diagnostic & Optimization Platform for CTC Operations</p>
+            </div>
+            <div class="title-phases-container" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 12px; padding: 30px; border: 1px solid rgba(255,255,255,0.2);">
+                <div class="title-phase-row" style="justify-content: center;">
+                    <div class="title-meta-item" style="color: white; display: flex; align-items: center; gap: 10px;"><span>🔬</span><strong>Status:</strong> Conceptual Prototype Design</div>
+                </div>
+                <div class="title-phase-row" style="justify-content: center;">
+                    <div class="title-meta-item" style="color: white; display: flex; align-items: center; gap: 10px;"><span>🎯</span><strong>Focus:</strong> Operational Efficiency for Clear to Close Workflows</div>
+                </div>
+                <div class="title-phase-row" style="justify-content: center;">
+                    <div class="title-meta-item" style="color: white; display: flex; align-items: center; gap: 10px;"><span>🚀</span><strong>Vision:</strong> Extending BoB Platform for CTC Diagnostics & Automation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTC Slide 2: Concept Overview -->
+        <div class="slide" data-deck="ctc" style="display: none;">
+            <div class="slide-header">
+                <div class="slide-number">SLIDE 2 OF 5</div>
+                <h1 class="slide-title">Concept Overview</h1>
+                <p class="slide-subtitle">Bringing BoB intelligence to Clear to Close operations</p>
+            </div>
+            <div class="slide-content">
+                <div class="clickable" onclick="openModal('ctc-slide2-problem')" style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">🔍</span>
+                            The Opportunity
+                        </h3>
+                        <span style="background: #E53935; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">CONCEPT</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Clear to Close workflows suffer from manual bottlenecks, condition tracking complexity, and lack of real-time diagnostic insights into readiness status.</p>
+                </div>
+
+                <div class="clickable" onclick="openModal('ctc-slide2-solution')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #4CAF50; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">👨‍⚕️</span>
+                            Dr. BoB Concept
+                        </h3>
+                        <span style="background: #4CAF50; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">PROTOTYPE</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">AI-powered diagnostic platform built on BoB architecture that analyzes CTC readiness, identifies blockers, recommends actions, and automates condition tracking across loan pipelines.</p>
+                </div>
+
+                <div class="clickable" onclick="openModal('ctc-slide2-value')" style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #2E7D60; cursor: pointer; transition: transform 0.2s;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                        <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 2rem;">💎</span>
+                            Value Proposition
+                        </h3>
+                        <span style="background: #2E7D60; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">STRATEGIC</span>
+                    </div>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">
+                        <strong style="color: #2C3E50;">Target Users:</strong> Processors, Underwriters, Closers, Quality Control<br><br>
+                        <strong style="color: #2C3E50;">Key Benefits:</strong> Real-time CTC diagnostics, automated condition tracking, proactive blocker identification, predictive close date analysis
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTC Slide 3: Core Features -->
+        <div class="slide" data-deck="ctc" style="display: none;">
+            <div class="slide-header">
+                <div class="slide-number">SLIDE 3 OF 5</div>
+                <h1 class="slide-title">Core Features Concept</h1>
+                <p class="slide-subtitle">Diagnostic intelligence for Clear to Close operations</p>
+            </div>
+            <div class="slide-content" style="gap: 8px;">
+                <div class="status-cards">
+                    <div class="status-card">
+                        <div class="status-card-label">🏥 Health Dashboard</div>
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                            Real-time loan health scores<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Red/Yellow/Green status indicators</span><br>
+                            Pipeline-wide visibility<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Drill-down diagnostics per loan</span>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-card-label">⚠️ Blocker Detection</div>
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                            AI-powered issue identification<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Missing docs, expired conditions</span><br>
+                            Proactive alerts<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Before they become critical</span>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-card-label">📋 Condition Tracker</div>
+                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                            Automated condition monitoring<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Sync with LOS systems</span><br>
+                            Status progression tracking<br>
+                            <span style="font-size: 0.7rem; color: #78909C;">Outstanding to satisfied workflow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px;">
+                    <h3 style="color: #2C3E50; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; border-bottom: 2px solid #4A8B73; padding-bottom: 6px;">💡 Conceptual Features</h3>
+
+                    <div style="display: grid; gap: 6px;">
+                        <div class="clickable" onclick="openModal('ctc-slide3-feature1')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2E7D60; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🎯</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Predictive Close Date Analysis</strong>
+                                <span style="background: #2E7D60; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AI-POWERED</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">ML models predict realistic close dates based on current conditions</p>
+                        </div>
+
+                        <div class="clickable" onclick="openModal('ctc-slide3-feature2')" style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #3A9675; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🤖</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Smart Action Recommendations</strong>
+                                <span style="background: #3A9675; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Context-aware suggestions for accelerating loan progression</p>
+                        </div>
+
+                        <div class="clickable" onclick="openModal('ctc-slide3-feature3')" style="background: linear-gradient(135deg, #C5E8D9 0%, #8FD4B8 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2E5C4A; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">📊</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Multi-Loan Pipeline View</strong>
+                                <span style="background: #2E5C4A; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">VISIBILITY</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Aggregate view across pipeline with filtering and prioritization</p>
+                        </div>
+
+                        <div class="clickable" onclick="openModal('ctc-slide3-feature4')" style="background: linear-gradient(135deg, #B8E0CE 0%, #7BC9A7 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #46A382; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+                                <span style="font-size: 1rem;">🔔</span>
+                                <strong style="color: #2C3E50; font-size: 0.75rem;">Intelligent Alerts & Notifications</strong>
+                                <span style="background: #46A382; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PROACTIVE</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Smart alerts for critical events and approaching deadlines</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTC Slide 4: Technical Architecture -->
+        <div class="slide" data-deck="ctc" style="display: none;">
+            <div class="slide-header">
+                <div class="slide-number">SLIDE 4 OF 5</div>
+                <h1 class="slide-title">Technical Architecture Concept</h1>
+                <p class="slide-subtitle">Built on proven BoB Management Suite platform foundation</p>
+            </div>
+            <div class="slide-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #4CAF50;">
+                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🏗️ Platform Foundation</h3>
+                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
+                        <li><strong style="color: #2E7D32;">✓ BoB Architecture:</strong> Leverage existing CLEAR portal framework</li>
+                        <li><strong style="color: #2E7D32;">✓ React Frontend:</strong> Modern, responsive UI components</li>
+                        <li><strong style="color: #2E7D32;">✓ .NET Core Backend:</strong> Scalable API architecture</li>
+                        <li><strong style="color: #2E7D32;">✓ Azure Cloud:</strong> Enterprise-grade infrastructure</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #2E7D60;">
+                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🔌 Integration Points</h3>
+                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
+                        <li><strong style="color: #2E7D60;">→ Byte LOS:</strong> Real-time loan data sync</li>
+                        <li><strong style="color: #2E7D60;">→ Document Manager:</strong> Condition tracking integration</li>
+                        <li><strong style="color: #2E7D60;">→ EPS APIs:</strong> Core data connectivity</li>
+                        <li><strong style="color: #2E7D60;">→ External Validators:</strong> Third-party verification services</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #C5E8D9 0%, #8FD4B8 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #2E5C4A;">
+                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🤖 AI/ML Capabilities</h3>
+                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
+                        <li><strong style="color: #2E5C4A;">◆ Pattern Recognition:</strong> Historical data analysis</li>
+                        <li><strong style="color: #2E5C4A;">◆ Predictive Models:</strong> Close date forecasting</li>
+                        <li><strong style="color: #2E5C4A;">◆ Anomaly Detection:</strong> Identify unusual patterns</li>
+                        <li><strong style="color: #2E5C4A;">◆ NLP Processing:</strong> Condition text analysis</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #B8E0CE 0%, #7BC9A7 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #3A9675;">
+                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🔒 Security & Compliance</h3>
+                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
+                        <li><strong style="color: #3A9675;">● Azure AD Auth:</strong> Enterprise SSO</li>
+                        <li><strong style="color: #3A9675;">● Role-Based Access:</strong> Granular permissions</li>
+                        <li><strong style="color: #3A9675;">● Audit Logging:</strong> Complete activity tracking</li>
+                        <li><strong style="color: #3A9675;">● Data Encryption:</strong> At-rest and in-transit</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTC Slide 5: Vision & Next Steps -->
+        <div class="slide" data-deck="ctc" style="display: none;">
+            <div class="slide-header">
+                <div class="slide-number">SLIDE 5 OF 5</div>
+                <h1 class="slide-title">Vision & Next Steps</h1>
+                <p class="slide-subtitle">From concept to reality</p>
+            </div>
+            <div class="slide-content">
+                <div style="background: linear-gradient(135deg, #2E5C4A 0%, #4A8B73 100%); color: white; border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(74, 139, 115, 0.3);">
+                    <h3 style="font-size: 1.75rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 2rem;">🚀</span>
+                        Strategic Vision
+                    </h3>
+                    <p style="font-size: 1.125rem; line-height: 1.8; margin: 0;">
+                        Clear to Close - Dr. BoB represents the next evolution of the BoB Management Suite - extending proven architecture and patterns to solve Clear to Close operational challenges. By leveraging existing infrastructure, we can deliver diagnostic intelligence and automation to CTC workflows faster and more cost-effectively than building from scratch.
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #4CAF50;">
+                        <h3 style="color: #2C3E50; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            🎯 Immediate Opportunities
+                        </h3>
+                        <ul style="color: #546E7A; line-height: 2;">
+                            <li>Stakeholder discovery sessions with Processors & Closers</li>
+                            <li>Technical feasibility assessment with existing BoB codebase</li>
+                            <li>Prototype design in Figma for user validation</li>
+                            <li>Integration mapping with Byte LOS & Document Manager</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #3A9675;">
+                        <h3 style="color: #2C3E50; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                            💎 Long-Term Value
+                        </h3>
+                        <ul style="color: #546E7A; line-height: 2;">
+                            <li>Reduce CTC cycle time through proactive diagnostics</li>
+                            <li>Improve loan quality with automated condition tracking</li>
+                            <li>Increase team capacity via intelligent automation</li>
+                            <li>Enhance customer experience with predictable close dates</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 12px; padding: 25px; border: 3px solid #FBC02D; box-shadow: 0 4px 15px rgba(251, 192, 45, 0.3);">
+                    <strong style="color: #F57F17; font-size: 1.1rem;">💡 This is a Conceptual Prototype:</strong>
+                    <span style="color: #2C3E50; font-size: 1rem;"> Clear to Close - Dr. BoB demonstrates how the proven BoB Management Suite platform can extend beyond bundling to serve other operational stakeholders. This concept is designed to gather feedback, validate assumptions, and secure stakeholder alignment for potential future development.</span>
                 </div>
             </div>
         </div>
@@ -1183,28 +1719,587 @@
         </div>
     </div>
 
+    <!-- Hidden Modal Content -->
+    <div style="display: none;">
+        <!-- Slide 2 Overview Modals -->
+        <div id="slide2-problem">
+            <h2 style="color: #E53935; margin-bottom: 20px;">🎯 Business Problem</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Critical Productivity Bottleneck in Post-Close Operations</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">The Challenge:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Workflow Lockout:</strong> Bundle operations lock users out of Byte LOS for 5-90+ minutes per operation</li>
+                <li><strong>Productivity Impact:</strong> Shippers, Trade Group, and Post-Closing Review teams cannot work during bundle processing</li>
+                <li><strong>Scale Issues:</strong> Multiple bundles per day compound the problem exponentially</li>
+                <li><strong>User Frustration:</strong> Forced idle time creates workflow interruptions and reduces efficiency</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Business Impact:</h3>
+            <ul style="line-height: 2;">
+                <li>Critical delays in post-close shipping operations</li>
+                <li>Reduced team capacity and throughput</li>
+                <li>Inability to process parallel loan operations</li>
+                <li>Escalating operational costs due to idle time</li>
+            </ul>
+            <div style="background: #FFEBEE; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #E53935;">💡 Impact:</strong> Without intervention, this bottleneck will continue to impede post-close operations efficiency as loan volumes scale.
+            </div>
+        </div>
+
+        <div id="slide2-solution">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">💡 Solution: BoB Management Suite</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Standalone Application Decouples Bundling from Byte LOS</strong></p>
+            <h3 style="color: #4CAF50; margin-top: 30px;">🎯 Core Innovation:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Separate from Byte:</strong> Standalone app runs independently - no workflow lockouts</li>
+                <li><strong>Background Processing:</strong> Async operations while users stay productive in Byte</li>
+                <li><strong>Fire-and-Forget:</strong> Start bundles, log out, operations continue</li>
+                <li><strong>CLEAR Portal Architecture:</strong> Built on proven CMG framework</li>
+            </ul>
+            <h3 style="color: #4CAF50; margin-top: 30px;">✨ Key Capabilities:</h3>
+            <ul style="line-height: 2;">
+                <li>Single Flow and Bulk Bundle operations</li>
+                <li>6+ concurrent jobs across multiple tabs/windows</li>
+                <li>Smart display rules reduce document clutter 40-50%</li>
+                <li>10-day activity history with status tracking</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Transforms bundle operations into a seamless background process. Users reclaim 5-90 minutes per operation and can process multiple loans simultaneously.
+            </div>
+        </div>
+
+        <div id="slide2-team">
+            <h2 style="color: #2196F3; margin-bottom: 20px;">📊 Team & Impact Summary</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Cross-Functional Teams Delivering Measurable Productivity Gains</strong></p>
+            <h3 style="color: #2196F3; margin-top: 30px;">👥 Target Users:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Shippers:</strong> Daily post-close bundle operations and investor shipping</li>
+                <li><strong>Trade Group:</strong> Investor-specific bundle requirements and secondary market operations</li>
+                <li><strong>Post-Closing Review:</strong> Quality checks, compliance verification, shipping coordination</li>
+            </ul>
+            <h3 style="color: #2196F3; margin-top: 30px;">🤝 Key Stakeholders:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Business Leadership:</strong> Colleen Schofield (Executive Sponsor), Ashley Kempe, Carol Overton, Scott Fine, Adam Covey</li>
+                <li><strong>Development Teams:</strong> CMG Docs Team, Design Team</li>
+                <li><strong>Product Management:</strong> Aza Olival (Product Manager)</li>
+                <li><strong>Support:</strong> Learning & Development, MVP Support Channel</li>
+            </ul>
+            <h3 style="color: #2196F3; margin-top: 30px;">📈 Productivity Impact:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Time Savings:</strong> Eliminates 5-90 minute Byte LOS lockouts per bundle operation</li>
+                <li><strong>Parallel Operations:</strong> Run multiple bundle jobs concurrently without workflow interruption</li>
+                <li><strong>Background Processing:</strong> Users stay productive while bundles run</li>
+                <li><strong>Capacity Growth:</strong> Handle higher loan volumes without adding headcount</li>
+            </ul>
+            <div style="background: #E3F2FD; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #2196F3;">💡 Impact:</strong> Cross-functional collaboration delivers immediate, measurable productivity gains. Users benefit from background task processing and parallel work streams.
+            </div>
+        </div>
+
+        <!-- Slide 3 Insight Modals -->
+        <div id="slide3-insight1">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">📚 Documentation Milestone (Q4 2025)</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Phase 1 & 2 Documentation Complete</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Accomplishments:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>37 Feature Tickets:</strong> Complete specifications documented</li>
+                <li><strong>Hundreds of User Stories:</strong> Detailed acceptance criteria and technical specifications</li>
+                <li><strong>Phase 1 (Single Flow):</strong> 22 tickets fully documented</li>
+                <li><strong>Phase 2 (Bulk Bundle):</strong> 15 tickets ready for development</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Next Steps:</h3>
+            <ul style="line-height: 2;">
+                <li>Phase 3 discovery begins Sprint 2026.3 (late February)</li>
+                <li>Requirements gathering with business early March</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Massive documentation milestone provides solid foundation for rapid development and clear execution path.
+            </div>
+        </div>
+
+        <div id="slide3-insight2">
+            <h2 style="color: #FF9800; margin-bottom: 20px;">🎯 Aggressive Market Timeline (Q1 2026)</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Ambitious delivery schedule for maximum business impact</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Q1 2026 Targets:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Phase 1:</strong> Single Flow Bundle to production (February 2026)</li>
+                <li><strong>Phase 2:</strong> Bulk Bundle delivery to production (Q1 2026)</li>
+                <li><strong>Immediate Impact:</strong> Eliminating 5-90 minute lockouts for Shippers</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Q2 2026 Target:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Phase 3:</strong> Document Manager Integration (early Q2 2026)</li>
+            </ul>
+            <div style="background: #FFF3E0; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #FF9800;">💡 Impact:</strong> Aggressive timeline enables immediate productivity gains for post-close operations teams across the enterprise.
+            </div>
+        </div>
+
+        <div id="slide3-insight3">
+            <h2 style="color: #2196F3; margin-bottom: 20px;">🔄 Sprint 2026.2 (Current / Day-1)</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Phase 1 MVP in Final Testing</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Current Status:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Testing Phase:</strong> Phase 1 Single Flow Bundle undergoing final testing</li>
+                <li><strong>Critical Blocker:</strong> Byte 25.2 API availability required</li>
+                <li><strong>API Target:</strong> End of January release expected</li>
+                <li><strong>Readiness:</strong> >90% complete, awaiting blocker resolution</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Risk Mitigation:</h3>
+            <ul style="line-height: 2;">
+                <li>Active coordination with BytePro partnership team</li>
+                <li>All development work complete and ready for API integration</li>
+            </ul>
+            <div style="background: #E3F2FD; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #2196F3;">💡 Status:</strong> On track for February deployment pending critical blocker resolution.
+            </div>
+        </div>
+
+        <div id="slide3-insight4">
+            <h2 style="color: #9C27B0; margin-bottom: 20px;">🚀 Sprint 2026.2 (Day-15)</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Phase 1 Production Deployment</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Deployment Plan:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Timeline:</strong> Mid-February (Day-15 of Sprint 2026.2)</li>
+                <li><strong>Scope:</strong> Single Flow Bundle to production</li>
+                <li><strong>User Groups:</strong> Shippers, Trade Group, Post-Closing Review</li>
+                <li><strong>Training:</strong> Learning & Development materials ready</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Expected Outcomes:</h3>
+            <ul style="line-height: 2;">
+                <li>Immediate productivity gains per bundle operation</li>
+                <li>Elimination of Byte LOS lockouts for single loan bundles</li>
+                <li>Background processing capability deployed</li>
+            </ul>
+            <div style="background: #F3E5F5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #9C27B0;">💡 Impact:</strong> First production release delivers immediate value to end users and validates platform architecture.
+            </div>
+        </div>
+
+        <div id="slide3-insight5">
+            <h2 style="color: #009688; margin-bottom: 20px;">💻 Sprint 2026.3 (Day-1) - Phase 2</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Bulk Bundle Development Begins</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Development Focus:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Frontend:</strong> 4 population methods, bulk UI components</li>
+                <li><strong>Backend:</strong> Asynchronous job processing, activity log</li>
+                <li><strong>Documentation:</strong> 15 tickets ready for implementation</li>
+                <li><strong>Timeline:</strong> Q1 2026 target completion</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Features:</h3>
+            <ul style="line-height: 2;">
+                <li>Manual upload with auto-fix formatting</li>
+                <li>Background processing with "set it & forget it" capability</li>
+                <li>Hyperlinked navigation between bulk and single flow</li>
+            </ul>
+            <div style="background: #E0F2F1; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #009688;">💡 Impact:</strong> Phase 2 builds on Phase 1 foundation to enable bulk operations at scale.
+            </div>
+        </div>
+
+        <div id="slide3-insight6">
+            <h2 style="color: #E91E63; margin-bottom: 20px;">🔍 Sprint 2026.3 (Day-1) - Phase 3</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Document Manager Integration Discovery</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Discovery Activities:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Technical Discovery:</strong> Integration patterns and API requirements</li>
+                <li><strong>Business Requirements:</strong> Stakeholder interviews early March</li>
+                <li><strong>Architecture Design:</strong> Integration strategy and data flow</li>
+                <li><strong>Documentation:</strong> Feature ticket creation and specifications</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Target Timeline:</h3>
+            <ul style="line-height: 2;">
+                <li>Discovery: Sprint 2026.3 (late February)</li>
+                <li>Requirements: Early March</li>
+                <li>Development: Early Q2 2026</li>
+            </ul>
+            <div style="background: #FCE4EC; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #E91E63;">💡 Note:</strong> Phase 3 represents next evolution of platform capabilities - document lifecycle management integration.
+            </div>
+        </div>
+
+        <div id="slide3-insight7">
+            <h2 style="color: #FBC02D; margin-bottom: 20px;">🤝 Enterprise Alignment</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Cross-Functional Stakeholder Alignment for Execution Excellence</strong></p>
+            <h3 style="color: #F57F17; margin-top: 30px;">👥 Key Stakeholders:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Business Operations:</strong> Shippers, Trade Group, Post-Closing Review</li>
+                <li><strong>Executive Sponsors:</strong> Colleen Schofield, Ashley Kempe, Carol Overton, Scott Fine, Adam Covey</li>
+                <li><strong>Development Teams:</strong> CMG Docs Team, Design Team</li>
+                <li><strong>Product & Support:</strong> Aza Olival (Product Manager), Learning & Development, MVP Support</li>
+            </ul>
+            <h3 style="color: #F57F17; margin-top: 30px;">🚀 Strategic Value:</h3>
+            <ul style="line-height: 2;">
+                <li>Rapid decision-making eliminates organizational bottlenecks</li>
+                <li>Business champion network ensures user adoption success</li>
+                <li>Cross-functional visibility reduces technical debt</li>
+                <li>Feedback loops enable continuous improvement</li>
+            </ul>
+            <div style="background: #FFF9C4; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #F57F17;">💡 Impact:</strong> Enterprise-wide alignment transforms BoB into a strategic initiative with executive visibility and operational buy-in across all delivery phases.
+            </div>
+        </div>
+
+        <!-- Slide 4 Feature Modals -->
+        <div id="slide4-feature1">
+            <h2 style="color: #2196F3; margin-bottom: 20px;">🔓 Separate from Byte</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Work in both platforms simultaneously without interruption</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Continue working in Byte LOS while bundle processes run in background</li>
+                <li>No more workflow interruptions or forced idle time</li>
+                <li>Maintain productivity across both systems seamlessly</li>
+                <li>Switch context between platforms without losing progress</li>
+            </ul>
+            <div style="background: #E3F2FD; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #2196F3;">💡 Impact:</strong> Eliminates 5-90 minute workflow lockouts per bundle operation, allowing users to maintain continuous productivity.
+            </div>
+        </div>
+
+        <div id="slide4-feature2">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">⚡ Parallel Processing</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Run multiple bundle operations concurrently</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Process multiple loans simultaneously in different browser tabs/windows</li>
+                <li>No queue restrictions - start new bundles while others process</li>
+                <li>Maximize throughput during peak operational periods</li>
+                <li>Scale operations based on team capacity and workload</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Enables 6+ parallel work streams, dramatically increasing team productivity and reducing bundle processing bottlenecks.
+            </div>
+        </div>
+
+        <div id="slide4-feature3">
+            <h2 style="color: #FF9800; margin-bottom: 20px;">🎯 Document Filtering</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Isolate documents by type, status, or category</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Filter by document type (APP, MISC, etc.) for targeted review</li>
+                <li>View only missing vs. found documents to focus efforts</li>
+                <li>Category-based filtering for organized document management</li>
+                <li>Quick identification of bundle readiness status</li>
+            </ul>
+            <div style="background: #FFF3E0; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #FF9800;">💡 Impact:</strong> Reduces document review time by 60-70% through intelligent filtering and focused display.
+            </div>
+        </div>
+
+        <div id="slide4-feature4">
+            <h2 style="color: #9C27B0; margin-bottom: 20px;">🧠 Smart Display Rules</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Auto-hide non-applicable loan program documents</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Automatically identifies and hides documents not required for loan type</li>
+                <li>Reduces visual clutter on document grid by 40-50%</li>
+                <li>Focus only on relevant, applicable documents</li>
+                <li>Intelligent rules engine based on loan program requirements</li>
+            </ul>
+            <div style="background: #F3E5F5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #9C27B0;">💡 Impact:</strong> Simplifies document review process and eliminates confusion about document applicability.
+            </div>
+        </div>
+
+        <!-- Slide 5 Feature Modals -->
+        <div id="slide5-feature1">
+            <h2 style="color: #2196F3; margin-bottom: 20px;">✨ All Single Flow Features</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Complete Single Flow capabilities plus bulk-specific enhancements</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Included Single Flow Features:</h3>
+            <ul style="line-height: 2;">
+                <li>🔓 Separate from Byte - Work in both platforms simultaneously</li>
+                <li>⚡ Parallel Processing - Multiple concurrent operations</li>
+                <li>🎯 Document Filtering - Type, status, and category isolation</li>
+                <li>🧠 Smart Display Rules - Auto-hide non-applicable documents</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Plus Bulk-Specific Enhancements:</h3>
+            <ul style="line-height: 2;">
+                <li>Population methods for multi-loan selection</li>
+                <li>Background job processing with logout capability</li>
+                <li>Activity log for historical tracking</li>
+                <li>Hyperlinked navigation between bulk and single flow views</li>
+            </ul>
+        </div>
+
+        <div id="slide5-feature2">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">📋 Manual Upload with Auto-Fix</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Raw loan number input with intelligent format cleanup</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Paste raw loan numbers in any format (comma, space, semicolon, etc.)</li>
+                <li>Auto-fix automatically cleans and standardizes formatting</li>
+                <li>Removes duplicate entries automatically</li>
+                <li>No manual formatting required - system handles it all</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Saves 5-10 minutes per bulk operation by eliminating manual data cleanup and validation.
+            </div>
+        </div>
+
+        <div id="slide5-feature3">
+            <h2 style="color: #FF9800; margin-bottom: 20px;">📁 Legacy Population Options</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Alternative methods for loan population selection</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Available Options:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Trade Number:</strong> Select loans by trade identifier</li>
+                <li><strong>Custom Filter:</strong> Build custom selection criteria</li>
+                <li><strong>Investor Commitment Number:</strong> Group by investor commitment</li>
+            </ul>
+            <div style="background: #FFF3E0; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #FF9800;">💡 Note:</strong> These legacy options provide flexibility for users who prefer traditional selection methods.
+            </div>
+        </div>
+
+        <div id="slide5-feature4">
+            <h2 style="color: #9C27B0; margin-bottom: 20px;">🚀 Background Processing</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Set it & forget it - Logout without interruption</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Jobs continue processing even after logout</li>
+                <li>No need to keep browser open or stay connected</li>
+                <li>Start bulk operations at end of day and review results next morning</li>
+                <li>Asynchronous processing frees users completely</li>
+            </ul>
+            <div style="background: #F3E5F5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #9C27B0;">💡 Impact:</strong> True "set it and forget it" capability - eliminates waiting time and allows flexible work scheduling.
+            </div>
+        </div>
+
+        <div id="slide5-feature5">
+            <h2 style="color: #009688; margin-bottom: 20px;">📊 Activity Log</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>10-day job history and status tracking</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>View all bulk operations from past 10 days</li>
+                <li>Track job status (In Progress, Completed, Failed)</li>
+                <li>Review historical bundle creation activity</li>
+                <li>Audit trail for compliance and tracking</li>
+            </ul>
+            <div style="background: #E0F2F1; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #009688;">💡 Impact:</strong> Provides transparency and accountability for all bulk bundle operations across the team.
+            </div>
+        </div>
+
+        <div id="slide5-feature6">
+            <h2 style="color: #E91E63; margin-bottom: 20px;">🔗 Hyperlinked Loans</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Drill down to individual loan level in single flow</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Click any loan number to open Single Flow view</li>
+                <li>Seamless navigation between bulk and individual loan contexts</li>
+                <li>Make individual loan corrections without leaving bulk workflow</li>
+                <li>Return to bulk view to continue operations</li>
+            </ul>
+            <div style="background: #FCE4EC; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #E91E63;">💡 Impact:</strong> Bridges bulk and single workflows for complete flexibility in loan management and document handling.
+            </div>
+        </div>
+
+        <!-- CTC Modals -->
+        <div id="ctc-slide2-problem">
+            <h2 style="color: #E53935; margin-bottom: 20px;">🔍 The Opportunity</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Clear to Close Operational Challenges</strong></p>
+            <h3 style="color: #E53935; margin-top: 30px;">🎯 Current Pain Points:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Manual Tracking:</strong> Processors manually track dozens of conditions per loan across spreadsheets</li>
+                <li><strong>Limited Visibility:</strong> No real-time pipeline-wide view of CTC readiness status</li>
+                <li><strong>Reactive Operations:</strong> Issues discovered late, causing last-minute delays</li>
+                <li><strong>Fragmented Data:</strong> Condition status scattered across multiple systems</li>
+            </ul>
+            <h3 style="color: #E53935; margin-top: 30px;">📉 Business Impact:</h3>
+            <ul style="line-height: 2;">
+                <li>Extended cycle times due to condition tracking inefficiencies</li>
+                <li>Missed close dates from late-discovery blockers</li>
+                <li>Reduced team capacity managing manual processes</li>
+                <li>Poor customer experience with unpredictable timelines</li>
+            </ul>
+            <div style="background: #FFEBEE; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #E53935;">💡 Opportunity:</strong> Clear to Close operations need diagnostic intelligence and automation - exactly what the BoB Management Suite platform architecture can deliver.
+            </div>
+        </div>
+
+        <div id="ctc-slide2-solution">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">👨‍⚕️ Dr. BoB Concept</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>AI-Powered CTC Diagnostic Platform</strong></p>
+            <h3 style="color: #4CAF50; margin-top: 30px;">🎯 Core Concept:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Health Diagnostics:</strong> Real-time loan health scores with red/yellow/green indicators</li>
+                <li><strong>Blocker Detection:</strong> AI identifies missing docs, expired conditions, and potential delays</li>
+                <li><strong>Smart Recommendations:</strong> Context-aware action suggestions to accelerate loan progression</li>
+                <li><strong>Predictive Analytics:</strong> ML models forecast realistic close dates based on current state</li>
+            </ul>
+            <h3 style="color: #4CAF50; margin-top: 30px;">✨ Platform Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Built on proven BoB architecture - faster time to value</li>
+                <li>Leverages existing CLEAR portal framework and patterns</li>
+                <li>Reuses authentication, security, and integration infrastructure</li>
+                <li>Extends platform ROI across multiple operational use cases</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Dr. BoB transforms CTC from reactive manual tracking to proactive AI-powered diagnostics.
+            </div>
+        </div>
+
+        <div id="ctc-slide2-value">
+            <h2 style="color: #2E7D60; margin-bottom: 20px;">💎 Value Proposition</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Operational Efficiency Through Diagnostic Intelligence</strong></p>
+            <h3 style="color: #2E7D60; margin-top: 30px;">👥 Target Users:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Processors:</strong> Real-time condition tracking and blocker alerts</li>
+                <li><strong>Underwriters:</strong> Clear visibility into condition satisfaction status</li>
+                <li><strong>Closers:</strong> Predictive close date insights and readiness diagnostics</li>
+                <li><strong>Quality Control:</strong> Pipeline-wide health monitoring and risk identification</li>
+            </ul>
+            <h3 style="color: #2E7D60; margin-top: 30px;">🚀 Key Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Identify and resolve blockers before they cause delays</li>
+                <li>Real-time aggregate view across entire loan portfolio</li>
+                <li>Data-driven close date forecasting</li>
+                <li>Reduce manual tracking effort by 60-70%</li>
+            </ul>
+            <div style="background: #D7F0E5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #2E7D60;">💡 Impact:</strong> Measurable improvements in cycle time, team capacity, and customer experience through intelligent CTC automation.
+            </div>
+        </div>
+
+        <div id="ctc-slide3-feature1">
+            <h2 style="color: #4CAF50; margin-bottom: 20px;">🎯 Predictive Close Date Analysis</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>ML-powered forecasting for realistic close date expectations</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">How It Works:</h3>
+            <ul style="line-height: 2;">
+                <li>Analyzes current loan conditions, outstanding items, and historical patterns</li>
+                <li>Machine learning models trained on thousands of closed loans</li>
+                <li>Factors in complexity, borrower responsiveness, and external dependencies</li>
+                <li>Updates predictions in real-time as conditions change</li>
+            </ul>
+            <h3 style="color: #2C3E50; margin-top: 30px;">User Benefits:</h3>
+            <ul style="line-height: 2;">
+                <li>Set realistic customer expectations upfront</li>
+                <li>Identify loans at risk of missing close dates early</li>
+                <li>Prioritize work based on predicted close date confidence</li>
+            </ul>
+            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Replace guesswork with data-driven close date forecasts.
+            </div>
+        </div>
+
+        <div id="ctc-slide3-feature2">
+            <h2 style="color: #3A9675; margin-bottom: 20px;">🤖 Smart Action Recommendations</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Context-aware guidance for accelerating loan progression</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Example Recommendations:</h3>
+            <ul style="line-height: 2;">
+                <li>"Request updated VOE - previous expires in 3 days"</li>
+                <li>"Schedule final walkthrough - property access confirmed"</li>
+                <li>"Follow up on outstanding appraisal condition with borrower"</li>
+                <li>"Notify title company - closing date approaching"</li>
+            </ul>
+            <div style="background: #D7F0E5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #3A9675;">💡 Impact:</strong> Accelerate loan progression with AI-powered next-best-action recommendations.
+            </div>
+        </div>
+
+        <div id="ctc-slide3-feature3">
+            <h2 style="color: #2E5C4A; margin-bottom: 20px;">📊 Multi-Loan Pipeline View</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Aggregate visibility across entire CTC pipeline</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Features:</h3>
+            <ul style="line-height: 2;">
+                <li>Real-time dashboard showing all loans in CTC stage</li>
+                <li>Color-coded health scores for quick status identification</li>
+                <li>Filter by processor, loan type, close date, health score</li>
+                <li>Drill down from pipeline view into individual loan diagnostics</li>
+            </ul>
+            <div style="background: #C5E8D9; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #2E5C4A;">💡 Impact:</strong> Transform CTC to strategic pipeline management with real-time visibility.
+            </div>
+        </div>
+
+        <div id="ctc-slide3-feature4">
+            <h2 style="color: #46A382; margin-bottom: 20px;">🔔 Intelligent Alerts & Notifications</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Proactive notifications for critical events and approaching deadlines</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Alert Types:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Critical Blockers:</strong> Immediate attention required to avoid delays</li>
+                <li><strong>Approaching Deadlines:</strong> 3-day, 1-day, and same-day expiration warnings</li>
+                <li><strong>Anomaly Detection:</strong> Unusual patterns that may indicate issues</li>
+                <li><strong>Milestone Progress:</strong> Positive updates when conditions are satisfied</li>
+            </ul>
+            <div style="background: #B8E0CE; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #46A382;">💡 Impact:</strong> Shift from reactive fire-fighting to proactive issue management.
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
+        let currentDeck = 'bob'; // Track which deck is active
+        let deckSlides = []; // Slides for current deck
 
-        document.getElementById('total-slides').textContent = totalSlides;
+        // Switch between decks
+        function switchDeck(deckName) {
+            // Update current deck
+            currentDeck = deckName;
+
+            // Get all slides for this deck
+            const allSlides = document.querySelectorAll('.slide');
+            deckSlides = Array.from(allSlides).filter(slide => slide.dataset.deck === deckName);
+
+            // Hide all slides
+            allSlides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+            });
+
+            // Show only slides from current deck
+            deckSlides.forEach(slide => {
+                slide.style.display = '';
+            });
+
+            // Update breadcrumb buttons
+            document.querySelectorAll('.breadcrumb-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.deck === deckName) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Reset to first slide of this deck
+            currentSlide = 0;
+            deckSlides[currentSlide].classList.add('active');
+
+            // Update slide counter
+            document.getElementById('total-slides').textContent = deckSlides.length;
+            document.getElementById('current-slide').textContent = '1';
+
+            // Update navigation buttons
+            updateNavButtons();
+        }
 
         function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = n;
-            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
-            if (currentSlide < 0) currentSlide = 0;
-            slides[currentSlide].classList.add('active');
+            if (deckSlides.length === 0) return;
 
+            // Remove active from current slide
+            deckSlides[currentSlide].classList.remove('active');
+
+            // Update slide index
+            currentSlide = n;
+            if (currentSlide >= deckSlides.length) currentSlide = deckSlides.length - 1;
+            if (currentSlide < 0) currentSlide = 0;
+
+            // Add active to new slide
+            deckSlides[currentSlide].classList.add('active');
+
+            // Update counter
             document.getElementById('current-slide').textContent = currentSlide + 1;
 
+            // Update nav buttons
+            updateNavButtons();
+        }
+
+        function updateNavButtons() {
             document.getElementById('prev-btn').disabled = currentSlide === 0;
-            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+            document.getElementById('next-btn').disabled = currentSlide === deckSlides.length - 1;
         }
 
         function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
+            if (currentSlide < deckSlides.length - 1) {
                 showSlide(currentSlide + 1);
             }
         }
@@ -1220,15 +2315,25 @@
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
             if (e.key === 'Home') showSlide(0);
-            if (e.key === 'End') showSlide(totalSlides - 1);
+            if (e.key === 'End') showSlide(deckSlides.length - 1);
             if (e.key === 'Escape') closeModal();
         });
 
         // Modal functions
-        function openModal(element) {
+        function openModal(elementOrId) {
             const modalOverlay = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = element.cloneNode(true).innerHTML;
+
+            // Handle both element objects and string IDs
+            if (typeof elementOrId === 'string') {
+                const contentElement = document.getElementById(elementOrId);
+                if (contentElement) {
+                    modalBody.innerHTML = contentElement.innerHTML;
+                }
+            } else {
+                modalBody.innerHTML = elementOrId.cloneNode(true).innerHTML;
+            }
+
             modalOverlay.classList.add('active');
         }
 
@@ -1239,44 +2344,8 @@
             document.getElementById('modalOverlay').classList.remove('active');
         }
 
-        // Make cards clickable on slides 2 and 3
-        function initializeClickableCards() {
-            const slides = document.querySelectorAll('.slide');
-
-            // Slide 2 (index 1) - content cards
-            if (slides[1]) {
-                const slide2Cards = slides[1].querySelectorAll('.content-card');
-                slide2Cards.forEach(card => {
-                    card.classList.add('clickable');
-                    card.addEventListener('click', function() {
-                        openModal(this);
-                    });
-                });
-            }
-
-            // Slide 3 (index 2) - status cards and content cards
-            if (slides[2]) {
-                const slide3StatusCards = slides[2].querySelectorAll('.status-card');
-                slide3StatusCards.forEach(card => {
-                    card.classList.add('clickable');
-                    card.addEventListener('click', function() {
-                        openModal(this);
-                    });
-                });
-
-                const slide3ContentCards = slides[2].querySelectorAll('.content-card');
-                slide3ContentCards.forEach(card => {
-                    card.classList.add('clickable');
-                    card.addEventListener('click', function() {
-                        openModal(this);
-                    });
-                });
-            }
-        }
-
-        // Initialize
-        showSlide(0);
-        initializeClickableCards();
+        // Initialize - Start with BoB deck
+        switchDeck('bob');
     </script>
 </body>
 </html>
