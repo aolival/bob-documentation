@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoB Manager - End of Day Todo | January 20, 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #2C3E50;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header .date {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-card.high-priority .number {
+            color: #e74c3c;
+        }
+
+        .stat-card.medium-priority .number {
+            color: #f39c12;
+        }
+
+        .stat-card.low-priority .number {
+            color: #27ae60;
+        }
+
+        .add-task-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-task-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #2C3E50;
+            font-size: 0.875rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            font-size: 0.875rem;
+            padding: 8px 16px;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            font-size: 0.875rem;
+            padding: 8px 16px;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .tasks-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .priority-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .priority-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+        }
+
+        .priority-section.high .priority-header {
+            border-bottom-color: #e74c3c;
+        }
+
+        .priority-section.medium .priority-header {
+            border-bottom-color: #f39c12;
+        }
+
+        .priority-section.low .priority-header {
+            border-bottom-color: #27ae60;
+        }
+
+        .priority-header h2 {
+            font-size: 1.5rem;
+            color: #2C3E50;
+        }
+
+        .priority-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .priority-badge.high {
+            background: #e74c3c;
+        }
+
+        .priority-badge.medium {
+            background: #f39c12;
+        }
+
+        .priority-badge.low {
+            background: #27ae60;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-item.completed .task-content {
+            text-decoration: line-through;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: #2C3E50;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .task-description {
+            color: #7f8c8d;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #95a5a6;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .task-item {
+                flex-direction: column;
+            }
+
+            .task-actions {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 BoB Manager - End of Day Todo</h1>
+            <p class="date">Monday, January 20, 2026</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <div class="number" id="total-count">0</div>
+            </div>
+            <div class="stat-card high-priority">
+                <h3>High Priority</h3>
+                <div class="number" id="high-count">0</div>
+            </div>
+            <div class="stat-card medium-priority">
+                <h3>Medium Priority</h3>
+                <div class="number" id="medium-count">0</div>
+            </div>
+            <div class="stat-card low-priority">
+                <h3>Low Priority</h3>
+                <div class="number" id="low-count">0</div>
+            </div>
+        </div>
+
+        <!-- Add Task Section -->
+        <div class="add-task-section">
+            <h2 style="margin-bottom: 20px; color: #2C3E50;">➕ Add New Task</h2>
+            <form class="add-task-form" id="add-task-form">
+                <div class="form-group">
+                    <label for="task-title">Task Title *</label>
+                    <input type="text" id="task-title" placeholder="e.g., Fill in Key Features for Slides 4 & 5" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Description</label>
+                    <textarea id="task-description" placeholder="Additional details about this task..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-priority">Priority *</label>
+                    <select id="task-priority" required>
+                        <option value="high">High Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="low">Low Priority</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+            </form>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="tasks-section">
+            <!-- High Priority -->
+            <div class="priority-section high">
+                <div class="priority-header">
+                    <h2>High Priority</h2>
+                    <span class="priority-badge high" id="high-badge">0</span>
+                </div>
+                <div class="task-list" id="high-tasks">
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p>No high priority tasks</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medium Priority -->
+            <div class="priority-section medium">
+                <div class="priority-header">
+                    <h2>Medium Priority</h2>
+                    <span class="priority-badge medium" id="medium-badge">0</span>
+                </div>
+                <div class="task-list" id="medium-tasks">
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p>No medium priority tasks</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Low Priority -->
+            <div class="priority-section low">
+                <div class="priority-header">
+                    <h2>Low Priority</h2>
+                    <span class="priority-badge low" id="low-badge">0</span>
+                </div>
+                <div class="task-list" id="low-tasks">
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p>No low priority tasks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Task Manager
+        class TaskManager {
+            constructor() {
+                this.tasks = this.loadTasks();
+                this.render();
+                this.attachEventListeners();
+            }
+
+            loadTasks() {
+                const saved = localStorage.getItem('bob-eod-tasks-jan20');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                // Default tasks for tomorrow based on today's work
+                return [
+                    {
+                        id: Date.now(),
+                        title: 'Fill in Key Features & Functions for Slide 4 (Single Flow)',
+                        description: 'Add bullet points to the Key Features box on the right side of Slide 4',
+                        priority: 'high',
+                        completed: false
+                    },
+                    {
+                        id: Date.now() + 1,
+                        title: 'Fill in Key Features & Functions for Slide 5 (Bulk Bundle)',
+                        description: 'Add bullet points to the Key Features box on the right side of Slide 5',
+                        priority: 'high',
+                        completed: false
+                    },
+                    {
+                        id: Date.now() + 2,
+                        title: 'Review Executive Summary with Leadership Team',
+                        description: 'Present the 6-slide executive summary presentation to leadership for feedback',
+                        priority: 'high',
+                        completed: false
+                    }
+                ];
+            }
+
+            saveTasks() {
+                localStorage.setItem('bob-eod-tasks-jan20', JSON.stringify(this.tasks));
+            }
+
+            addTask(title, description, priority) {
+                const task = {
+                    id: Date.now(),
+                    title,
+                    description,
+                    priority,
+                    completed: false
+                };
+                this.tasks.push(task);
+                this.saveTasks();
+                this.render();
+            }
+
+            toggleTask(id) {
+                const task = this.tasks.find(t => t.id === id);
+                if (task) {
+                    task.completed = !task.completed;
+                    this.saveTasks();
+                    this.render();
+                }
+            }
+
+            deleteTask(id) {
+                this.tasks = this.tasks.filter(t => t.id !== id);
+                this.saveTasks();
+                this.render();
+            }
+
+            render() {
+                // Update stats
+                const highTasks = this.tasks.filter(t => t.priority === 'high' && !t.completed);
+                const mediumTasks = this.tasks.filter(t => t.priority === 'medium' && !t.completed);
+                const lowTasks = this.tasks.filter(t => t.priority === 'low' && !t.completed);
+                const totalTasks = this.tasks.filter(t => !t.completed);
+
+                document.getElementById('total-count').textContent = totalTasks.length;
+                document.getElementById('high-count').textContent = highTasks.length;
+                document.getElementById('medium-count').textContent = mediumTasks.length;
+                document.getElementById('low-count').textContent = lowTasks.length;
+
+                document.getElementById('high-badge').textContent = highTasks.length;
+                document.getElementById('medium-badge').textContent = mediumTasks.length;
+                document.getElementById('low-badge').textContent = lowTasks.length;
+
+                // Render task lists
+                this.renderTaskList('high');
+                this.renderTaskList('medium');
+                this.renderTaskList('low');
+            }
+
+            renderTaskList(priority) {
+                const container = document.getElementById(`${priority}-tasks`);
+                const tasks = this.tasks.filter(t => t.priority === priority);
+
+                if (tasks.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p>No ${priority} priority tasks</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = tasks.map(task => `
+                    <div class="task-item ${task.completed ? 'completed' : ''}">
+                        <input type="checkbox"
+                               class="task-checkbox"
+                               ${task.completed ? 'checked' : ''}
+                               data-id="${task.id}">
+                        <div class="task-content">
+                            <div class="task-title">${this.escapeHtml(task.title)}</div>
+                            ${task.description ? `<div class="task-description">${this.escapeHtml(task.description)}</div>` : ''}
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn btn-danger" data-id="${task.id}" data-action="delete">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            attachEventListeners() {
+                // Add task form
+                document.getElementById('add-task-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const title = document.getElementById('task-title').value;
+                    const description = document.getElementById('task-description').value;
+                    const priority = document.getElementById('task-priority').value;
+
+                    this.addTask(title, description, priority);
+
+                    // Reset form
+                    e.target.reset();
+                });
+
+                // Task actions (using event delegation)
+                document.addEventListener('change', (e) => {
+                    if (e.target.classList.contains('task-checkbox')) {
+                        const id = parseInt(e.target.dataset.id);
+                        this.toggleTask(id);
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (e.target.dataset.action === 'delete') {
+                        const id = parseInt(e.target.dataset.id);
+                        if (confirm('Are you sure you want to delete this task?')) {
+                            this.deleteTask(id);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize
+        const taskManager = new TaskManager();
+    </script>
+</body>
+</html>

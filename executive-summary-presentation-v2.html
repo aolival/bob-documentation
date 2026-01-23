@@ -92,6 +92,15 @@
             }
         }
 
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* Header styling matching Waterfall Evaluator */
         .slide-header {
             background: white;
@@ -681,17 +690,19 @@
         .modal-content {
             background: white;
             border-radius: 16px;
-            max-width: 95%;
-            max-height: 90%;
-            overflow: hidden;
+            max-width: 85vw;
+            width: 85vw;
+            max-height: 90vh;
+            height: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
             position: relative;
-            padding: 40px 60px;
+            padding: 20px 40px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             animation: modalIn 0.3s ease-out;
             font-size: 1.4rem;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         .modal-content h3 {
@@ -716,27 +727,27 @@
         }
 
         .modal-content .status-card-label {
-            font-size: 1.3rem !important;
+            font-size: 1.5rem !important;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .modal-content .status-card-value {
             font-size: 1.6rem !important;
-            line-height: 1.5 !important;
+            line-height: 1.6 !important;
         }
 
         .modal-content .status-card-value br {
-            line-height: 1.5 !important;
+            line-height: 1.6 !important;
         }
 
         .modal-content span {
-            font-size: 1.3rem !important;
+            font-size: 1.4rem !important;
         }
 
         .modal-content .status-card {
-            padding: 30px;
+            padding: 25px;
         }
 
         @keyframes modalIn {
@@ -838,10 +849,10 @@
 
         <!-- Slide 2: Project Overview with Screenshots -->
         <div class="slide" data-deck="bob">
-            <div class="slide-header">
-                <div class="slide-number">SLIDE 2 OF 6</div>
-                <h1 class="slide-title">Project Overview</h1>
-                <p class="slide-subtitle">Eliminating productivity bottlenecks in post-close operations</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 2 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">Project Overview</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">Eliminating productivity bottlenecks in post-close operations</p>
             </div>
             <div class="slide-content">
                 <div class="clickable" onclick="openModal('slide2-problem')" style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; cursor: pointer; transition: transform 0.2s;">
@@ -852,7 +863,7 @@
                         </h3>
                         <span style="background: #E53935; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">CRITICAL</span>
                     </div>
-                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Bundle operations lock users out of Byte LOS for 5-90+ minutes, creating critical productivity bottlenecks in post-close shipping.</p>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Bundle operations lock users out of Byte LOS for 5-20 minutes on average, creating critical productivity bottlenecks in post-close shipping.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('slide2-solution')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #4CAF50; cursor: pointer; transition: transform 0.2s;">
@@ -879,7 +890,7 @@
                         <strong style="color: #2C3E50;">Key Stakeholders:</strong><br>
                         Business - Colleen Schofield, Ashley Kempe, Carol Overton, Scott Fine, Adam Covey<br>
                         Development - CMG Docs & Design Teams | Product Manager - Aza Olival<br><br>
-                        <strong style="color: #2C3E50;">Productivity Gain:</strong> Eliminates 5-90 minute Byte lockouts per bundle operation. Users benefit from background task processing and parallel work streams
+                        <strong style="color: #2C3E50;">Productivity Gain:</strong> Eliminates 5-20 minutes on average per bundle in Byte lockouts. Users benefit from background task processing and parallel work streams
                     </p>
                 </div>
             </div>
@@ -887,124 +898,95 @@
 
         <!-- Slide 3: Project Pulse -->
         <div class="slide" data-deck="bob">
-            <div class="slide-header" style="padding: 12px 30px;">
-                <div class="slide-number">SLIDE 3 OF 6</div>
-                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 4px;">Project Pulse: Status, Insights & Path Forward</h1>
-                <p class="slide-subtitle" style="font-size: 0.875rem;">Current state, achievements, and delivery trajectory</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 3 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">Project Pulse: Status, Insights & Path Forward</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">Current state, achievements, and delivery trajectory</p>
             </div>
             <div class="slide-content" style="gap: 8px;">
-                <div class="status-cards">
-                    <div class="status-card">
-                        <div class="status-card-label">Feature Tickets</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                <div class="status-cards" style="gap: 12px;">
+                    <div class="status-card clickable" onclick="openModal('slide3-feature-tickets')" style="padding: 16px; cursor: pointer; transition: transform 0.2s;">
+                        <div class="status-card-label" style="font-size: 1.0625rem; margin-bottom: 8px;">Feature Tickets</div>
+                        <div class="status-card-value" style="font-size: 1.125rem; line-height: 1.5;">
                             Phase 1: Single Flow Bundle<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">22 Tickets - Testing in Progress or Owner Accepted</span><br>
+                            <span style="font-size: 1rem; color: #78909C;">22 Tickets - Testing in Progress or Owner Accepted</span><br>
                             Phase 2: Bulk Flow Bundle<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">15 Tickets - Ready for Development (Feb 2026)</span><br>
+                            <span style="font-size: 1rem; color: #78909C;">15 Tickets - Ready for Development (Feb 2026)</span><br>
                             Phase 3: Document Manager Integration<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">TBD - 60+ Days Out</span>
+                            <span style="font-size: 1rem; color: #78909C;">TBD - 60+ Days Out</span>
                         </div>
                     </div>
-                    <div class="status-card">
-                        <div class="status-card-label">Database / Backend Dependency</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                    <div class="status-card clickable" onclick="openModal('slide3-backend-dependency')" style="padding: 16px; cursor: pointer; transition: transform 0.2s;">
+                        <div class="status-card-label" style="font-size: 1.0625rem; margin-bottom: 8px;">Database / Backend Dependency</div>
+                        <div class="status-card-value" style="font-size: 1.125rem; line-height: 1.5;">
                             18 new EPS connections<br>
-                            <span style="font-size: 0.7rem; color: #2C3E50;">Byte 25.2 API Integration</span><br>
-                            <span style="font-size: 0.7rem; color: #D32F2F; font-weight: 600;">🔴 CRITICAL BLOCKER:</span><br>
-                            <span style="font-size: 0.65rem; color: #78909C;">Byte 25.2 Prod Release targeted for Sprint 2026.2 (End of Jan)</span><br>
-                            <span style="font-size: 0.7rem; color: #E65100; font-weight: 600;">⚠️ Pending Blockers:</span><br>
-                            <span style="font-size: 0.65rem; color: #78909C;">OI-002: Trade Number Mapping | OI-003: Custom Filter Mapping | OI-004: Investor Commitment Mapping</span>
+                            <span style="font-size: 1rem; color: #2C3E50;">Byte 25.2 API Integration</span><br>
+                            <span style="font-size: 1rem; color: #D32F2F; font-weight: 600;">🔴 CRITICAL BLOCKER:</span><br>
+                            <span style="font-size: 0.9375rem; color: #78909C;">Byte 25.2 Prod Release targeted for Sprint 2026.2 (End of Jan)</span><br>
+                            <span style="font-size: 1rem; color: #E65100; font-weight: 600;">⚠️ Pending Blockers:</span><br>
+                            <span style="font-size: 0.9375rem; color: #78909C;">OI-002: Trade Number Mapping | OI-003: Custom Filter Mapping | OI-004: Investor Commitment Mapping</span>
                         </div>
                     </div>
-                    <div class="status-card">
-                        <div class="status-card-label">Readiness Score</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
+                    <div class="status-card clickable" onclick="openModal('slide3-readiness-score')" style="padding: 16px; cursor: pointer; transition: transform 0.2s;">
+                        <div class="status-card-label" style="font-size: 1.0625rem; margin-bottom: 8px;">Readiness Score</div>
+                        <div class="status-card-value" style="font-size: 1.125rem; line-height: 1.5;">
                             Phase 1: >90%<br>
-                            <span style="font-size: 0.7rem; color: #2C3E50;">Single Flow Bundle</span><br>
-                            <span style="font-size: 0.65rem; color: #78909C;">UI testing awaiting <span style="color: #D32F2F; font-weight: 600;">Critical Blocker</span> removal</span><br>
+                            <span style="font-size: 1rem; color: #2C3E50;">Single Flow Bundle</span><br>
+                            <span style="font-size: 0.9375rem; color: #78909C;">UI testing awaiting <span style="color: #D32F2F; font-weight: 600;">Critical Blocker</span> removal</span><br>
                             Phase 2: 50%<br>
-                            <span style="font-size: 0.7rem; color: #2C3E50;">Bulk Flow Bundle</span><br>
-                            <span style="font-size: 0.65rem; color: #78909C;">Documentation complete awaiting development (Feb 2026)</span><br>
+                            <span style="font-size: 1rem; color: #2C3E50;">Bulk Flow Bundle</span><br>
+                            <span style="font-size: 0.9375rem; color: #78909C;">Documentation complete awaiting development (Feb 2026)</span><br>
                             Phase 3: <20%<br>
-                            <span style="font-size: 0.7rem; color: #2C3E50;">Document Manager Integration</span><br>
-                            <span style="font-size: 0.65rem; color: #78909C;">Discovery Sprint 2026.3 (late Feb) | Requirements early March</span>
+                            <span style="font-size: 1rem; color: #2C3E50;">Document Manager Integration</span><br>
+                            <span style="font-size: 0.9375rem; color: #78909C;">Discovery Sprint 2026.3 (late Feb) | Requirements early March</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px;">
-                    <h3 style="color: #2C3E50; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; border-bottom: 2px solid #17a2b8; padding-bottom: 6px;">💡 Key Insights, Timeline & Milestones</h3>
+                <div style="background: white; border-radius: 10px; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 8px;">
+                    <h3 style="color: #2C3E50; font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; border-bottom: 2px solid #17a2b8; padding-bottom: 6px;">💡 Key Insights, Timeline & Milestones</h3>
 
-                    <div style="display: grid; gap: 6px;">
-                        <!-- Insight 1 -->
-                        <div class="clickable" onclick="openModal('slide3-insight1')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #4CAF50; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">📚</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Documentation Milestone (Q4 2025)</strong>
-                                <span style="background: #4CAF50; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">COMPLETED</span>
+                    <div style="display: grid; gap: 7px;">
+                        <!-- Insight 1 - Combined: Milestones & Enterprise Alignment -->
+                        <div class="clickable" onclick="openModal('slide3-insight1-7')" style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 8px; padding: 10px 12px; cursor: pointer; border-left: 4px solid #FBC02D; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
+                                <span style="font-size: 1.25rem;">🤝</span>
+                                <strong style="color: #2C3E50; font-size: 0.9375rem;">Milestones & Enterprise Alignment</strong>
+                                <span style="background: #FBC02D; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.6875rem; font-weight: 600; margin-left: auto;">STRATEGIC</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 & 2 complete - 37 feature tickets with full specifications</p>
+                            <p style="color: #546E7A; font-size: 0.875rem; margin: 0; padding-left: 32px; line-height: 1.4;">Q4 2025 documentation complete (37 tickets) | Cross-functional stakeholder alignment achieved</p>
                         </div>
 
                         <!-- Insight 2 -->
-                        <div class="clickable" onclick="openModal('slide3-insight2')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #FF9800; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🎯</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Aggressive Market Timeline (Q1 2026)</strong>
-                                <span style="background: #FF9800; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">TARGET</span>
+                        <div class="clickable" onclick="openModal('slide3-insight2')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 8px; padding: 10px 12px; cursor: pointer; border-left: 4px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
+                                <span style="font-size: 1.25rem;">🎯</span>
+                                <strong style="color: #2C3E50; font-size: 0.9375rem;">Aggressive Market Timeline (Q1 2026)</strong>
+                                <span style="background: #FF9800; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.6875rem; font-weight: 600; margin-left: auto;">TARGET</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Delivering Phase 1 & 2 to production within Q1 2026</p>
+                            <p style="color: #546E7A; font-size: 0.875rem; margin: 0; padding-left: 32px; line-height: 1.4;">Delivering Phase 1 & 2 to production within Q1 2026</p>
                         </div>
 
-                        <!-- Insight 3 -->
-                        <div class="clickable" onclick="openModal('slide3-insight3')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2196F3; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🔄</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.2 (Current / Day-1)</strong>
-                                <span style="background: #2196F3; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">IN PROGRESS</span>
+                        <!-- Insight 3 - Combined: Sprint 2026.2 - Phase 1 -->
+                        <div class="clickable" onclick="openModal('slide3-insight3-4')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 8px; padding: 10px 12px; cursor: pointer; border-left: 4px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
+                                <span style="font-size: 1.25rem;">🚀</span>
+                                <strong style="color: #2C3E50; font-size: 0.9375rem;">Sprint 2026.2 - Phase 1 Delivery</strong>
+                                <span style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.6875rem; font-weight: 600; margin-left: auto;">IN PROGRESS</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 MVP in final testing, blocked by Byte 25.2 API release</p>
+                            <p style="color: #546E7A; font-size: 0.875rem; margin: 0; padding-left: 32px; line-height: 1.4;">Final testing (blocked by Byte 25.2 API) → Production deployment Day-15</p>
                         </div>
 
-                        <!-- Insight 4 -->
-                        <div class="clickable" onclick="openModal('slide3-insight4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #9C27B0; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🚀</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.2 (Day-15)</strong>
-                                <span style="background: #9C27B0; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">DEPLOY</span>
+                        <!-- Insight 5 - Combined: Sprint 2026.3 - Phase 2 & 3 -->
+                        <div class="clickable" onclick="openModal('slide3-insight5-6')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 8px; padding: 10px 12px; cursor: pointer; border-left: 4px solid #009688; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
+                                <span style="font-size: 1.25rem;">💻</span>
+                                <strong style="color: #2C3E50; font-size: 0.9375rem;">Sprint 2026.3 - Phase 2 & 3 Kickoff</strong>
+                                <span style="background: #009688; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.6875rem; font-weight: 600; margin-left: auto;">UPCOMING</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 1 Single Flow Bundle production deployment</p>
+                            <p style="color: #546E7A; font-size: 0.875rem; margin: 0; padding-left: 32px; line-height: 1.4;">Phase 2 Bulk Bundle development begins | Phase 3 discovery sessions start</p>
                         </div>
 
-                        <!-- Insight 5 -->
-                        <div class="clickable" onclick="openModal('slide3-insight5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #009688; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">💻</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.3 (Day-1)</strong>
-                                <span style="background: #009688; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PHASE 2</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 2 Bulk Bundle development (FE/BE) begins</p>
-                        </div>
-
-                        <!-- Insight 6 -->
-                        <div class="clickable" onclick="openModal('slide3-insight6')" style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #E91E63; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🔍</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Sprint 2026.3 (Day-1)</strong>
-                                <span style="background: #E91E63; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PHASE 3</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Phase 3 discovery sessions kick off</p>
-                        </div>
-
-                        <!-- Insight 7 -->
-                        <div class="clickable" onclick="openModal('slide3-insight7')" style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #FBC02D; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🤝</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Enterprise Alignment</strong>
-                                <span style="background: #FBC02D; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">STRATEGIC</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Cross-functional stakeholder alignment achieved - critical for execution velocity</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1012,139 +994,258 @@
 
         <!-- Slide 4: BoB Single Flow Delivery -->
         <div class="slide" data-deck="bob">
-            <div class="slide-header">
-                <div class="slide-number">SLIDE 4 OF 6</div>
-                <h1 class="slide-title">BoB - Single Flow Delivery</h1>
-                <p class="slide-subtitle">User Interface Feature & Function Highlights</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 4 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Single Flow Delivery</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 63% 37%; gap: 20px; padding: 20px; overflow: hidden;">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
                 <!-- Left: Scaled Interface -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
                     <!-- Clear Header -->
-                    <div style="background: white; padding: 12px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="background: white; padding: 12px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: center; align-items: center; position: relative;">
                         <h2 style="font-size: 1.1rem; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #17a2b8; margin: 0;">Clear</h2>
-                        <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="position: absolute; right: 20px; display: flex; align-items: center; gap: 10px;">
                             <span style="font-size: 0.7rem; color: #546E7A;">Shipper</span>
                             <div style="width: 28px; height: 28px; background: #17a2b8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.75rem;">AB</div>
                         </div>
                     </div>
 
                     <!-- Main Content Area -->
-                    <div style="flex: 1; background: #f5f7f9; padding: 20px; overflow-y: auto;">
-                        <div style="background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                            <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 500; margin-bottom: 15px;">Bundle Builder - Single Loan</h3>
+                    <div style="flex: 1; background: #f5f7f9; padding: 12px; overflow-y: auto; position: relative;">
+                        <div style="background: white; border-radius: 6px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                            <h3 style="color: #2C3E50; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px;">Bundle Builder - Single Loan</h3>
 
-                            <div style="margin-bottom: 15px;">
-                                <label style="display: block; font-size: 0.7rem; font-weight: 600; color: #2C3E50; margin-bottom: 5px;">Select Subject Loan</label>
-                                <input type="text" value="TEST000107039" readonly
-                                       style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #546E7A; margin-bottom: 4px;">Select Subject Loan</label>
+                                <div style="position: relative;">
+                                    <input id="slide4LoanInput" type="text" value="TEST000001384"
+                                           oninput="handleSlide4LoanInput()"
+                                           style="width: 100%; padding: 6px 32px 6px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.65rem; background: white; color: #2C3E50;">
+                                    <button onclick="searchSlide4Loan()" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: #17a2b8; cursor: pointer; font-size: 0.85rem;">🔍</button>
+                                </div>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                                 <div>
-                                    <label style="display: block; font-size: 0.7rem; font-weight: 600; color: #2C3E50; margin-bottom: 5px;">Select Bundle</label>
-                                    <input type="text" value="Bundle Two" readonly
-                                           style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
+                                    <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #546E7A; margin-bottom: 4px;">Select Bundle</label>
+                                    <select id="slide4BundleSelect" onchange="handleSlide4BundleChange()"
+                                            style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.65rem; background: white; color: #2C3E50; cursor: pointer;">
+                                        <option value="">-- Select Bundle --</option>
+                                        <option value="themoneysource" selected>The Money Source</option>
+                                        <option value="usbank">US Bank</option>
+                                        <option value="chasebank">Chase Bank</option>
+                                        <option value="wellsfargo">Wells Fargo</option>
+                                        <option value="bankofamerica">Bank of America</option>
+                                        <option value="quickenloans">Quicken Loans</option>
+                                        <option value="freedommortgage">Freedom Mortgage</option>
+                                        <option value="pennymac">PennyMac</option>
+                                        <option value="caliberhomeloans">Caliber Home Loans</option>
+                                        <option value="amerihomemortgage">AmeriHome Mortgage</option>
+                                        <option value="newrez">NewRez</option>
+                                        <option value="guildmortgage">Guild Mortgage</option>
+                                        <option value="fairwayindependent">Fairway Independent</option>
+                                        <option value="movementmortgage">Movement Mortgage</option>
+                                        <option value="navyfederal">Navy Federal Credit Union</option>
+                                        <option value="usaa">USAA</option>
+                                        <option value="better">Better.com</option>
+                                        <option value="loandepot">LoanDepot</option>
+                                        <option value="guaranteedrate">Guaranteed Rate</option>
+                                        <option value="crosscountry">CrossCountry Mortgage</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <label style="display: block; font-size: 0.7rem; font-weight: 600; color: #2C3E50; margin-bottom: 5px;">PDF Bundle Name</label>
-                                    <input type="text" value="TEST00001105s15_Smith.pdf" readonly
-                                           style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
+                                    <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #546E7A; margin-bottom: 4px;">PDF Bundle Name</label>
+                                    <input id="slide4PdfName" type="text" value="johndanieldoe-10002923893-chasebank.pdf" readonly
+                                           style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.62rem; background: #f8f9fa; color: #78909C;">
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 8px; margin-bottom: 15px; justify-content: flex-end;">
-                                <button style="padding: 8px 14px; background: white; border: 2px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.7rem; font-weight: 600; cursor: pointer;">Start New Bundle</button>
-                                <button style="padding: 8px 14px; background: #17a2b8; border: none; color: white; border-radius: 4px; font-size: 0.7rem; font-weight: 600; cursor: pointer;">Build Bundle</button>
+                            <div id="slide4StatusMessage" style="display: none; padding: 6px 10px; margin-bottom: 8px; border-radius: 4px; font-size: 0.62rem; text-align: center;"></div>
+
+                            <div style="display: flex; gap: 6px; margin-bottom: 10px; justify-content: flex-end;">
+                                <button onclick="startNewSlide4Bundle()" style="padding: 6px 12px; background: white; border: 1px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">Start New Bundle</button>
+                                <button onclick="openUploadDocumentsModal()" style="padding: 6px 12px; background: white; border: 1px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">📤 Upload Documents</button>
                             </div>
 
-                            <div style="display: flex; gap: 10px; margin-bottom: 15px; background: #d4edda; padding: 10px; border-radius: 4px;">
-                                <span style="padding: 5px 10px; background: white; border: 2px solid #28a745; border-radius: 3px; font-size: 0.7rem; font-weight: 600; color: #2C3E50;">All 3</span>
-                                <span style="padding: 5px 10px; background: #f8d7da; border-radius: 3px; font-size: 0.7rem; font-weight: 600; color: #721c24;">Missing 1</span>
-                                <span style="padding: 5px 10px; background: #d4edda; border-radius: 3px; font-size: 0.7rem; font-weight: 600; color: #155724;">Found 2</span>
+                            <div id="slide4FilterSection" style="display: flex; gap: 5px; margin-bottom: 8px; align-items: center; font-size: 0.62rem;">
+                                <span id="filterAll" onclick="filterSlide4Docs('all')" style="padding: 4px 8px; background: white; border: 2px solid #17a2b8; border-radius: 4px; font-weight: 600; color: #2C3E50; cursor: pointer;">All 19</span>
+                                <span id="filterMissing" onclick="filterSlide4Docs('missing')" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; position: relative; cursor: pointer;">Missing <span style="position: absolute; top: -4px; right: -4px; background: #dc3545; color: white; border-radius: 50%; padding: 2px 5px; font-size: 0.55rem; font-weight: 700;">8</span></span>
+                                <span id="filterFound" onclick="filterSlide4Docs('found')" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; cursor: pointer;">Found 11</span>
+                                <label style="display: flex; align-items: center; gap: 3px; padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; cursor: pointer;">
+                                    <input id="hideNACheckbox" type="checkbox" checked onchange="toggleNotApplicableDocs()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                    <span style="color: #546E7A;">Hide Not Applicable Docs</span>
+                                </label>
+                                <span style="margin-left: auto; color: #78909C;">25 docs, 120 pgs</span>
                             </div>
 
-                            <div style="font-size: 0.7rem;">
-                                <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 8px; background: #f8f9fa; font-weight: 600; border-radius: 4px; margin-bottom: 5px;">
-                                    <div>Document Type</div>
-                                    <div>Count</div>
-                                    <div>Category</div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 8px; border-bottom: 1px solid #e9ecef;">
-                                    <div>Category: APP</div>
-                                    <div style="color: #28a745; font-weight: 600;">Found 2</div>
-                                    <div>APP</div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 8px; border-bottom: 1px solid #e9ecef;">
-                                    <div>Category: APP</div>
-                                    <div style="color: #dc3545; font-weight: 600;">Missing</div>
-                                    <div>APP</div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 10px; padding: 8px;">
-                                    <div>Category: MISC</div>
-                                    <div style="color: #28a745; font-weight: 600;">Found 2</div>
-                                    <div>MISC</div>
-                                </div>
+                            <div id="slide4TableContainer" style="display: block; overflow-x: auto;">
+                                <table id="slide4DocTable" style="width: 100%; border-collapse: collapse; font-size: 0.62rem;">
+                                    <thead style="background: #f8f9fa;">
+                                        <tr>
+                                            <th style="padding: 5px 6px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Document Type</th>
+                                            <th style="padding: 5px 6px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Status</th>
+                                            <th style="padding: 5px 6px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Document Category <span style="font-size: 0.55rem;">▼</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Personal Tax Statement</td>
+                                            <td style="padding: 5px 6px; color: #dc3545; font-weight: 600;">Missing</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Driver's License</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Flood Cert</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Homeowner's Insurance Declaration Page</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Title Deed</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 2</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Income Statement</td>
+                                            <td style="padding: 5px 6px; color: #dc3545; font-weight: 600;">Missing</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">2023 Tax Returns</td>
+                                            <td style="padding: 5px 6px; color: #dc3545; font-weight: 600;">Missing</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">2024 Tax Returns</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Escrow Waiver</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Mortgage Insurance Certificate</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 2</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Gift Letter</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 3</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">Purchase Agreement</td>
+                                            <td style="padding: 5px 6px; color: #dc3545; font-weight: 600;">Missing</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="found">
+                                            <td style="padding: 5px 6px; color: #2C3E50;">LOE - 10k Deposit</td>
+                                            <td style="padding: 5px 6px; color: #546E7A;">Found 2</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="notapplicable" class="not-applicable-row" style="display: none; border-bottom: 1px solid #f1f3f5; background: #fafafa;">
+                                            <td style="padding: 5px 6px; color: #78909C;">HOA Documentation</td>
+                                            <td style="padding: 5px 6px; color: #78909C; font-style: italic;">N/A</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="notapplicable" class="not-applicable-row" style="display: none; border-bottom: 1px solid #f1f3f5; background: #fafafa;">
+                                            <td style="padding: 5px 6px; color: #78909C;">HOA Documentation</td>
+                                            <td style="padding: 5px 6px; color: #78909C; font-style: italic;">N/A</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                        <tr data-status="notapplicable" class="not-applicable-row" style="display: none; border-bottom: 1px solid #f1f3f5; background: #fafafa;">
+                                            <td style="padding: 5px 6px; color: #78909C;">HOA Documentation</td>
+                                            <td style="padding: 5px 6px; color: #78909C; font-style: italic;">N/A</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">INC</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Build Bundle Button - Lower Right Corner -->
+                            <div style="position: absolute; bottom: 12px; right: 12px;">
+                                <button id="slide4BuildBtn" onclick="buildSlide4Bundle()" style="padding: 6px 12px; background: #17a2b8; border: none; color: white; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">Build Bundle</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right: Key Features Box -->
-                <div style="background: white; border-radius: 8px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
-                    <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px; border-bottom: 3px solid #17a2b8; padding-bottom: 8px;">Key Features & Functions</h3>
+                <div style="background: white; border-radius: 8px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
+                    <h3 style="color: #2C3E50; font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; border-bottom: 3px solid #17a2b8; padding-bottom: 10px;">Key Features & Functions</h3>
 
                     <!-- Feature Cards -->
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
                         <!-- Feature 1 -->
-                        <div class="clickable" onclick="openModal('slide4-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #2196F3; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                <span style="font-size: 1.2rem;">🔓</span>
-                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Separate from Byte</strong>
-                                <span style="background: #2196F3; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">FLEXIBILITY</span>
+                        <div class="clickable" onclick="openModal('slide4-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 8px; padding: 14px; cursor: pointer; border-left: 5px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <span style="font-size: 1.5rem;">🔓</span>
+                                <strong style="color: #2C3E50; font-size: 1rem;">Separate from Byte</strong>
+                                <span style="background: #2196F3; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">FLEXIBILITY</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Work in both platforms simultaneously</p>
+                            <p style="color: #546E7A; font-size: 0.9rem; margin: 0; padding-left: 38px;">Work in both platforms simultaneously</p>
                         </div>
 
                         <!-- Feature 2 -->
-                        <div class="clickable" onclick="openModal('slide4-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #4CAF50; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                <span style="font-size: 1.2rem;">⚡</span>
-                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Parallel Processing</strong>
-                                <span style="background: #4CAF50; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
+                        <div class="clickable" onclick="openModal('slide4-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 8px; padding: 14px; cursor: pointer; border-left: 5px solid #4CAF50; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <span style="font-size: 1.5rem;">⚡</span>
+                                <strong style="color: #2C3E50; font-size: 1rem;">Parallel Processing</strong>
+                                <span style="background: #4CAF50; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Run multiple bundle operations concurrently</p>
+                            <p style="color: #546E7A; font-size: 0.9rem; margin: 0; padding-left: 38px;">Run multiple bundle operations concurrently</p>
                         </div>
 
                         <!-- Feature 3 -->
-                        <div class="clickable" onclick="openModal('slide4-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #FF9800; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                <span style="font-size: 1.2rem;">🎯</span>
-                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Document Filtering</strong>
-                                <span style="background: #FF9800; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">EFFICIENCY</span>
+                        <div class="clickable" onclick="openModal('slide4-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 8px; padding: 14px; cursor: pointer; border-left: 5px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <span style="font-size: 1.5rem;">🎯</span>
+                                <strong style="color: #2C3E50; font-size: 1rem;">Document Filtering</strong>
+                                <span style="background: #FF9800; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">EFFICIENCY</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Isolate by type, status, or category</p>
+                            <p style="color: #546E7A; font-size: 0.9rem; margin: 0; padding-left: 38px;">Isolate by type, status, or category</p>
                         </div>
 
                         <!-- Feature 4 -->
-                        <div class="clickable" onclick="openModal('slide4-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 6px; padding: 10px; cursor: pointer; border-left: 4px solid #9C27B0; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                <span style="font-size: 1.2rem;">🧠</span>
-                                <strong style="color: #2C3E50; font-size: 0.8125rem;">Smart Display Rules</strong>
-                                <span style="background: #9C27B0; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.6rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
+                        <div class="clickable" onclick="openModal('slide4-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 8px; padding: 14px; cursor: pointer; border-left: 5px solid #9C27B0; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <span style="font-size: 1.5rem;">🧠</span>
+                                <strong style="color: #2C3E50; font-size: 1rem;">Smart Display Rules</strong>
+                                <span style="background: #9C27B0; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.75rem; margin: 0; padding-left: 30px;">Auto-hide non-applicable loan program documents</p>
+                            <p style="color: #546E7A; font-size: 0.9rem; margin: 0; padding-left: 38px;">Auto-hide non-applicable loan program documents</p>
+                        </div>
+
+                        <!-- Feature 5 -->
+                        <div class="clickable" onclick="openModal('slide4-feature5')" style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 8px; padding: 14px; cursor: pointer; border-left: 5px solid #FBC02D; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                                <span style="font-size: 1.5rem;">📤</span>
+                                <strong style="color: #2C3E50; font-size: 1rem;">One-Stop Upload</strong>
+                                <span style="background: #FBC02D; color: white; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: auto;">CONVENIENCE</span>
+                            </div>
+                            <p style="color: #546E7A; font-size: 0.9rem; margin: 0; padding-left: 38px;">Upload missing docs directly from bundle builder</p>
                         </div>
                     </div>
 
                     <!-- Demo Links Section -->
-                    <div style="margin-top: 12px; background: #f8f9fa; border-radius: 6px; padding: 10px; border-left: 3px solid #17a2b8;">
-                        <h4 style="color: #2C3E50; font-size: 0.75rem; font-weight: 600; margin-bottom: 6px;">Additional Demo Details Available Here</h4>
-                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.7rem; color: #546E7A;">
-                            <li style="margin-bottom: 6px;">
+                    <div style="margin-top: 16px; background: #f8f9fa; border-radius: 8px; padding: 14px; border-left: 4px solid #17a2b8;">
+                        <h4 style="color: #2C3E50; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px;">Additional Demo Details Available Here</h4>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #546E7A;">
+                            <li style="margin-bottom: 8px;">
                                 <a href="#" style="color: #17a2b8; text-decoration: none;">Demo Link (Coming Soon) ↗</a>
                             </li>
-                            <li style="margin-bottom: 3px;">
+                            <li style="margin-bottom: 5px;">
                                 <span style="color: #95a5a6;">Clear Docs - BoB Application UAT coming soon</span>
                             </li>
                             <li>
@@ -1158,203 +1259,351 @@
 
         <!-- Slide 5: BoB Bulk Bundle Delivery -->
         <div class="slide" data-deck="bob">
-            <div class="slide-header">
-                <div class="slide-number">SLIDE 5 OF 6</div>
-                <h1 class="slide-title">BoB - Bulk Bundle Delivery</h1>
-                <p class="slide-subtitle">User Interface Feature & Function Highlights</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 5 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Bulk Bundle Delivery</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 63% 37%; gap: 20px; padding: 20px; overflow: hidden;">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
                 <!-- Left: Scaled Interface -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
                     <!-- Clear Header with Navigation -->
-                    <div style="background: white; padding: 12px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="background: white; padding: 12px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: center; align-items: center; position: relative;">
                         <div style="display: flex; align-items: center; gap: 20px;">
                             <h2 style="font-size: 1.1rem; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #17a2b8; margin: 0;">Clear</h2>
                             <div style="display: flex; gap: 3px;">
-                                <button style="padding: 8px 12px; background: transparent; border: none; border-bottom: 3px solid #17a2b8; color: #17a2b8; font-size: 0.7rem; font-weight: 600; cursor: pointer;">Bulk Bundle Builder</button>
-                                <button style="padding: 8px 12px; background: transparent; border: none; border-bottom: 3px solid transparent; color: #546E7A; font-size: 0.7rem; cursor: pointer;">Activity Log</button>
+                                <button id="bulkBundleTab" onclick="switchTab('bulk')" style="padding: 8px 12px; background: transparent; border: none; border-bottom: 3px solid #17a2b8; color: #17a2b8; font-size: 0.7rem; font-weight: 600; cursor: pointer;">Bulk Bundle Builder</button>
+                                <button id="activityLogTab" onclick="switchTab('activity')" style="padding: 8px 12px; background: transparent; border: none; border-bottom: 3px solid transparent; color: #546E7A; font-size: 0.7rem; cursor: pointer; position: relative;">
+                                    Activity Log
+                                    <span style="position: absolute; top: 2px; right: -4px; background: #dc3545; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700;">3</span>
+                                </button>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="position: absolute; right: 20px; display: flex; align-items: center; gap: 10px;">
                             <span style="font-size: 0.7rem; color: #546E7A;">Shipper</span>
                             <div style="width: 28px; height: 28px; background: #17a2b8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.75rem;">AB</div>
                         </div>
                     </div>
 
-                    <!-- Main Content Area -->
-                    <div style="flex: 1; background: #f5f7f9; padding: 15px; overflow-y: auto;">
+                    <!-- Main Content Area with Tab Views -->
+                    <div style="flex: 1; background: #f5f7f9; position: relative; overflow: hidden;">
+                        <!-- Bulk Bundle Builder View (Default) -->
+                        <div id="bulkBundleView" style="height: 100%; padding: 8px; overflow-y: auto; display: flex; flex-direction: column;">
                         <!-- Select Loan Population Section -->
-                        <div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 15px;">
-                            <div style="background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 12px; font-weight: 600; color: #2C3E50; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="background: white; border-radius: 6px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 8px;">
+                            <div style="background: #e9ecef; padding: 6px 10px; border-radius: 4px; margin-bottom: 7px; font-weight: 600; color: #2C3E50; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; position: relative;">
                                 <span>Select Loan Population</span>
-                                <span style="cursor: pointer; font-size: 0.7rem;">▼</span>
+                                <span style="position: absolute; right: 10px; cursor: pointer; font-size: 0.65rem;">▲</span>
                             </div>
 
-                            <div style="font-size: 0.65rem; font-weight: 600; color: #546E7A; margin-bottom: 8px;">
+                            <div style="font-size: 0.62rem; font-weight: 600; color: #546E7A; margin-bottom: 6px; text-align: center;">
                                 Identify Loan Population By Using
                             </div>
 
-                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px;">
-                                <button style="padding: 6px 8px; background: white; border: 2px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.65rem; font-weight: 600; cursor: pointer;">Manual Entry</button>
-                                <button style="padding: 6px 8px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.65rem; cursor: pointer;">Trade No</button>
-                                <button style="padding: 6px 8px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.65rem; cursor: pointer;">Custom Filter</button>
-                                <button style="padding: 6px 8px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.65rem; cursor: pointer;">Investor Commit.</button>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 7px;">
+                                <button id="slide5MethodManual" onclick="selectSlide5Method('manual')" style="padding: 5px 7px; background: white; border: 2px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">Manual Entry</button>
+                                <button id="slide5MethodTrade" onclick="selectSlide5Method('trade')" style="padding: 5px 7px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.62rem; cursor: pointer;">Trade No</button>
+                                <button id="slide5MethodFilter" onclick="selectSlide5Method('filter')" style="padding: 5px 7px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.62rem; cursor: pointer;">Custom Filter</button>
+                                <button id="slide5MethodInvestor" onclick="selectSlide5Method('investor')" style="padding: 5px 7px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.62rem; cursor: pointer;">Investor Commit. No</button>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 7px;">
                                 <div>
-                                    <label style="display: block; font-size: 0.65rem; font-weight: 600; color: #2C3E50; margin-bottom: 4px;">Subject Loans</label>
-                                    <textarea style="width: 100%; height: 60px; padding: 6px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.65rem; resize: none; font-family: monospace;" placeholder="Loan numbers..."></textarea>
+                                    <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #2C3E50; margin-bottom: 3px;">Subject Loans</label>
+                                    <textarea id="slide5LoanTextarea" style="width: 100%; height: 48px; padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.6rem; resize: none; font-family: monospace;">TEST10008332,TEST10008333;TEST10008334/TEST10008335.TEST10008336 TEST10008337</textarea>
+                                    <div style="margin-top: 2px; font-size: 0.5rem; color: #78909C; line-height: 1.2;">
+                                        Separate loan numbers by comma, space, backslash, period, or semicolon (e.g. TEST000).
+                                    </div>
+                                    <button onclick="fixSlide5LoanFormat()" style="margin-top: 2px; padding: 2px 6px; background: transparent; border: none; color: #17a2b8; font-size: 0.56rem; font-weight: 600; cursor: pointer;">Fix Format</button>
                                 </div>
                                 <div>
-                                    <label style="display: block; font-size: 0.65rem; font-weight: 600; color: #2C3E50; margin-bottom: 4px;">Bundle Name</label>
-                                    <select style="width: 100%; padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.65rem; background: white; color: #78909C; cursor: pointer;">
-                                        <option>Select</option>
+                                    <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #2C3E50; margin-bottom: 3px;">Bundle Name</label>
+                                    <select id="slide5BundleSelect" style="width: 100%; padding: 5px 7px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.62rem; background: white; color: #2C3E50; cursor: pointer;">
+                                        <option value="">-- Select Bundle --</option>
+                                        <option value="usbank" selected>US Bank</option>
+                                        <option value="themoneysource">The Money Source</option>
+                                        <option value="chasebank">Chase Bank</option>
+                                        <option value="wellsfargo">Wells Fargo</option>
+                                        <option value="bankofamerica">Bank of America</option>
+                                        <option value="quickenloans">Quicken Loans</option>
+                                        <option value="freedommortgage">Freedom Mortgage</option>
+                                        <option value="pennymac">PennyMac</option>
+                                        <option value="caliberhomeloans">Caliber Home Loans</option>
+                                        <option value="amerihomemortgage">AmeriHome Mortgage</option>
+                                        <option value="newrez">NewRez</option>
+                                        <option value="guildmortgage">Guild Mortgage</option>
+                                        <option value="fairwayindependent">Fairway Independent</option>
+                                        <option value="movementmortgage">Movement Mortgage</option>
+                                        <option value="navyfederal">Navy Federal Credit Union</option>
+                                        <option value="usaa">USAA</option>
+                                        <option value="better">Better.com</option>
+                                        <option value="loandepot">LoanDepot</option>
+                                        <option value="guaranteedrate">Guaranteed Rate</option>
+                                        <option value="crosscountry">CrossCountry Mortgage</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div style="display: flex; gap: 6px; justify-content: flex-end;">
-                                <button style="padding: 6px 12px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.65rem; cursor: pointer;">Clear</button>
-                                <button style="padding: 6px 12px; background: #17a2b8; border: none; color: white; border-radius: 4px; font-size: 0.65rem; font-weight: 600; cursor: pointer;">View Population</button>
+                            <div style="display: flex; gap: 5px; justify-content: flex-end;">
+                                <button onclick="clearSlide5Form()" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; color: #546E7A; border-radius: 4px; font-size: 0.62rem; cursor: pointer;">Clear</button>
+                                <button onclick="viewSlide5LoanPopulation()" style="padding: 5px 10px; background: #17a2b8; border: none; color: white; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">View Loan Population</button>
                             </div>
                         </div>
 
                         <!-- Build Loan Population Section -->
-                        <div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-                            <div style="background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; font-weight: 600; color: #2C3E50; font-size: 0.75rem;">
+                        <div id="slide5BuildSection" style="background: white; border-radius: 6px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); flex: 1; display: flex; flex-direction: column;">
+                            <div style="background: #e9ecef; padding: 6px 10px; border-radius: 4px; margin-bottom: 7px; font-weight: 600; color: #2C3E50; font-size: 0.7rem; text-align: center;">
                                 Build Loan Population
                             </div>
 
-                            <div style="display: flex; gap: 6px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; font-size: 0.65rem;">
-                                <span style="padding: 5px 10px; background: white; border: 2px solid #17a2b8; border-radius: 4px; font-weight: 600; color: #17a2b8;">All 16</span>
-                                <span style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A;">Missing <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 8px; margin-left: 3px; font-weight: 600;">3</span></span>
-                                <span style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A;">Ready 8</span>
+                            <div style="display: flex; gap: 5px; margin-bottom: 7px; align-items: center; flex-wrap: wrap; font-size: 0.62rem;">
+                                <span id="slide5FilterAll" onclick="filterSlide5Loans('all')" style="padding: 4px 8px; background: white; border: 2px solid #17a2b8; border-radius: 4px; font-weight: 600; color: #17a2b8; cursor: pointer;">All Loans <span id="slide5CountAll">6</span></span>
+                                <span id="slide5FilterMissing" onclick="filterSlide5Loans('missing')" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A; cursor: pointer;">Loans Missing Docs <span style="background: #dc3545; color: white; padding: 1px 5px; border-radius: 6px; margin-left: 2px; font-weight: 600;">5</span></span>
+                                <span id="slide5FilterReady" onclick="filterSlide5Loans('ready')" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A; cursor: pointer;">Ready to Bundle 1</span>
+                                <label style="display: flex; align-items: center; gap: 3px; padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; cursor: pointer;">
+                                    <input id="slide5HideNACheckbox" type="checkbox" checked onchange="toggleSlide5NotApplicableDocs()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                    <span style="color: #546E7A;">Hide Missing Not Applicable Docs</span>
+                                </label>
+                                <button onclick="refreshSlide5Population()" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A; cursor: pointer; font-size: 0.62rem;">
+                                    ↻ Refresh Population
+                                </button>
+                                <button onclick="addLoanToSlide5Population()" style="padding: 4px 8px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #546E7A; cursor: pointer; font-size: 0.62rem;">
+                                    ⊕ Add Loan to Population
+                                </button>
                             </div>
 
-                            <div style="overflow-x: auto;">
-                                <table style="width: 100%; border-collapse: collapse; font-size: 0.65rem;">
+                            <div style="overflow-x: auto; flex: 1;">
+                                <table id="slide5LoanTable" style="width: 100%; border-collapse: collapse; font-size: 0.62rem;">
                                     <thead style="background: #f8f9fa;">
                                         <tr>
-                                            <th style="padding: 6px 8px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600;">Loan Number</th>
-                                            <th style="padding: 6px 8px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600;">Missing</th>
-                                            <th style="padding: 6px 8px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600;">Found</th>
-                                            <th style="padding: 6px 8px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600;">Status</th>
+                                            <th style="padding: 5px 6px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600; width: 28px;">
+                                                <input id="slide5SelectAll" type="checkbox" checked onclick="toggleSlide5SelectAll()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </th>
+                                            <th style="padding: 5px 6px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600;"></th>
+                                            <th style="padding: 5px 6px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600;">Missing Docs <span style="font-size: 0.57rem; cursor: pointer;">▼</span></th>
+                                            <th style="padding: 5px 6px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600;">Found Docs</th>
+                                            <th style="padding: 5px 6px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600;">Bundle Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 6px 8px; color: #17a2b8; font-weight: 500;">REA000290995</td>
-                                            <td style="padding: 6px 8px; text-align: center;"><span style="background: #f8d7da; color: #721c24; padding: 2px 6px; border-radius: 3px; font-weight: 600;">2</span></td>
-                                            <td style="padding: 6px 8px; text-align: center;">2</td>
-                                            <td style="padding: 6px 8px; color: #78909C;">Not Bundled</td>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008332</td>
+                                            <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="9" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">9</span></td>
+                                            <td style="padding: 5px 6px; text-align: center;">1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 6px 8px; color: #17a2b8; font-weight: 500;">RTB787878787</td>
-                                            <td style="padding: 6px 8px; text-align: center;"><span style="background: #f8d7da; color: #721c24; padding: 2px 6px; border-radius: 3px; font-weight: 600;">2</span></td>
-                                            <td style="padding: 6px 8px; text-align: center;">2</td>
-                                            <td style="padding: 6px 8px; color: #78909C;">Not Bundled</td>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008333</td>
+                                            <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="7" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">7</span></td>
+                                            <td style="padding: 5px 6px; text-align: center;">1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 6px 8px; color: #17a2b8; font-weight: 500;">YTB787878787</td>
-                                            <td style="padding: 6px 8px; text-align: center;"><span style="background: #f8d7da; color: #721c24; padding: 2px 6px; border-radius: 3px; font-weight: 600;">2</span></td>
-                                            <td style="padding: 6px 8px; text-align: center;">1</td>
-                                            <td style="padding: 6px 8px; color: #78909C;">Not Bundled</td>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008334</td>
+                                            <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="3" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">3</span></td>
+                                            <td style="padding: 5px 6px; text-align: center;">13</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 6px 8px; color: #17a2b8; font-weight: 500;">CSI0000139757</td>
-                                            <td style="padding: 6px 8px; text-align: center;"><span style="background: #ffeaa7; color: #6c5b2d; padding: 2px 6px; border-radius: 3px; font-weight: 600;">1</span></td>
-                                            <td style="padding: 6px 8px; text-align: center;">1</td>
-                                            <td style="padding: 6px 8px; color: #78909C;">Not Bundled</td>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008335</td>
+                                            <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="1" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">1</span></td>
+                                            <td style="padding: 5px 6px; text-align: center;">13</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
                                         </tr>
-                                        <tr>
-                                            <td style="padding: 6px 8px; color: #17a2b8; font-weight: 500;">C0RR8787878</td>
-                                            <td style="padding: 6px 8px; text-align: center;">0</td>
-                                            <td style="padding: 6px 8px; text-align: center;">1</td>
-                                            <td style="padding: 6px 8px; color: #28a745; font-weight: 600;">Ready</td>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008336</td>
+                                            <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="1" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">1</span></td>
+                                            <td style="padding: 5px 6px; text-align: center;">1</td>
+                                            <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
+                                        </tr>
+                                        <tr data-status="ready">
+                                            <td style="padding: 5px 6px; text-align: center;">
+                                                <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
+                                            </td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008337</td>
+                                            <td style="padding: 5px 6px; text-align: center;">0</td>
+                                            <td style="padding: 5px 6px; text-align: center;">20</td>
+                                            <td style="padding: 5px 6px; color: #28a745; font-weight: 600;">Ready to Bundle</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <div style="display: flex; gap: 6px; justify-content: flex-end; margin-top: 7px;">
+                                <button onclick="buildSlide5ReadyLoans()" style="padding: 5px 10px; background: white; border: 2px solid #17a2b8; color: #17a2b8; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">Build Ready to Bundle Loans</button>
+                                <button id="slide5BuildSelected" onclick="buildSlide5SelectedLoans()" style="padding: 5px 10px; background: #17a2b8; border: none; color: white; border-radius: 4px; font-size: 0.62rem; font-weight: 600; cursor: pointer;">Build <span id="slide5SelectedCount">6</span> Selected Loans</button>
+                            </div>
                         </div>
+                        </div>
+                        <!-- End of Bulk Bundle Builder View -->
+
+                        <!-- Activity Log View (Hidden by default) -->
+                        <div id="activityLogView" style="height: 100%; padding: 15px; overflow-y: auto; display: none;">
+                            <!-- Alert Banner -->
+                            <div style="background: #f8d7da; border-left: 4px solid #dc3545; padding: 10px 15px; margin-bottom: 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="color: #721c24; font-size: 0.75rem; font-weight: 600;">3 Incomplete Bundle</span>
+                                <button style="background: transparent; border: none; color: #721c24; font-size: 1rem; cursor: pointer; padding: 0; line-height: 1;">✕</button>
+                            </div>
+
+                            <!-- Activity Log Section -->
+                            <div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                                <div style="background: #e9ecef; padding: 8px 12px; border-radius: 4px; margin-bottom: 12px; font-weight: 600; color: #2C3E50; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <span>Activity Log</span>
+                                    <span style="cursor: pointer; font-size: 0.7rem;">▲</span>
+                                </div>
+
+                                <div style="font-size: 0.65rem; color: #546E7A; margin-bottom: 12px;">
+                                    Activity log only shows bulk summary's generated in the last 7 days
+                                </div>
+
+                                <!-- Activity Log Table -->
+                                <div style="overflow-x: auto;">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 0.65rem;">
+                                        <thead style="background: #f8f9fa;">
+                                            <tr>
+                                                <th style="padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #2C3E50;">Bundle Name</th>
+                                                <th style="padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #2C3E50;">Last Viewed</th>
+                                                <th style="padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #2C3E50;">Last Build Request</th>
+                                                <th style="padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #2C3E50;">Number of Loans</th>
+                                                <th style="padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #2C3E50;">Bulk Bundle Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="border-bottom: 1px solid #f1f3f5;">
+                                                <td style="padding: 8px 10px;">
+                                                    <a href="#" style="color: #17a2b8; text-decoration: underline; font-weight: 500;">US Bank</a>
+                                                </td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">27</td>
+                                                <td style="padding: 8px 10px; color: #dc3545; font-weight: 600;">Incomplete</td>
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid #f1f3f5;">
+                                                <td style="padding: 8px 10px;">
+                                                    <a href="#" style="color: #17a2b8; text-decoration: underline; font-weight: 500;">American Bank</a>
+                                                </td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">10</td>
+                                                <td style="padding: 8px 10px; color: #dc3545; font-weight: 600;">Incomplete</td>
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid #f1f3f5;">
+                                                <td style="padding: 8px 10px;">
+                                                    <a href="#" style="color: #17a2b8; text-decoration: underline; font-weight: 500;">US Bank</a>
+                                                </td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11</td>
+                                                <td style="padding: 8px 10px; color: #dc3545; font-weight: 600;">Incomplete</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px 10px;">
+                                                    <a href="#" style="color: #17a2b8; text-decoration: underline; font-weight: 500;">American Bank</a>
+                                                </td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">11/12/25 1:04pm EST</td>
+                                                <td style="padding: 8px 10px; color: #546E7A;">13</td>
+                                                <td style="padding: 8px 10px; color: #78909C;">Complete</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Activity Log View -->
                     </div>
                 </div>
 
                 <!-- Right: Key Features Box -->
-                <div style="background: white; border-radius: 8px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
-                    <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px; border-bottom: 3px solid #17a2b8; padding-bottom: 8px;">Key Features & Functions</h3>
+                <div style="background: white; border-radius: 8px; padding: 14px 22px 22px 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;">
+                    <h3 style="color: #2C3E50; font-size: 1.22rem; font-weight: 600; margin-bottom: 12px; border-bottom: 3px solid #17a2b8; padding-bottom: 8px;">Key Features & Functions</h3>
 
                     <!-- Feature Cards -->
-                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
                         <!-- Feature 1 -->
-                        <div class="clickable" onclick="openModal('slide5-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #2196F3; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">✨</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">All Single Flow Features</strong>
-                                <span style="background: #2196F3; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">COMPLETE</span>
+                        <div class="clickable" onclick="openModal('slide5-feature1')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #2196F3; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">✨</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">All Single Flow Features</strong>
+                                <span style="background: #2196F3; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">COMPLETE</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Plus additional bulk capabilities</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">Plus additional bulk capabilities</p>
                         </div>
 
                         <!-- Feature 2 -->
-                        <div class="clickable" onclick="openModal('slide5-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #4CAF50; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">📋</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Manual Upload with Auto-Fix</strong>
-                                <span style="background: #4CAF50; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
+                        <div class="clickable" onclick="openModal('slide5-feature2')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #4CAF50; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">📋</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">Manual Upload with Auto-Fix</strong>
+                                <span style="background: #4CAF50; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">PRODUCTIVITY</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Raw loan number input with format cleanup</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">Raw loan number input with format cleanup</p>
                         </div>
 
                         <!-- Feature 3 -->
-                        <div class="clickable" onclick="openModal('slide5-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #FF9800; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">📁</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Legacy Population Options</strong>
-                                <span style="background: #FF9800; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">OPTIONS</span>
+                        <div class="clickable" onclick="openModal('slide5-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #FF9800; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">📁</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">Legacy Population Options</strong>
+                                <span style="background: #FF9800; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">OPTIONS</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Trade No, Custom Filter, Investor Commitment</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">Trade No, Custom Filter, Investor Commitment</p>
                         </div>
 
                         <!-- Feature 4 -->
-                        <div class="clickable" onclick="openModal('slide5-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #9C27B0; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">🚀</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Background Processing</strong>
-                                <span style="background: #9C27B0; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
+                        <div class="clickable" onclick="openModal('slide5-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #9C27B0; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">🚀</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">Background Processing</strong>
+                                <span style="background: #9C27B0; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Set it & forget it, logout without interruption</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">Fire & Forget, logout without interruption</p>
                         </div>
 
                         <!-- Feature 5 -->
-                        <div class="clickable" onclick="openModal('slide5-feature5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #009688; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">📊</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Activity Log</strong>
-                                <span style="background: #009688; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">TRACKING</span>
+                        <div class="clickable" onclick="openModal('slide5-feature5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #009688; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">📊</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">Activity Log</strong>
+                                <span style="background: #009688; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">TRACKING</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">10-day job history and status tracking</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">10-day job history and status tracking</p>
                         </div>
 
                         <!-- Feature 6 -->
-                        <div class="clickable" onclick="openModal('slide5-feature6')" style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 6px; padding: 8px; cursor: pointer; border-left: 4px solid #E91E63; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                                <span style="font-size: 1rem;">🔗</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Hyperlinked Loans</strong>
-                                <span style="background: #E91E63; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">NAVIGATION</span>
+                        <div class="clickable" onclick="openModal('slide5-feature6')" style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 7px; padding: 12px; cursor: pointer; border-left: 5px solid #E91E63; transition: transform 0.2s;">
+                            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 5px;">
+                                <span style="font-size: 1.4rem;">🔗</span>
+                                <strong style="color: #2C3E50; font-size: 0.95rem;">Hyperlinked Loans</strong>
+                                <span style="background: #E91E63; color: white; padding: 3px 7px; border-radius: 9px; font-size: 0.67rem; font-weight: 600; margin-left: auto;">NAVIGATION</span>
                             </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 22px;">Drill down to individual loan level in single flow</p>
+                            <p style="color: #546E7A; font-size: 0.85rem; margin: 0; padding-left: 35px;">Drill down to individual loan level in single flow</p>
                         </div>
                     </div>
 
                     <!-- Demo Links Section -->
-                    <div style="margin-top: 12px; background: #f8f9fa; border-radius: 6px; padding: 10px; border-left: 3px solid #17a2b8;">
-                        <h4 style="color: #2C3E50; font-size: 0.75rem; font-weight: 600; margin-bottom: 6px;">Additional Demo Details Available Here</h4>
-                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.7rem; color: #546E7A;">
-                            <li style="margin-bottom: 6px;">
+                    <div style="margin-top: 12px; background: #f8f9fa; border-radius: 7px; padding: 11px; border-left: 4px solid #17a2b8;">
+                        <h4 style="color: #2C3E50; font-size: 0.83rem; font-weight: 600; margin-bottom: 7px;">Additional Demo Details Available Here</h4>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.82rem; color: #546E7A;">
+                            <li style="margin-bottom: 7px;">
                                 <a href="#" style="color: #17a2b8; text-decoration: none;">Demo Link (Coming Soon) ↗</a>
                             </li>
-                            <li style="margin-bottom: 3px;">
+                            <li style="margin-bottom: 5px;">
                                 <span style="color: #95a5a6;">Clear Docs - BoB Application UAT coming soon</span>
                             </li>
                             <li>
@@ -1368,33 +1617,27 @@
 
         <!-- Slide 6: Questions -->
         <div class="slide questions-slide" data-deck="bob">
-            <div style="max-width: 900px; margin: 0 auto; width: 100%;">
-                <!-- Questions Header -->
-                <div style="background: linear-gradient(135deg, #4A90A4 0%, #2C3E50 100%); border-radius: 12px; padding: 25px 30px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(74, 144, 164, 0.3); border-left: 6px solid #2C3E50;">
-                    <h1 style="font-size: 2.75rem; font-weight: 700; color: white; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Questions?</h1>
-                    <p style="color: rgba(255,255,255,0.9); font-size: 1rem; margin-top: 10px;">We're here to discuss any aspects of the BoB Management Suite</p>
-                </div>
-
+            <div style="max-width: 1200px; margin: 0 auto; width: 100%;">
                 <!-- Special Thanks - Enhanced -->
-                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 50%, #C8E6C9 100%); border-radius: 12px; padding: 30px; box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3); border: 4px solid #4CAF50; margin-bottom: 20px; position: relative; overflow: hidden;">
+                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 50%, #C8E6C9 100%); border-radius: 12px; padding: 22px 30px; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3); border: 3px solid #4CAF50; margin-bottom: 12px; position: relative; overflow: hidden;">
                     <!-- Decorative Elements -->
                     <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(76,175,80,0.2) 0%, transparent 70%); border-radius: 50%;"></div>
                     <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(76,175,80,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
 
                     <div style="position: relative; z-index: 1;">
-                        <h3 style="color: #1B5E20; font-size: 1.75rem; margin-bottom: 10px; text-align: center; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                        <h3 style="color: #1B5E20; font-size: 1.875rem; margin-bottom: 10px; text-align: center; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                             🙏 Special Thanks to Our Key Stakeholders
                         </h3>
-                        <p style="text-align: center; color: #2E7D32; font-size: 0.9375rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.5px;">
+                        <p style="text-align: center; color: #2E7D32; font-size: 1.0625rem; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.5px;">
                             This Success is a Testament to Outstanding Collaboration
                         </p>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
-                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                    <span style="font-size: 1.25rem;">🤝</span> Business Partners
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 10px;">
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">🤝</span> Business Partners
                                 </p>
-                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
                                     Colleen Schofield<br>
                                     Ashley Kempe<br>
                                     Carol Overton<br>
@@ -1402,49 +1645,57 @@
                                     Adam Covey
                                 </p>
                             </div>
-                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
-                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                    <span style="font-size: 1.25rem;">💻</span> Development Teams
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">💻</span> Development Teams
                                 </p>
-                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
                                     CMG Docs Team<br>
                                     Design Team
                                 </p>
                             </div>
-                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #388E3C; text-align: center;">
-                                <p style="color: #2E7D32; font-weight: 700; font-size: 0.9375rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                    <span style="font-size: 1.25rem;">📚</span> Support & Documentation
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">📚</span> Support & Documentation
                                 </p>
-                                <p style="color: #2C3E50; font-size: 0.875rem; line-height: 1.6; margin: 0; font-weight: 500;">
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
                                     Product Enterprise Group
                                 </p>
                             </div>
                         </div>
 
-                        <div style="text-align: center; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 15px;">
-                            <p style="color: #2E7D32; font-size: 0.875rem; font-style: italic; margin: 0; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.05); white-space: nowrap;">
+                        <div style="text-align: center; background: rgba(255,255,255,0.6); border-radius: 12px; padding: 14px;">
+                            <p style="color: #2E7D32; font-size: 1rem; font-style: italic; margin: 0; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                                 ✨ Your collaboration and insights have been instrumental to this initiative's success ✨
                             </p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Questions Header -->
+                <div style="background: linear-gradient(135deg, #4A90A4 0%, #2C3E50 100%); border-radius: 12px; padding: 18px 35px; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(74, 144, 164, 0.3); border-left: 6px solid #2C3E50;">
+                    <h1 style="font-size: 2.875rem; font-weight: 700; color: white; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Questions?</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.125rem; margin-top: 8px;">We're here to discuss any aspects of the BoB Management Suite</p>
+                </div>
+
                 <!-- Documentation Section -->
-                <div style="background: white; border-radius: 12px; padding: 25px 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #4A90A4;">
-                    <h3 style="color: #2C3E50; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                        📋 Documentation
+                <div style="background: white; border-radius: 12px; padding: 16px 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #4A90A4;">
+                    <h3 style="color: #2C3E50; font-size: 1.375rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        📋 Material & Documentation
                     </h3>
-                    <p style="color: #546E7A; font-size: 0.9375rem; line-height: 1.6; margin-bottom: 12px;">
-                        All tickets, requirements, and specifications available in Azure DevOps
-                    </p>
-                    <a href="https://cmgfidev.visualstudio.com/CMG%20Docs/_backlogs/backlog/CMG%20Docs%20Team/Epics?workitem=72742" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #4A90A4 0%, #3d7a8a 100%); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(74, 144, 164, 0.3);">
-                        View Parent Epic in ADO ↗
-                    </a>
-                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 8px; border-left: 3px solid #4A90A4;">
-                        <p style="color: #2C3E50; font-size: 0.8125rem; margin: 0; line-height: 1.6;">
-                            <strong>Questions or Needs?</strong><br>
-                            Please feel free to reach out to BoB's Product Manager<br>
-                            <strong>Aza Olival</strong> • <a href="mailto:aolival@cmgfi.com" style="color: #4A90A4; text-decoration: none; font-weight: 600;">aolival@cmgfi.com</a>
+                    <div style="margin-top: 0; padding: 10px 16px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196F3;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>📚 Azure DevOps:</strong> All tickets, requirements, specifications, and supporting materials available in Azure DevOps: <a href="https://cmgfidev.visualstudio.com/CMG%20Docs/_backlogs/backlog/CMG%20Docs%20Team/Epics?workitem=72742" target="_blank" style="display: inline; background: linear-gradient(135deg, #4A90A4 0%, #3d7a8a 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(74, 144, 164, 0.3);">View Parent Epic in ADO ↗</a>
+                        </p>
+                    </div>
+                    <div style="margin-top: 8px; padding: 10px 16px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>📄 Executive Summary:</strong> This summary is available for full review at: <a href="https://bob-documentation.vercel.app/executive-summary-presentation-v2.html" target="_blank" style="display: inline; background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);">View Executive Summary ↗</a>
+                        </p>
+                    </div>
+                    <div style="margin-top: 8px; padding: 10px 16px; background: #f0f7ff; border-radius: 8px; border-left: 4px solid #4A90A4;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>Questions or Needs?</strong> Please feel free to reach out to BoB's Product Manager <strong>Aza Olival</strong> • <a href="mailto:aolival@cmgfi.com" style="display: inline; background: linear-gradient(135deg, #4A90A4 0%, #3d7a8a 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(74, 144, 164, 0.3);">Email Aza ↗</a>
                         </p>
                     </div>
                 </div>
@@ -1472,9 +1723,9 @@
         </div>
 
         <!-- CTC Slide 2: Concept Overview -->
-        <div class="slide" data-deck="ctc" style="display: none;">
+        <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
             <div class="slide-header">
-                <div class="slide-number">SLIDE 2 OF 5</div>
+                <div class="slide-number">SLIDE 2 OF 6</div>
                 <h1 class="slide-title">Concept Overview</h1>
                 <p class="slide-subtitle">Bringing BoB intelligence to Clear to Close operations</p>
             </div>
@@ -1518,9 +1769,9 @@
         </div>
 
         <!-- CTC Slide 3: Core Features -->
-        <div class="slide" data-deck="ctc" style="display: none;">
+        <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
             <div class="slide-header">
-                <div class="slide-number">SLIDE 3 OF 5</div>
+                <div class="slide-number">SLIDE 3 OF 6</div>
                 <h1 class="slide-title">Core Features Concept</h1>
                 <p class="slide-subtitle">Diagnostic intelligence for Clear to Close operations</p>
             </div>
@@ -1600,9 +1851,9 @@
         </div>
 
         <!-- CTC Slide 4: Technical Architecture -->
-        <div class="slide" data-deck="ctc" style="display: none;">
+        <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
             <div class="slide-header">
-                <div class="slide-number">SLIDE 4 OF 5</div>
+                <div class="slide-number">SLIDE 4 OF 6</div>
                 <h1 class="slide-title">Technical Architecture Concept</h1>
                 <p class="slide-subtitle">Built on proven BoB Management Suite platform foundation</p>
             </div>
@@ -1650,9 +1901,9 @@
         </div>
 
         <!-- CTC Slide 5: Vision & Next Steps -->
-        <div class="slide" data-deck="ctc" style="display: none;">
+        <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
             <div class="slide-header">
-                <div class="slide-number">SLIDE 5 OF 5</div>
+                <div class="slide-number">SLIDE 5 OF 6</div>
                 <h1 class="slide-title">Vision & Next Steps</h1>
                 <p class="slide-subtitle">From concept to reality</p>
             </div>
@@ -1700,6 +1951,93 @@
             </div>
         </div>
 
+        <!-- CTC Slide 6: Questions -->
+        <div class="slide questions-slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
+            <div style="max-width: 1200px; margin: 0 auto; width: 100%;">
+                <!-- Special Thanks - Enhanced -->
+                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 50%, #C8E6C9 100%); border-radius: 12px; padding: 22px 30px; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3); border: 3px solid #4CAF50; margin-bottom: 12px; position: relative; overflow: hidden;">
+                    <!-- Decorative Elements -->
+                    <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(76,175,80,0.2) 0%, transparent 70%); border-radius: 50%;"></div>
+                    <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(76,175,80,0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+
+                    <div style="position: relative; z-index: 1;">
+                        <h3 style="color: #1B5E20; font-size: 1.875rem; margin-bottom: 10px; text-align: center; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                            🙏 Special Thanks to Our Key Stakeholders
+                        </h3>
+                        <p style="text-align: center; color: #2E7D32; font-size: 1.0625rem; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.5px;">
+                            This Success is a Testament to Outstanding Collaboration
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 10px;">
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">🤝</span> Business Partners
+                                </p>
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
+                                    Colleen Schofield<br>
+                                    Ashley Kempe<br>
+                                    Carol Overton<br>
+                                    Scott Fine<br>
+                                    Adam Covey
+                                </p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">💻</span> Development Teams
+                                </p>
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
+                                    CMG Docs Team<br>
+                                    Design Team
+                                </p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 12px; padding: 26px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 5px solid #388E3C; text-align: center;">
+                                <p style="color: #2E7D32; font-weight: 700; font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                                    <span style="font-size: 1.875rem;">📚</span> Support & Documentation
+                                </p>
+                                <p style="color: #2C3E50; font-size: 1.125rem; line-height: 1.8; margin: 0; font-weight: 500;">
+                                    Product Enterprise Group
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; background: rgba(255,255,255,0.6); border-radius: 12px; padding: 14px;">
+                            <p style="color: #2E7D32; font-size: 1rem; font-style: italic; margin: 0; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                ✨ Your collaboration and insights have been instrumental to this initiative's success ✨
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions Header -->
+                <div style="background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 100%); border-radius: 12px; padding: 18px 35px; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(58, 150, 117, 0.3); border-left: 6px solid #2E5C4A;">
+                    <h1 style="font-size: 2.875rem; font-weight: 700; color: white; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">Questions?</h1>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.125rem; margin-top: 8px;">We're here to discuss any aspects of the BoB Management Suite</p>
+                </div>
+
+                <!-- Documentation Section -->
+                <div style="background: white; border-radius: 12px; padding: 16px 30px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-left: 6px solid #3A9675;">
+                    <h3 style="color: #2C3E50; font-size: 1.375rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                        📋 Material & Documentation
+                    </h3>
+                    <div style="margin-top: 0; padding: 10px 16px; background: #e0f2f1; border-radius: 8px; border-left: 4px solid #26A69A;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>📚 Azure DevOps:</strong> All tickets, requirements, specifications, and supporting materials available in Azure DevOps: <a href="https://cmgfidev.visualstudio.com/CMG%20Docs/_backlogs/backlog/CMG%20Docs%20Team/Epics?workitem=72742" target="_blank" style="display: inline; background: linear-gradient(135deg, #3A9675 0%, #2E7D60 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(58, 150, 117, 0.3);">View Parent Epic in ADO ↗</a>
+                        </p>
+                    </div>
+                    <div style="margin-top: 8px; padding: 10px 16px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>📄 Executive Summary:</strong> This summary is available for full review at: <a href="https://bob-documentation.vercel.app/executive-summary-presentation-v2.html" target="_blank" style="display: inline; background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);">View Executive Summary ↗</a>
+                        </p>
+                    </div>
+                    <div style="margin-top: 8px; padding: 10px 16px; background: #d7f0e5; border-radius: 8px; border-left: 4px solid #3A9675;">
+                        <p style="color: #2C3E50; font-size: 0.9375rem; margin: 0; line-height: 1.6;">
+                            <strong>Questions or Needs?</strong> Please feel free to reach out to BoB's Product Manager <strong>Aza Olival</strong> • <a href="mailto:aolival@cmgfi.com" style="display: inline; background: linear-gradient(135deg, #3A9675 0%, #2E7D60 100%); color: white; padding: 6px 16px; border-radius: 7px; text-decoration: none; font-weight: 600; font-size: 0.9375rem; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(58, 150, 117, 0.3);">Email Aza ↗</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Navigation -->
@@ -1719,6 +2057,15 @@
         </div>
     </div>
 
+    <!-- Spinner Overlay -->
+    <div id="spinnerOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); text-align: center;">
+            <div style="font-size: 4rem; animation: spin 1s linear infinite; margin-bottom: 20px;">⏳</div>
+            <div style="font-size: 1.2rem; color: #2C3E50; font-weight: 600;">Building Bundle...</div>
+            <div style="font-size: 0.9rem; color: #546E7A; margin-top: 8px;">Please wait</div>
+        </div>
+    </div>
+
     <!-- Hidden Modal Content -->
     <div style="display: none;">
         <!-- Slide 2 Overview Modals -->
@@ -1727,7 +2074,7 @@
             <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Critical Productivity Bottleneck in Post-Close Operations</strong></p>
             <h3 style="color: #2C3E50; margin-top: 30px;">The Challenge:</h3>
             <ul style="line-height: 2;">
-                <li><strong>Workflow Lockout:</strong> Bundle operations lock users out of Byte LOS for 5-90+ minutes per operation</li>
+                <li><strong>Workflow Lockout:</strong> Bundle operations lock users out of Byte LOS for 5-20 minutes on average per operation</li>
                 <li><strong>Productivity Impact:</strong> Shippers, Trade Group, and Post-Closing Review teams cannot work during bundle processing</li>
                 <li><strong>Scale Issues:</strong> Multiple bundles per day compound the problem exponentially</li>
                 <li><strong>User Frustration:</strong> Forced idle time creates workflow interruptions and reduces efficiency</li>
@@ -1762,35 +2109,37 @@
                 <li>10-day activity history with status tracking</li>
             </ul>
             <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #4CAF50;">💡 Impact:</strong> Transforms bundle operations into a seamless background process. Users reclaim 5-90 minutes per operation and can process multiple loans simultaneously.
+                <strong style="color: #4CAF50;">💡 Impact:</strong> Transforms bundle operations into a seamless background process. Users reclaim 5-20 minutes on average per bundle and can process multiple loans simultaneously.
             </div>
         </div>
 
         <div id="slide2-team">
-            <h2 style="color: #2196F3; margin-bottom: 20px;">📊 Team & Impact Summary</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Cross-Functional Teams Delivering Measurable Productivity Gains</strong></p>
-            <h3 style="color: #2196F3; margin-top: 30px;">👥 Target Users:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Shippers:</strong> Daily post-close bundle operations and investor shipping</li>
-                <li><strong>Trade Group:</strong> Investor-specific bundle requirements and secondary market operations</li>
-                <li><strong>Post-Closing Review:</strong> Quality checks, compliance verification, shipping coordination</li>
+            <h2 style="color: #2196F3; margin: 0 0 5px 0; font-size: 1.5rem;">📊 Team & Impact Summary</h2>
+            <p style="font-size: 0.95rem; margin: 0 0 8px 0; line-height: 1.2;"><strong>Cross-Functional Teams Delivering Measurable Productivity Gains</strong></p>
+
+            <h3 style="color: #2196F3; margin: 8px 0 3px 0; font-size: 1.15rem;">👥 Target Users:</h3>
+            <ul style="line-height: 1.3; font-size: 0.95rem; margin: 0; padding-left: 20px;">
+                <li><strong>Shippers:</strong> Daily post-close operations</li>
+                <li><strong>Trade Group:</strong> Investor-specific bundles</li>
+                <li><strong>Post-Closing Review:</strong> Quality & compliance</li>
             </ul>
-            <h3 style="color: #2196F3; margin-top: 30px;">🤝 Key Stakeholders:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Business Leadership:</strong> Colleen Schofield (Executive Sponsor), Ashley Kempe, Carol Overton, Scott Fine, Adam Covey</li>
-                <li><strong>Development Teams:</strong> CMG Docs Team, Design Team</li>
-                <li><strong>Product Management:</strong> Aza Olival (Product Manager)</li>
-                <li><strong>Support:</strong> Learning & Development, MVP Support Channel</li>
+
+            <h3 style="color: #2196F3; margin: 8px 0 3px 0; font-size: 1.15rem;">🤝 Key Stakeholders:</h3>
+            <ul style="line-height: 1.3; font-size: 0.95rem; margin: 0; padding-left: 20px;">
+                <li><strong>Leadership:</strong> Colleen Schofield, Ashley Kempe, Carol Overton, Scott Fine, Adam Covey</li>
+                <li><strong>Teams:</strong> CMG Docs, Design | PM: Aza Olival | Support: L&D</li>
             </ul>
-            <h3 style="color: #2196F3; margin-top: 30px;">📈 Productivity Impact:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Time Savings:</strong> Eliminates 5-90 minute Byte LOS lockouts per bundle operation</li>
-                <li><strong>Parallel Operations:</strong> Run multiple bundle jobs concurrently without workflow interruption</li>
-                <li><strong>Background Processing:</strong> Users stay productive while bundles run</li>
-                <li><strong>Capacity Growth:</strong> Handle higher loan volumes without adding headcount</li>
+
+            <h3 style="color: #2196F3; margin: 8px 0 3px 0; font-size: 1.15rem;">📈 Productivity Impact:</h3>
+            <ul style="line-height: 1.3; font-size: 0.95rem; margin: 0; padding-left: 20px;">
+                <li>Eliminates 5-20 minutes on average per bundle lockouts</li>
+                <li>Parallel operations - multiple bundles concurrently</li>
+                <li>Background processing - continuous productivity</li>
+                <li>Capacity growth without headcount</li>
             </ul>
-            <div style="background: #E3F2FD; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #2196F3;">💡 Impact:</strong> Cross-functional collaboration delivers immediate, measurable productivity gains. Users benefit from background task processing and parallel work streams.
+
+            <div style="background: #E3F2FD; padding: 8px 12px; border-radius: 6px; margin-top: 8px;">
+                <strong style="color: #2196F3; font-size: 1rem;">💡 Impact:</strong><span style="font-size: 0.95rem;"> Immediate productivity gains through background processing and parallel work streams.</span>
             </div>
         </div>
 
@@ -1816,20 +2165,20 @@
         </div>
 
         <div id="slide3-insight2">
-            <h2 style="color: #FF9800; margin-bottom: 20px;">🎯 Aggressive Market Timeline (Q1 2026)</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Ambitious delivery schedule for maximum business impact</strong></p>
-            <h3 style="color: #2C3E50; margin-top: 30px;">Q1 2026 Targets:</h3>
-            <ul style="line-height: 2;">
+            <h2 style="color: #FF9800; margin-bottom: 12px; font-size: 1.8rem;">🎯 Aggressive Market Timeline (Q1 2026)</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 15px; line-height: 1.4;"><strong>Ambitious delivery schedule for maximum business impact</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">Q1 2026 Targets:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
                 <li><strong>Phase 1:</strong> Single Flow Bundle to production (February 2026)</li>
                 <li><strong>Phase 2:</strong> Bulk Bundle delivery to production (Q1 2026)</li>
-                <li><strong>Immediate Impact:</strong> Eliminating 5-90 minute lockouts for Shippers</li>
+                <li><strong>Immediate Impact:</strong> Eliminates 5-20 minutes on average per bundle in lockouts for Shippers</li>
             </ul>
-            <h3 style="color: #2C3E50; margin-top: 30px;">Q2 2026 Target:</h3>
-            <ul style="line-height: 2;">
+            <h3 style="color: #2C3E50; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">Q2 2026 Target:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
                 <li><strong>Phase 3:</strong> Document Manager Integration (early Q2 2026)</li>
             </ul>
-            <div style="background: #FFF3E0; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #FF9800;">💡 Impact:</strong> Aggressive timeline enables immediate productivity gains for post-close operations teams across the enterprise.
+            <div style="background: #FFF3E0; padding: 15px 20px; border-radius: 8px; margin-top: 18px;">
+                <strong style="color: #FF9800; font-size: 1.2rem;">💡 Impact:</strong><span style="font-size: 1.1rem;"> Aggressive timeline enables immediate productivity gains for post-close operations teams across the enterprise.</span>
             </div>
         </div>
 
@@ -1938,6 +2287,140 @@
             </div>
         </div>
 
+        <!-- Combined Modal: Documentation Milestone + Enterprise Alignment -->
+        <div id="slide3-insight1-7">
+            <h2 style="color: #FBC02D; margin-bottom: 12px; font-size: 1.8rem;">📚 Milestones & Enterprise Alignment</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 15px; line-height: 1.4;"><strong>Q4 2025 Documentation Milestone + Cross-Functional Alignment Achieved</strong></p>
+
+            <h3 style="color: #4CAF50; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">📚 Q4 2025 Documentation Complete:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>37 Feature Tickets</strong> documented for Phase 1 & 2</li>
+                <li><strong>Phase 1 (22 tickets):</strong> In flight - testing & deployment</li>
+                <li><strong>Phase 2 (15 tickets):</strong> Ready for development kickoff</li>
+                <li><strong>Phase 3:</strong> Discovery starts late February</li>
+            </ul>
+
+            <h3 style="color: #F57F17; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">🚀 Enterprise Alignment Value:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li>Senior post close sponsorship removes barriers and drives prioritization</li>
+                <li>Business champions ensure user adoption and feedback loops</li>
+                <li>Cross-functional visibility eliminates bottlenecks</li>
+                <li>Rapid decision-making accelerates delivery velocity</li>
+            </ul>
+
+            <div style="background: #FFF9C4; padding: 15px 20px; border-radius: 8px; margin-top: 18px;">
+                <strong style="color: #FBC02D; font-size: 1.2rem;">💡 Impact:</strong><span style="font-size: 1.1rem;"> Documentation complete + enterprise-wide alignment creates clear execution path with executive visibility across all phases.</span>
+            </div>
+        </div>
+
+        <!-- Combined Modal: Sprint 2026.2 Testing + Deployment -->
+        <div id="slide3-insight3-4">
+            <h2 style="color: #2196F3; margin-bottom: 12px; font-size: 1.8rem;">🚀 Sprint 2026.2 - Phase 1 Delivery</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 15px; line-height: 1.4;"><strong>Final Testing → Production Deployment (Mid-February)</strong></p>
+
+            <h3 style="color: #2196F3; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">🔄 Current Status:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>Readiness:</strong> >90% complete, final testing phase</li>
+                <li><strong>Critical Blocker:</strong> Byte 25.2 API (end of January target)</li>
+                <li><strong>Risk Mitigation:</strong> Active coordination with BytePro team</li>
+            </ul>
+
+            <h3 style="color: #9C27B0; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">🚀 Production Deployment (Day-15):</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>Timeline:</strong> Mid-February deployment to production</li>
+                <li><strong>User Groups:</strong> Shippers, Trade Group, Post-Closing Review</li>
+                <li><strong>Training:</strong> Materials ready for deployment</li>
+            </ul>
+
+            <h3 style="color: #2C3E50; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">📈 Expected Impact:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li>Eliminates 5-20 minutes on average per bundle in Byte LOS lockouts</li>
+                <li>Background processing capability deployed</li>
+                <li>Validates platform architecture for future phases</li>
+            </ul>
+
+            <div style="background: #E3F2FD; padding: 15px 20px; border-radius: 8px; margin-top: 18px;">
+                <strong style="color: #2196F3; font-size: 1.2rem;">💡 Status:</strong><span style="font-size: 1.1rem;"> On track for February deployment pending blocker resolution. First production release delivers immediate user value.</span>
+            </div>
+        </div>
+
+        <!-- Combined Modal: Sprint 2026.3 Phase 2 + Phase 3 -->
+        <div id="slide3-insight5-6">
+            <h2 style="color: #009688; margin-bottom: 12px; font-size: 1.8rem;">💻 Sprint 2026.3 - Phase 2 & 3 Kickoff</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 15px; line-height: 1.4;"><strong>Bulk Bundle Development + Document Manager Integration Discovery</strong></p>
+
+            <h3 style="color: #009688; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">💻 Phase 2: Bulk Bundle (Q1 2026)</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>Documentation:</strong> 15 tickets ready for implementation</li>
+                <li><strong>Key Features:</strong> 4 population methods, background processing, activity log</li>
+                <li><strong>Timeline:</strong> Q1 2026 target completion</li>
+            </ul>
+
+            <h3 style="color: #009688; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">✨ Phase 2 Value:</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>"Fire & Forget":</strong> Logout without interruption</li>
+                <li><strong>Bulk Scale:</strong> Process multiple loans simultaneously</li>
+                <li><strong>Seamless Navigation:</strong> Hyperlinks between bulk and single flow</li>
+            </ul>
+
+            <h3 style="color: #E91E63; margin-top: 18px; font-size: 1.4rem; margin-bottom: 8px;">🔍 Phase 3: Document Manager Integration</h3>
+            <ul style="line-height: 1.6; font-size: 1.1rem; margin-top: 0; margin-bottom: 0;">
+                <li><strong>Discovery:</strong> Sprint 2026.3 (late February)</li>
+                <li><strong>Requirements:</strong> Early March with stakeholders</li>
+                <li><strong>Development:</strong> Early Q2 2026</li>
+            </ul>
+
+            <div style="background: #E0F2F1; padding: 15px 20px; border-radius: 8px; margin-top: 18px;">
+                <strong style="color: #009688; font-size: 1.2rem;">💡 Impact:</strong><span style="font-size: 1.1rem;"> Phase 2 enables bulk operations at scale. Phase 3 delivers document lifecycle management for complete workflow automation.</span>
+            </div>
+        </div>
+
+        <!-- Slide 3 Status Card Modals -->
+        <div id="slide3-feature-tickets">
+            <div class="status-card" style="margin: 0; padding: 0;">
+                <div class="status-card-label" style="font-size: 1.375rem; margin-bottom: 12px;">Feature Tickets</div>
+                <div class="status-card-value" style="font-size: 1.5rem; line-height: 1.5;">
+                    Phase 1: Single Flow Bundle<br>
+                    <span style="font-size: 1.25rem; color: #78909C;">22 Tickets - Testing in Progress or Owner Accepted</span><br>
+                    Phase 2: Bulk Flow Bundle<br>
+                    <span style="font-size: 1.25rem; color: #78909C;">15 Tickets - Ready for Development (Feb 2026)</span><br>
+                    Phase 3: Document Manager Integration<br>
+                    <span style="font-size: 1.25rem; color: #78909C;">TBD - 60+ Days Out</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide3-backend-dependency">
+            <div class="status-card" style="margin: 0; padding: 0;">
+                <div class="status-card-label" style="font-size: 1.375rem; margin-bottom: 12px;">Database / Backend Dependency</div>
+                <div class="status-card-value" style="font-size: 1.5rem; line-height: 1.5;">
+                    18 new EPS connections<br>
+                    <span style="font-size: 1.25rem; color: #2C3E50;">Byte 25.2 API Integration</span><br>
+                    <span style="font-size: 1.25rem; color: #D32F2F; font-weight: 600;">🔴 CRITICAL BLOCKER:</span><br>
+                    <span style="font-size: 1.15rem; color: #78909C;">Byte 25.2 Prod Release targeted for Sprint 2026.2 (End of Jan)</span><br>
+                    <span style="font-size: 1.25rem; color: #E65100; font-weight: 600;">⚠️ Pending Blockers:</span><br>
+                    <span style="font-size: 1.15rem; color: #78909C;">OI-002: Trade Number Mapping | OI-003: Custom Filter Mapping | OI-004: Investor Commitment Mapping</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide3-readiness-score">
+            <div class="status-card" style="margin: 0; padding: 0;">
+                <div class="status-card-label" style="font-size: 1.375rem; margin-bottom: 12px;">Readiness Score</div>
+                <div class="status-card-value" style="font-size: 1.5rem; line-height: 1.5;">
+                    Phase 1: >90%<br>
+                    <span style="font-size: 1.25rem; color: #2C3E50;">Single Flow Bundle</span><br>
+                    <span style="font-size: 1.15rem; color: #78909C;">UI testing awaiting <span style="color: #D32F2F; font-weight: 600;">Critical Blocker</span> removal</span><br>
+                    Phase 2: 50%<br>
+                    <span style="font-size: 1.25rem; color: #2C3E50;">Bulk Flow Bundle</span><br>
+                    <span style="font-size: 1.15rem; color: #78909C;">Documentation complete awaiting development (Feb 2026)</span><br>
+                    Phase 3: <20%<br>
+                    <span style="font-size: 1.25rem; color: #2C3E50;">Document Manager Integration</span><br>
+                    <span style="font-size: 1.15rem; color: #78909C;">Discovery Sprint 2026.3 (late Feb) | Requirements early March</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide 4 Feature Modals -->
         <div id="slide4-feature1">
             <h2 style="color: #2196F3; margin-bottom: 20px;">🔓 Separate from Byte</h2>
@@ -1950,7 +2433,7 @@
                 <li>Switch context between platforms without losing progress</li>
             </ul>
             <div style="background: #E3F2FD; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #2196F3;">💡 Impact:</strong> Eliminates 5-90 minute workflow lockouts per bundle operation, allowing users to maintain continuous productivity.
+                <strong style="color: #2196F3;">💡 Impact:</strong> Eliminates 5-20 minutes on average per bundle in workflow lockouts, allowing users to maintain continuous productivity.
             </div>
         </div>
 
@@ -1996,6 +2479,21 @@
             </ul>
             <div style="background: #F3E5F5; padding: 20px; border-radius: 8px; margin-top: 30px;">
                 <strong style="color: #9C27B0;">💡 Impact:</strong> Simplifies document review process and eliminates confusion about document applicability.
+            </div>
+        </div>
+
+        <div id="slide4-feature5">
+            <h2 style="color: #FBC02D; margin-bottom: 20px;">📤 One-Stop Upload</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Upload documents and build bundles without leaving the application</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 30px;">Key Highlights:</h3>
+            <ul style="line-height: 2;">
+                <li>Upload key job success docs directly from bundle builder</li>
+                <li>Final bundle output automatically added back to database</li>
+                <li>Generated bundle instantly accessible in Byte</li>
+                <li>No context switching between systems</li>
+            </ul>
+            <div style="background: #FFF9C4; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                <strong style="color: #F57F17;">💡 Impact:</strong> Complete workflow in one place - upload docs, build bundle, and instantly access final output in Byte.
             </div>
         </div>
 
@@ -2050,7 +2548,7 @@
 
         <div id="slide5-feature4">
             <h2 style="color: #9C27B0; margin-bottom: 20px;">🚀 Background Processing</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Set it & forget it - Logout without interruption</strong></p>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Fire & Forget - Logout without interruption</strong></p>
             <h3 style="color: #2C3E50; margin-top: 30px;">Key Benefits:</h3>
             <ul style="line-height: 2;">
                 <li>Jobs continue processing even after logout</li>
@@ -2319,6 +2817,21 @@
             if (e.key === 'Escape') closeModal();
         });
 
+        // Spinner functions
+        function showSpinner() {
+            const spinner = document.getElementById('spinnerOverlay');
+            if (spinner) {
+                spinner.style.display = 'flex';
+            }
+        }
+
+        function hideSpinner() {
+            const spinner = document.getElementById('spinnerOverlay');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+        }
+
         // Modal functions
         function openModal(elementOrId) {
             const modalOverlay = document.getElementById('modalOverlay');
@@ -2342,6 +2855,652 @@
                 return;
             }
             document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        // Tab switching function for Slide 5 flip tile
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const bulkView = document.getElementById('bulkBundleView');
+            const activityView = document.getElementById('activityLogView');
+
+            // Get tab buttons
+            const bulkTab = document.getElementById('bulkBundleTab');
+            const activityTab = document.getElementById('activityLogTab');
+
+            if (tabName === 'bulk') {
+                bulkView.style.display = 'block';
+                activityView.style.display = 'none';
+                bulkTab.style.borderBottom = '3px solid #17a2b8';
+                bulkTab.style.color = '#17a2b8';
+                activityTab.style.borderBottom = '3px solid transparent';
+                activityTab.style.color = '#546E7A';
+            } else if (tabName === 'activity') {
+                bulkView.style.display = 'none';
+                activityView.style.display = 'block';
+                bulkTab.style.borderBottom = '3px solid transparent';
+                bulkTab.style.color = '#546E7A';
+                activityTab.style.borderBottom = '3px solid #17a2b8';
+                activityTab.style.color = '#17a2b8';
+            }
+        }
+
+        // Filter function for Slide 4 document table
+        function filterSlide4Docs(filterType) {
+            const table = document.getElementById('slide4DocTable');
+            if (!table) return;
+
+            const rows = table.querySelectorAll('tbody tr');
+            const filterAll = document.getElementById('filterAll');
+            const filterMissing = document.getElementById('filterMissing');
+            const filterFound = document.getElementById('filterFound');
+            const hideNACheckbox = document.getElementById('hideNACheckbox');
+
+            // Reset all filter button styles
+            if (filterAll) {
+                filterAll.style.border = '1px solid #cbd5e0';
+                filterAll.style.fontWeight = 'normal';
+            }
+            if (filterMissing) {
+                filterMissing.style.border = '1px solid #cbd5e0';
+                filterMissing.style.fontWeight = 'normal';
+            }
+            if (filterFound) {
+                filterFound.style.border = '1px solid #cbd5e0';
+                filterFound.style.fontWeight = 'normal';
+            }
+
+            // Apply filter
+            if (filterType === 'all') {
+                rows.forEach(row => {
+                    // Show all rows, but respect N/A checkbox state
+                    if (row.dataset.status === 'notapplicable' && hideNACheckbox && hideNACheckbox.checked) {
+                        row.style.display = 'none';
+                    } else {
+                        row.style.display = '';
+                    }
+                });
+                if (filterAll) {
+                    filterAll.style.border = '2px solid #17a2b8';
+                    filterAll.style.fontWeight = '600';
+                }
+            } else if (filterType === 'missing') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'missing') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterMissing) {
+                    filterMissing.style.border = '2px solid #17a2b8';
+                    filterMissing.style.fontWeight = '600';
+                }
+            } else if (filterType === 'found') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'found') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterFound) {
+                    filterFound.style.border = '2px solid #17a2b8';
+                    filterFound.style.fontWeight = '600';
+                }
+            }
+        }
+
+        // Toggle Not Applicable Documentation rows
+        function toggleNotApplicableDocs() {
+            const checkbox = document.getElementById('hideNACheckbox');
+            const naRows = document.querySelectorAll('.not-applicable-row');
+
+            if (checkbox && checkbox.checked) {
+                // Hide N/A rows
+                naRows.forEach(row => row.style.display = 'none');
+            } else {
+                // Show N/A rows
+                naRows.forEach(row => row.style.display = '');
+            }
+        }
+
+        // Slide 4 Interactive Bundle Builder Functions
+        function startNewSlide4Bundle() {
+            // Reset all fields
+            document.getElementById('slide4LoanInput').value = '';
+            document.getElementById('slide4BundleSelect').value = '';
+            document.getElementById('slide4PdfName').value = '';
+
+            // Disable Build Bundle button
+            const buildBtn = document.getElementById('slide4BuildBtn');
+            buildBtn.disabled = true;
+            buildBtn.style.background = '#cbd5e0';
+            buildBtn.style.color = '#78909C';
+            buildBtn.style.cursor = 'not-allowed';
+
+            // Hide table and filters
+            document.getElementById('slide4TableContainer').style.display = 'none';
+            document.getElementById('slide4FilterSection').style.display = 'none';
+
+            // Show success message
+            showSlide4Message('New bundle started! Enter a loan number to begin.', 'info');
+
+            // Focus on loan input
+            document.getElementById('slide4LoanInput').focus();
+        }
+
+        function handleSlide4LoanInput() {
+            const loanInput = document.getElementById('slide4LoanInput').value.trim();
+            const bundleSelect = document.getElementById('slide4BundleSelect').value;
+
+            // Enable Build Bundle if both loan and bundle are filled
+            checkSlide4BuildReady();
+        }
+
+        function searchSlide4Loan() {
+            const loanInput = document.getElementById('slide4LoanInput').value.trim();
+            if (loanInput) {
+                showSlide4Message('Loan ' + loanInput + ' found! Now select a bundle.', 'success');
+                checkSlide4BuildReady();
+            } else {
+                showSlide4Message('Please enter a loan number', 'warning');
+            }
+        }
+
+        function handleSlide4BundleChange() {
+            const bundleSelect = document.getElementById('slide4BundleSelect');
+            const selectedValue = bundleSelect.value;
+            const selectedText = bundleSelect.options[bundleSelect.selectedIndex].text;
+            const loanInput = document.getElementById('slide4LoanInput').value.trim();
+            const pdfNameField = document.getElementById('slide4PdfName');
+
+            if (selectedValue && loanInput) {
+                // Generate PDF bundle name
+                const loanNumber = loanInput.replace(/[^a-zA-Z0-9]/g, '');
+                const bundleCode = selectedValue.replace(/\s+/g, '').toLowerCase();
+                pdfNameField.value = 'johndanieldoe-' + loanNumber + '-' + bundleCode + '.pdf';
+
+                // Auto-show table and filters when both loan and bundle are selected
+                const tableContainer = document.getElementById('slide4TableContainer');
+                const filterSection = document.getElementById('slide4FilterSection');
+                tableContainer.style.display = 'block';
+                filterSection.style.display = 'flex';
+
+                showSlide4Message('Bundle "' + selectedText + '" selected! Document grid loaded.', 'success');
+            } else if (selectedValue && !loanInput) {
+                pdfNameField.value = '';
+                showSlide4Message('Please enter a loan number first', 'warning');
+            }
+
+            checkSlide4BuildReady();
+        }
+
+        function checkSlide4BuildReady() {
+            const loanInput = document.getElementById('slide4LoanInput').value.trim();
+            const bundleSelect = document.getElementById('slide4BundleSelect').value;
+            const buildBtn = document.getElementById('slide4BuildBtn');
+
+            if (loanInput && bundleSelect) {
+                // Enable Build Bundle button
+                buildBtn.disabled = false;
+                buildBtn.style.background = '#17a2b8';
+                buildBtn.style.color = 'white';
+                buildBtn.style.cursor = 'pointer';
+            } else {
+                // Disable Build Bundle button
+                buildBtn.disabled = true;
+                buildBtn.style.background = '#cbd5e0';
+                buildBtn.style.color = '#78909C';
+                buildBtn.style.cursor = 'not-allowed';
+            }
+        }
+
+        function buildSlide4Bundle() {
+            const loanInput = document.getElementById('slide4LoanInput').value.trim();
+            const bundleSelect = document.getElementById('slide4BundleSelect');
+            const selectedText = bundleSelect.options[bundleSelect.selectedIndex].text;
+
+            if (!loanInput || !bundleSelect.value) return;
+
+            // Show full-page spinner
+            showSpinner();
+
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Show success message - bundle finalized
+                showSlide4Message('Bundle built successfully! ' + selectedText + ' - ' + loanInput, 'success');
+
+                // Auto-hide message after 3 seconds
+                setTimeout(() => {
+                    const msgEl = document.getElementById('slide4StatusMessage');
+                    if (msgEl) msgEl.style.display = 'none';
+                }, 3000);
+            }, 2000);
+        }
+
+        function showSlide4Message(message, type) {
+            const msgEl = document.getElementById('slide4StatusMessage');
+            if (!msgEl) return;
+
+            msgEl.textContent = message;
+            msgEl.style.display = 'block';
+
+            if (type === 'success') {
+                msgEl.style.background = '#d4edda';
+                msgEl.style.color = '#155724';
+                msgEl.style.border = '1px solid #c3e6cb';
+            } else if (type === 'warning') {
+                msgEl.style.background = '#fff3cd';
+                msgEl.style.color = '#856404';
+                msgEl.style.border = '1px solid #ffeaa7';
+            } else if (type === 'info') {
+                msgEl.style.background = '#d1ecf1';
+                msgEl.style.color = '#0c5460';
+                msgEl.style.border = '1px solid #bee5eb';
+            }
+        }
+
+        // Slide 5 Bulk Bundle Builder Functions
+        function fixSlide5LoanFormat() {
+            const textarea = document.getElementById('slide5LoanTextarea');
+            if (!textarea) return;
+
+            // Get current value
+            let loanText = textarea.value;
+
+            // Split by any combination of delimiters (comma, semicolon, period, backslash, space, newline)
+            let loans = loanText.split(/[,;.\\/\s\n]+/).filter(loan => loan.trim() !== '');
+
+            // Clean up each loan number (remove extra spaces)
+            loans = loans.map(loan => loan.trim());
+
+            // Join with commas and update textarea
+            textarea.value = loans.join(', ');
+
+            // Visual feedback: briefly change border color
+            textarea.style.border = '2px solid #28a745';
+            textarea.style.background = '#d4edda';
+
+            setTimeout(() => {
+                textarea.style.border = '1px solid #cbd5e0';
+                textarea.style.background = 'white';
+            }, 1000);
+        }
+
+        function clearSlide5Form() {
+            // Reset the textarea
+            const textarea = document.getElementById('slide5LoanTextarea');
+            if (textarea) {
+                textarea.value = '';
+            }
+
+            // Reset bundle select to placeholder (-- Select Bundle --)
+            const bundleSelect = document.getElementById('slide5BundleSelect');
+            if (bundleSelect) {
+                bundleSelect.value = '';  // Reset to the empty value placeholder
+            }
+
+            // Hide the Build Loan Population section
+            const buildSection = document.getElementById('slide5BuildSection');
+            if (buildSection) {
+                buildSection.style.display = 'none';
+            }
+
+            // Reset method selection to Manual Entry
+            selectSlide5Method('manual');
+
+            // Visual feedback
+            if (textarea) {
+                textarea.style.border = '2px solid #17a2b8';
+                textarea.focus();
+
+                setTimeout(() => {
+                    textarea.style.border = '1px solid #cbd5e0';
+                }, 800);
+            }
+
+            // Visual feedback on bundle dropdown
+            if (bundleSelect) {
+                bundleSelect.style.border = '2px solid #17a2b8';
+
+                setTimeout(() => {
+                    bundleSelect.style.border = '1px solid #cbd5e0';
+                }, 800);
+            }
+        }
+
+        function viewSlide5LoanPopulation() {
+            const textarea = document.getElementById('slide5LoanTextarea');
+            if (!textarea) return;
+
+            const loanText = textarea.value.trim();
+
+            if (loanText === '') {
+                // Show warning if no loans entered
+                textarea.style.border = '2px solid #ffc107';
+                textarea.style.background = '#fff3cd';
+
+                setTimeout(() => {
+                    textarea.style.border = '1px solid #cbd5e0';
+                    textarea.style.background = 'white';
+                }, 1500);
+            } else {
+                // Success feedback
+                textarea.style.border = '2px solid #28a745';
+                textarea.style.background = '#d4edda';
+
+                setTimeout(() => {
+                    textarea.style.border = '1px solid #cbd5e0';
+                    textarea.style.background = 'white';
+
+                    // Show the Build Loan Population section with animation
+                    const buildSection = document.getElementById('slide5BuildSection');
+                    if (buildSection) {
+                        buildSection.style.display = 'flex';
+                        buildSection.style.opacity = '0';
+
+                        setTimeout(() => {
+                            buildSection.style.transition = 'opacity 0.3s ease-in';
+                            buildSection.style.opacity = '1';
+                        }, 50);
+                    }
+                }, 800);
+            }
+        }
+
+        // Method selection for Slide 5
+        function selectSlide5Method(method) {
+            // Reset all method buttons
+            const buttons = ['slide5MethodManual', 'slide5MethodTrade', 'slide5MethodFilter', 'slide5MethodInvestor'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.style.border = '1px solid #cbd5e0';
+                    btn.style.color = '#546E7A';
+                    btn.style.fontWeight = 'normal';
+                }
+            });
+
+            // Highlight selected method
+            const selectedBtn = document.getElementById('slide5Method' + method.charAt(0).toUpperCase() + method.slice(1));
+            if (selectedBtn) {
+                selectedBtn.style.border = '2px solid #17a2b8';
+                selectedBtn.style.color = '#17a2b8';
+                selectedBtn.style.fontWeight = '600';
+            }
+        }
+
+        // Filter loans by status
+        function filterSlide5Loans(filterType) {
+            const table = document.getElementById('slide5LoanTable');
+            if (!table) return;
+
+            const rows = table.querySelectorAll('tbody tr');
+            const filterAll = document.getElementById('slide5FilterAll');
+            const filterMissing = document.getElementById('slide5FilterMissing');
+            const filterReady = document.getElementById('slide5FilterReady');
+
+            // Reset all filter styles
+            [filterAll, filterMissing, filterReady].forEach(filter => {
+                if (filter) {
+                    filter.style.border = '1px solid #cbd5e0';
+                    filter.style.fontWeight = 'normal';
+                    filter.style.color = '#546E7A';
+                }
+            });
+
+            // Apply filter
+            if (filterType === 'all') {
+                rows.forEach(row => row.style.display = '');
+                if (filterAll) {
+                    filterAll.style.border = '2px solid #17a2b8';
+                    filterAll.style.fontWeight = '600';
+                    filterAll.style.color = '#17a2b8';
+                }
+            } else if (filterType === 'missing') {
+                rows.forEach(row => {
+                    row.style.display = row.dataset.status === 'missing' ? '' : 'none';
+                });
+                if (filterMissing) {
+                    filterMissing.style.border = '2px solid #17a2b8';
+                    filterMissing.style.fontWeight = '600';
+                    filterMissing.style.color = '#17a2b8';
+                }
+            } else if (filterType === 'ready') {
+                rows.forEach(row => {
+                    row.style.display = row.dataset.status === 'ready' ? '' : 'none';
+                });
+                if (filterReady) {
+                    filterReady.style.border = '2px solid #17a2b8';
+                    filterReady.style.fontWeight = '600';
+                    filterReady.style.color = '#17a2b8';
+                }
+            }
+        }
+
+        // Toggle select all checkboxes
+        function toggleSlide5SelectAll() {
+            const selectAll = document.getElementById('slide5SelectAll');
+            const checkboxes = document.querySelectorAll('.slide5-loan-checkbox');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+
+            updateSlide5SelectedCount();
+        }
+
+        // Update selected loan count
+        function updateSlide5SelectedCount() {
+            const checkboxes = document.querySelectorAll('.slide5-loan-checkbox');
+            const countSpan = document.getElementById('slide5SelectedCount');
+            const selectAll = document.getElementById('slide5SelectAll');
+
+            let selectedCount = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) selectedCount++;
+            });
+
+            if (countSpan) {
+                countSpan.textContent = selectedCount;
+            }
+
+            // Update select all checkbox state
+            if (selectAll) {
+                selectAll.checked = selectedCount === checkboxes.length;
+            }
+        }
+
+        // Refresh population
+        function refreshSlide5Population() {
+            const textarea = document.getElementById('slide5LoanTextarea');
+
+            // Visual feedback - brief loading state
+            if (textarea) {
+                textarea.style.border = '2px solid #17a2b8';
+                textarea.style.background = '#e3f2fd';
+            }
+
+            setTimeout(() => {
+                if (textarea) {
+                    textarea.style.border = '1px solid #cbd5e0';
+                    textarea.style.background = 'white';
+                }
+
+                // Flash success on table
+                const table = document.getElementById('slide5LoanTable');
+                if (table) {
+                    table.style.background = '#d4edda';
+                    setTimeout(() => {
+                        table.style.background = '';
+                    }, 500);
+                }
+            }, 800);
+        }
+
+        // Add loan to population
+        function addLoanToSlide5Population() {
+            const textarea = document.getElementById('slide5LoanTextarea');
+            if (!textarea) return;
+
+            // Add a new loan number to the list
+            const currentLoans = textarea.value.trim();
+            const newLoan = 'TEST10008338';
+
+            textarea.value = currentLoans ? currentLoans + ', ' + newLoan : newLoan;
+
+            // Visual feedback
+            textarea.style.border = '2px solid #28a745';
+            textarea.style.background = '#d4edda';
+
+            setTimeout(() => {
+                textarea.style.border = '1px solid #cbd5e0';
+                textarea.style.background = 'white';
+            }, 1000);
+        }
+
+        // Build ready to bundle loans
+        function buildSlide5ReadyLoans() {
+            const readyRows = document.querySelectorAll('#slide5LoanTable tbody tr[data-status="ready"]');
+
+            if (readyRows.length === 0) {
+                // No ready loans
+                return;
+            }
+
+            // Show full-page spinner
+            showSpinner();
+
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Flash success on ready rows
+                readyRows.forEach(row => {
+                    row.style.background = '#d4edda';
+                });
+
+                setTimeout(() => {
+                    readyRows.forEach(row => {
+                        row.style.background = '';
+                    });
+                }, 800);
+            }, 2000);
+        }
+
+        // Build selected loans
+        function buildSlide5SelectedLoans() {
+            const checkboxes = document.querySelectorAll('.slide5-loan-checkbox:checked');
+
+            if (checkboxes.length === 0) {
+                return;
+            }
+
+            // Show full-page spinner
+            showSpinner();
+
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Flash success on selected rows
+                checkboxes.forEach(checkbox => {
+                    const row = checkbox.closest('tr');
+                    if (row) {
+                        row.style.background = '#d4edda';
+                    }
+                });
+
+                setTimeout(() => {
+                    checkboxes.forEach(checkbox => {
+                        const row = checkbox.closest('tr');
+                        if (row) {
+                            row.style.background = '';
+                        }
+                    });
+                }, 800);
+            }, 2000);
+        }
+
+        // Open upload documents modal/message for Slide 4
+        function openUploadDocumentsModal() {
+            showSlide4Message('Upload feature: Add missing documents here. Final bundle will be automatically saved to database and instantly accessible in Byte.', 'info');
+
+            // Auto-hide message after 5 seconds
+            setTimeout(() => {
+                const msgEl = document.getElementById('slide4StatusMessage');
+                if (msgEl) msgEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Upload document function for Slide 4
+        function uploadSlide4Document(button, docType) {
+            // Show full-page spinner
+            showSpinner();
+
+            // Simulate upload process
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Find the row and update status
+                const row = button.closest('tr');
+                if (row) {
+                    const statusCell = row.querySelectorAll('td')[1];
+                    const actionCell = row.querySelectorAll('td')[3];
+
+                    // Update status to Found
+                    statusCell.innerHTML = '<span style="color: #28a745; font-weight: 600;">Found 1</span>';
+                    statusCell.style.color = '#28a745';
+
+                    // Replace upload button with checkmark
+                    actionCell.innerHTML = '<span style="color: #28a745; font-weight: 600;">✓</span>';
+
+                    // Change row status
+                    row.dataset.status = 'found';
+
+                    // Flash success on row
+                    row.style.background = '#d4edda';
+                    setTimeout(() => {
+                        row.style.background = '';
+                    }, 1000);
+                }
+
+                // Show success message
+                showSlide4Message('Document "' + docType + '" uploaded successfully!', 'success');
+
+                // Auto-hide message after 3 seconds
+                setTimeout(() => {
+                    const msgEl = document.getElementById('slide4StatusMessage');
+                    if (msgEl) msgEl.style.display = 'none';
+                }, 3000);
+            }, 2000);
+        }
+
+        // Toggle Not Applicable Documentation on Slide 5 (affects counts only)
+        function toggleSlide5NotApplicableDocs() {
+            const checkbox = document.getElementById('slide5HideNACheckbox');
+            const missingCounts = document.querySelectorAll('.slide5-missing-count');
+
+            if (checkbox && checkbox.checked) {
+                // Hide N/A docs: Reset counts to base (exclude N/A doc counts)
+                missingCounts.forEach(countSpan => {
+                    const baseCount = parseInt(countSpan.dataset.base);
+                    countSpan.textContent = baseCount;
+                });
+            } else {
+                // Show N/A docs: Increase counts by 3 (include N/A doc counts)
+                missingCounts.forEach(countSpan => {
+                    const baseCount = parseInt(countSpan.dataset.base);
+                    const newCount = baseCount + 3;
+                    countSpan.textContent = newCount;
+                });
+            }
         }
 
         // Initialize - Start with BoB deck
