@@ -18,11 +18,31 @@
             overflow: hidden;
         }
 
+        /* CMG Financial Logo */
+        .cmg-logo {
+            position: fixed;
+            top: 15px;
+            left: 40px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cmg-logo img {
+            height: 32px;
+            width: auto;
+        }
+
         /* Breadcrumb Navigation */
         .breadcrumb-nav {
             position: fixed;
             top: 15px;
-            left: 40px;
+            right: 40px;
             z-index: 1000;
             display: flex;
             gap: 8px;
@@ -798,7 +818,8 @@
         @media print {
             .navigation,
             .slide-counter,
-            .breadcrumb-nav {
+            .breadcrumb-nav,
+            .cmg-logo {
                 display: none;
             }
 
@@ -811,6 +832,11 @@
     </style>
 </head>
 <body>
+    <!-- CMG Financial Logo -->
+    <div class="cmg-logo">
+        <img src="https://cdn.brandfetch.io/id1_smxztX/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1763516068627" alt="CMG Financial">
+    </div>
+
     <!-- Breadcrumb Navigation -->
     <div class="breadcrumb-nav">
         <a href="#" class="breadcrumb-btn active" data-deck="bob" onclick="switchDeck('bob'); return false;">
@@ -1725,176 +1751,372 @@
         <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
             <div class="slide-header">
                 <div class="slide-number">SLIDE 2 OF 6</div>
-                <h1 class="slide-title">Concept Overview</h1>
-                <p class="slide-subtitle">Bringing BoB intelligence to Clear to Close operations</p>
+                <h1 class="slide-title">Project Overview</h1>
+                <p class="slide-subtitle">Leveraging BoB infrastructure internally for AI-powered data integrity validation</p>
             </div>
             <div class="slide-content">
                 <div class="clickable" onclick="openModal('ctc-slide2-problem')" style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; cursor: pointer; transition: transform 0.2s;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
                         <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 2rem;">🔍</span>
-                            The Opportunity
+                            <span style="font-size: 2rem;">⚠️</span>
+                            The Problem
                         </h3>
-                        <span style="background: #E53935; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">CONCEPT</span>
+                        <span style="background: #E53935; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">RISK</span>
                     </div>
-                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Clear to Close workflows suffer from manual bottlenecks, condition tracking complexity, and lack of real-time diagnostic insights into readiness status.</p>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Data integrity gaps in post-close operations go undetected by busy operational teams - leading to compliance violations, scratch & dent loans, and costly repurchase risk from mismatched borrower names, property address discrepancies, and other critical data errors.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('ctc-slide2-solution')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #4CAF50; cursor: pointer; transition: transform 0.2s;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
                         <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 2rem;">👨‍⚕️</span>
-                            Dr. BoB Concept
+                            <span style="font-size: 2rem;">💡</span>
+                            The Vision
                         </h3>
-                        <span style="background: #4CAF50; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">PROTOTYPE</span>
+                        <span style="background: #4CAF50; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">SOLUTION</span>
                     </div>
-                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">AI-powered diagnostic platform built on BoB architecture that analyzes CTC readiness, identifies blockers, recommends actions, and automates condition tracking across loan pipelines.</p>
+                    <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">Leverage BoB's proven PDF generation infrastructure (currently external-facing) to create internal structured bundles → Doctor BoB AI retrieves them from shared location → Systematically validates documents against source of truth databases → Catches data integrity gaps humans miss → Alerts operational teams before issues escalate.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('ctc-slide2-value')" style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #2E7D60; cursor: pointer; transition: transform 0.2s;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
                         <h3 style="color: #2C3E50; font-size: 1.5rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 2rem;">💎</span>
-                            Value Proposition
+                            <span style="font-size: 2rem;">🎯</span>
+                            Strategic Value
                         </h3>
-                        <span style="background: #2E7D60; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">STRATEGIC</span>
+                        <span style="background: #2E7D60; color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">ROI</span>
                     </div>
                     <p style="color: #546E7A; font-size: 1.125rem; line-height: 1.6; margin: 0;">
-                        <strong style="color: #2C3E50;">Target Users:</strong> Processors, Underwriters, Closers, Quality Control<br><br>
-                        <strong style="color: #2C3E50;">Key Benefits:</strong> Real-time CTC diagnostics, automated condition tracking, proactive blocker identification, predictive close date analysis
+                        <strong style="color: #2C3E50;">Why This Works:</strong> BoB's consistent document flow creates perfect foundation for AI validation excellence - repetitive, systematic review of same document structure enables "Docs AI" capabilities to identify hot spots and cross-reference data against truth sources with precision humans can't match.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- CTC Slide 3: Core Features -->
+        <!-- CTC Slide 3: BoB Internal Stacking Order Concept -->
         <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
-            <div class="slide-header">
-                <div class="slide-number">SLIDE 3 OF 6</div>
-                <h1 class="slide-title">Core Features Concept</h1>
-                <p class="slide-subtitle">Diagnostic intelligence for Clear to Close operations</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 3 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Internal Stacking Order</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">From External Delivery to Internal Operations</p>
             </div>
-            <div class="slide-content" style="gap: 8px;">
-                <div class="status-cards">
-                    <div class="status-card">
-                        <div class="status-card-label">🏥 Health Dashboard</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
-                            Real-time loan health scores<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Red/Yellow/Green status indicators</span><br>
-                            Pipeline-wide visibility<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Drill-down diagnostics per loan</span>
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
+                <!-- Left: BoB UI -->
+                <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+                    <!-- Clear Header -->
+                    <div style="background: white; padding: 14px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: center; align-items: center; position: relative;">
+                        <h2 style="font-size: 1.3rem; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #17a2b8; margin: 0;">Clear</h2>
+                        <span style="color: #000; margin-left: 8px; font-size: 1.3rem; font-weight: 600;">- BoB Manager</span>
+                        <div style="position: absolute; right: 20px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 0.7rem; color: #546E7A;">Shipper</span>
+                            <div style="width: 32px; height: 32px; background: #17a2b8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem;">AB</div>
                         </div>
                     </div>
-                    <div class="status-card">
-                        <div class="status-card-label">⚠️ Blocker Detection</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
-                            AI-powered issue identification<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Missing docs, expired conditions</span><br>
-                            Proactive alerts<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Before they become critical</span>
-                        </div>
-                    </div>
-                    <div class="status-card">
-                        <div class="status-card-label">📋 Condition Tracker</div>
-                        <div class="status-card-value" style="font-size: 0.75rem; line-height: 1.3;">
-                            Automated condition monitoring<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Sync with LOS systems</span><br>
-                            Status progression tracking<br>
-                            <span style="font-size: 0.7rem; color: #78909C;">Outstanding to satisfied workflow</span>
+
+                    <!-- Main Content Area -->
+                    <div style="flex: 1; background: #f5f7f9; padding: 14px; overflow-y: auto; position: relative;">
+                        <div style="background: white; border-radius: 6px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                            <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">BoB (Builder of Bundles) | Single Loan Delivery</h3>
+
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Select Subject Loan</label>
+                                <input type="text" value="test900" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: #e9ecef; color: #2C3E50;">
+                            </div>
+
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Select Bundle</label>
+                                <select style="width: 100%; padding: 8px 10px; border: 2px solid #FFC107; border-radius: 4px; font-size: 0.75rem; background: #FFF9C4; color: #2C3E50; font-weight: 600;">
+                                    <option>💡 CMG Internal - QC Review</option>
+                                    <option>C2C - QC Bundle (External)</option>
+                                    <option>Investor Bundle (External)</option>
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">PDF Bundle Name</label>
+                                <input type="text" value="johndanieldoe-test900-cmg-qcbundle.pdf" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.72rem; background: #f8f9fa; color: #78909C;">
+                            </div>
+
+                            <div style="display: flex; gap: 8px; margin-bottom: 10px; justify-content: flex-end;">
+                                <button onclick="startNewCtcSlide3Bundle()" style="padding: 8px 14px; background: #17a2b8; color: white; border: none; border-radius: 4px; font-size: 0.72rem; font-weight: 600; cursor: pointer;">Start New Bundle</button>
+                                <button id="ctcSlide3BuildBtn" onclick="buildCtcSlide3Bundle()" style="padding: 8px 14px; background: #6c757d; color: white; border: none; border-radius: 4px; font-size: 0.72rem; font-weight: 600; cursor: pointer;">Build Bundle</button>
+                            </div>
+
+                            <div style="background: #FFF3E0; border-left: 4px solid #FF9800; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                                <strong style="color: #E65100; font-size: 0.75rem;">💡 Stacking Order: CMG Internal QC</strong>
+                                <p style="color: #2C3E50; font-size: 0.7rem; margin: 4px 0 0 0;">Documents ordered for internal quality control review instead of external investor delivery</p>
+                            </div>
+
+                            <div style="display: flex; gap: 6px; margin-bottom: 10px; align-items: center; font-size: 0.72rem;">
+                                <span id="ctcSlide3FilterAll" onclick="filterCtcSlide3Docs('all')" style="padding: 5px 10px; background: white; border: 2px solid #17a2b8; border-radius: 4px; font-weight: 600; color: #2C3E50; cursor: pointer;">All <span id="ctcSlide3CountAll">11</span></span>
+                                <span id="ctcSlide3FilterMissing" onclick="filterCtcSlide3Docs('missing')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; position: relative; cursor: pointer;">Missing <span id="ctcSlide3CountMissing" style="position: absolute; top: -4px; right: -4px; background: #dc3545; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: 700;">1</span></span>
+                                <span id="ctcSlide3FilterFound" onclick="filterCtcSlide3Docs('found')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; cursor: pointer;">Found <span id="ctcSlide3CountFound">9</span></span>
+                            </div>
+
+                            <div style="overflow-x: auto;">
+                                <table id="ctcSlide3DocTable" style="width: 100%; border-collapse: collapse; font-size: 0.72rem;">
+                                    <thead style="background: #f8f9fa;">
+                                        <tr>
+                                            <th style="padding: 7px 8px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">DOCUMENT TYPE</th>
+                                            <th style="padding: 7px 8px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">STATUS</th>
+                                            <th style="padding: 7px 8px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">CATEGORY</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-weight: 600;">HOI Policy</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Insurance</td>
+                                        </tr>
+                                        <tr data-status="missing" style="border-bottom: 1px solid #f1f3f5; background: #FFEBEE;">
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-weight: 600;">Title</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">Missing</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Title</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">CPL</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Title</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Appraisal</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Property</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Purchase Contract</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Property</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Bond Resv./Comm.</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Financial</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Credit Report</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 2</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Credit</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Flood Cert</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 1</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Insurance</td>
+                                        </tr>
+                                        <tr data-status="found" style="border-bottom: 1px solid #f1f3f5; background: #FFF9C4;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Docs (UNSIGNED)</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">Found - 2</span></td>
+                                            <td style="padding: 7px 8px; color: #546E7A;">Documents</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px;">
-                    <h3 style="color: #2C3E50; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; border-bottom: 2px solid #4A8B73; padding-bottom: 6px;">💡 Conceptual Features</h3>
+                <!-- Right: Feature Highlights -->
+                <div style="display: flex; flex-direction: column; gap: 15px; overflow-y: auto;">
+                    <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #FF9800;">
+                        <h3 style="color: #E65100; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">🏢</span>
+                            Internal vs. External Focus
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;"><strong>Current:</strong> BoB builds bundles for external third-party investors (C2C, Wells Fargo, etc.)<br><br><strong>Concept:</strong> Special stacking orders designed for internal CMG departments - QC teams, compliance, underwriting, closing teams - enabling operational workflows beyond investor delivery.</p>
+                    </div>
 
-                    <div style="display: grid; gap: 6px;">
-                        <div class="clickable" onclick="openModal('ctc-slide3-feature1')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2E7D60; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🎯</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Predictive Close Date Analysis</strong>
-                                <span style="background: #2E7D60; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AI-POWERED</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">ML models predict realistic close dates based on current conditions</p>
-                        </div>
+                    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #4CAF50;">
+                        <h3 style="color: #1B5E20; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">🎯</span>
+                            Operational Use Cases
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Pre-closing QC review bundles, compliance audit packages, post-close quality assurance sets, training materials for new processors, and internal documentation standards - all with customized document stacking orders.</p>
+                    </div>
 
-                        <div class="clickable" onclick="openModal('ctc-slide3-feature2')" style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #3A9675; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🤖</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Smart Action Recommendations</strong>
-                                <span style="background: #3A9675; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">AUTOMATION</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Context-aware suggestions for accelerating loan progression</p>
-                        </div>
+                    <div style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #2196F3;">
+                        <h3 style="color: #0D47A1; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">📋</span>
+                            Custom Stacking Orders
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Each internal department could define their preferred document order and requirements. QC teams might prioritize critical docs first, while compliance teams might need chronological ordering for audit trail purposes.</p>
+                    </div>
 
-                        <div class="clickable" onclick="openModal('ctc-slide3-feature3')" style="background: linear-gradient(135deg, #C5E8D9 0%, #8FD4B8 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #2E5C4A; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">📊</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Multi-Loan Pipeline View</strong>
-                                <span style="background: #2E5C4A; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">VISIBILITY</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Aggregate view across pipeline with filtering and prioritization</p>
-                        </div>
+                    <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #9C27B0;">
+                        <h3 style="color: #4A148C; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">⚡</span>
+                            Workflow Integration
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Internal bundles could trigger automated workflows - QC review tasks, compliance checks, training module assignments - transforming BoB from a delivery tool into an operational workflow orchestrator.</p>
+                    </div>
 
-                        <div class="clickable" onclick="openModal('ctc-slide3-feature4')" style="background: linear-gradient(135deg, #B8E0CE 0%, #7BC9A7 100%); border-radius: 5px; padding: 8px; cursor: pointer; border-left: 3px solid #46A382; transition: transform 0.2s;">
-                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
-                                <span style="font-size: 1rem;">🔔</span>
-                                <strong style="color: #2C3E50; font-size: 0.75rem;">Intelligent Alerts & Notifications</strong>
-                                <span style="background: #46A382; color: white; padding: 2px 5px; border-radius: 8px; font-size: 0.55rem; font-weight: 600; margin-left: auto;">PROACTIVE</span>
-                            </div>
-                            <p style="color: #546E7A; font-size: 0.7rem; margin: 0; padding-left: 24px;">Smart alerts for critical events and approaching deadlines</p>
-                        </div>
+                    <div style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #00897B;">
+                        <h3 style="color: #004D40; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">💡</span>
+                            Strategic Value
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Extends BoB's proven architecture beyond external delivery to power internal operations. Leverages existing infrastructure to solve operational challenges without building separate systems from scratch.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- CTC Slide 4: Technical Architecture -->
+        <!-- CTC Slide 4: Doctor BoB - UI Feature Highlights -->
         <div class="slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
-            <div class="slide-header">
-                <div class="slide-number">SLIDE 4 OF 6</div>
-                <h1 class="slide-title">Technical Architecture Concept</h1>
-                <p class="slide-subtitle">Built on proven BoB Management Suite platform foundation</p>
+            <div class="slide-header" style="padding: 12px 40px; margin-bottom: 10px;">
+                <div class="slide-number" style="font-size: 0.7rem; margin-bottom: 4px;">SLIDE 4 OF 6</div>
+                <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">Doctor BoB - Single Loan QC</h1>
+                <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #4CAF50;">
-                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🏗️ Platform Foundation</h3>
-                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
-                        <li><strong style="color: #2E7D32;">✓ BoB Architecture:</strong> Leverage existing CLEAR portal framework</li>
-                        <li><strong style="color: #2E7D32;">✓ React Frontend:</strong> Modern, responsive UI components</li>
-                        <li><strong style="color: #2E7D32;">✓ .NET Core Backend:</strong> Scalable API architecture</li>
-                        <li><strong style="color: #2E7D32;">✓ Azure Cloud:</strong> Enterprise-grade infrastructure</li>
-                    </ul>
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
+                <!-- Left: Scaled Interface -->
+                <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+                    <!-- Clear Header -->
+                    <div style="background: white; padding: 14px 20px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: center; align-items: center; position: relative;">
+                        <h2 style="font-size: 1.3rem; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #14b8a6; margin: 0;">Clear</h2>
+                        <span style="color: #000; margin-left: 8px; font-size: 1.3rem; font-weight: 600;">- BoB Manager</span>
+                        <div style="position: absolute; right: 20px; display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem;">AO</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Area -->
+                    <div style="flex: 1; background: #f5f7f9; padding: 14px; overflow-y: auto; position: relative;">
+                        <div style="background: white; border-radius: 6px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                            <h3 style="color: #2C3E50; font-size: 1rem; font-weight: 600; margin-bottom: 12px;">Doctor BoB - Single Loan Manager | Quality Control & Validation</h3>
+
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Select Doctor Bundle</label>
+                                <select id="ctcBundleSelect" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
+                                    <option>Approved & Locked</option>
+                                    <option>Clear to Close & Locked</option>
+                                    <option>Docs Back</option>
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: 10px;">
+                                <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Loans Available for Doctor BoB</label>
+                                <input id="ctcLoanInput" type="text" value="10002923893" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
+                            </div>
+
+                            <div style="display: flex; gap: 8px; margin-bottom: 10px; justify-content: flex-end;">
+                                <button id="ctcRunBtn" onclick="runCtcDocBoB()" style="padding: 8px 14px; background: #14b8a6; color: white; border: none; border-radius: 4px; font-size: 0.72rem; font-weight: 600; cursor: pointer;">📋 Run Doc BoB</button>
+                                <button onclick="startNewCtcRun()" style="padding: 8px 14px; background: white; border: 1px solid #14b8a6; color: #14b8a6; border-radius: 4px; font-size: 0.72rem; font-weight: 600; cursor: pointer;">➕ Start New Doc BoB Run</button>
+                            </div>
+
+                            <div style="display: flex; gap: 6px; margin-bottom: 10px; align-items: center; font-size: 0.72rem;">
+                                <span id="ctcFilterAll" onclick="filterCtcDocs('all')" style="padding: 5px 10px; background: white; border: 2px solid #14b8a6; border-radius: 4px; font-weight: 600; color: #2C3E50; cursor: pointer;">All <span id="ctcCountAll">10</span></span>
+                                <span id="ctcFilterFail" onclick="filterCtcDocs('fail')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; position: relative; cursor: pointer;">Fail <span id="ctcCountFail" style="position: absolute; top: -4px; right: -4px; background: #dc3545; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: 700;">3</span></span>
+                                <span id="ctcFilterPass" onclick="filterCtcDocs('pass')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; cursor: pointer;">Pass <span id="ctcCountPass">5</span></span>
+                                <span style="margin-left: auto; color: #78909C;"><span id="ctcTotalDocs">10</span> docs, <span id="ctcTotalPages">20</span> pgs</span>
+                            </div>
+
+                            <div style="overflow-x: auto;">
+                                <table id="ctcDocTable" style="width: 100%; border-collapse: collapse; font-size: 0.72rem;">
+                                    <thead style="background: #f8f9fa;">
+                                        <tr>
+                                            <th style="padding: 7px 8px; text-align: left; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Document Name</th>
+                                            <th style="padding: 7px 8px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Status</th>
+                                            <th style="padding: 7px 8px; text-align: center; border-bottom: 2px solid #e9ecef; font-weight: 600; color: #546E7A;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">HOI Policy</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Title</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">CPL</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Appraisal</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Appraisal validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        </tr>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Purchase Contract</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Purchase Contract validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        </tr>
+                                        <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Bond Resv./Comm.</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Credit Report</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50;">Flood Cert</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Flood Cert validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        </tr>
+                                        <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
+                                            <td style="padding: 7px 8px; color: #78909C;">Test Document A</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #6c757d; font-weight: 600;">N/A</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                        <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
+                                            <td style="padding: 7px 8px; color: #78909C;">Test Document B</td>
+                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #6c757d; font-weight: 600;">N/A</span></td>
+                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="background: linear-gradient(135deg, #D7F0E5 0%, #A8DCC1 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #2E7D60;">
-                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🔌 Integration Points</h3>
-                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
-                        <li><strong style="color: #2E7D60;">→ Byte LOS:</strong> Real-time loan data sync</li>
-                        <li><strong style="color: #2E7D60;">→ Document Manager:</strong> Condition tracking integration</li>
-                        <li><strong style="color: #2E7D60;">→ EPS APIs:</strong> Core data connectivity</li>
-                        <li><strong style="color: #2E7D60;">→ External Validators:</strong> Third-party verification services</li>
-                    </ul>
-                </div>
+                <!-- Right: Feature Highlights -->
+                <div style="display: flex; flex-direction: column; gap: 15px; overflow-y: auto;">
+                    <div style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #4CAF50;">
+                        <h3 style="color: #1B5E20; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">🎯</span>
+                            Automated Quality Control
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Run comprehensive document validation checks against loan data to identify discrepancies, missing information, or data quality issues before they impact closing timelines.</p>
+                    </div>
 
-                <div style="background: linear-gradient(135deg, #C5E8D9 0%, #8FD4B8 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #2E5C4A;">
-                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🤖 AI/ML Capabilities</h3>
-                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
-                        <li><strong style="color: #2E5C4A;">◆ Pattern Recognition:</strong> Historical data analysis</li>
-                        <li><strong style="color: #2E5C4A;">◆ Predictive Models:</strong> Close date forecasting</li>
-                        <li><strong style="color: #2E5C4A;">◆ Anomaly Detection:</strong> Identify unusual patterns</li>
-                        <li><strong style="color: #2E5C4A;">◆ NLP Processing:</strong> Condition text analysis</li>
-                    </ul>
-                </div>
+                    <div style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #2196F3;">
+                        <h3 style="color: #0D47A1; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">📊</span>
+                            Real-Time Status Filtering
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Instantly filter documents by Pass, Fail, or N/A status. View document counts and page totals to understand validation results at a glance and prioritize remediation efforts.</p>
+                    </div>
 
-                <div style="background: linear-gradient(135deg, #B8E0CE 0%, #7BC9A7 100%); border-radius: 12px; padding: 25px; border-left: 5px solid #3A9675;">
-                    <h3 style="color: #1B5E20; margin-bottom: 15px; font-size: 1.3rem;">🔒 Security & Compliance</h3>
-                    <ul style="line-height: 2; color: #2C3E50; list-style: none; padding: 0;">
-                        <li><strong style="color: #3A9675;">● Azure AD Auth:</strong> Enterprise SSO</li>
-                        <li><strong style="color: #3A9675;">● Role-Based Access:</strong> Granular permissions</li>
-                        <li><strong style="color: #3A9675;">● Audit Logging:</strong> Complete activity tracking</li>
-                        <li><strong style="color: #3A9675;">● Data Encryption:</strong> At-rest and in-transit</li>
-                    </ul>
+                    <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #FF9800;">
+                        <h3 style="color: #E65100; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">⚠️</span>
+                            Detailed Failure Insights
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Failed documents display specific error messages explaining validation failures - from address mismatches to missing signatures - enabling processors to take targeted corrective action.</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #9C27B0;">
+                        <h3 style="color: #4A148C; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">🔄</span>
+                            Processor Communication
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">"Update Processor" action buttons enable instant communication of validation failures to loan processors, streamlining remediation workflows and reducing back-and-forth communication delays.</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #00897B;">
+                        <h3 style="color: #004D40; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">🔁</span>
+                            Flexible Bundle Selection
+                        </h3>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Select from multiple bundle types (Approved & Locked, Clear to Close & Locked, Docs Back, Funded) to run targeted quality control checks at different loan lifecycle stages.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2592,134 +2814,162 @@
 
         <!-- CTC Modals -->
         <div id="ctc-slide2-problem">
-            <h2 style="color: #E53935; margin-bottom: 20px;">🔍 The Opportunity</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Clear to Close Operational Challenges</strong></p>
-            <h3 style="color: #E53935; margin-top: 30px;">🎯 Current Pain Points:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Manual Tracking:</strong> Processors manually track dozens of conditions per loan across spreadsheets</li>
-                <li><strong>Limited Visibility:</strong> No real-time pipeline-wide view of CTC readiness status</li>
-                <li><strong>Reactive Operations:</strong> Issues discovered late, causing last-minute delays</li>
-                <li><strong>Fragmented Data:</strong> Condition status scattered across multiple systems</li>
-            </ul>
-            <h3 style="color: #E53935; margin-top: 30px;">📉 Business Impact:</h3>
-            <ul style="line-height: 2;">
-                <li>Extended cycle times due to condition tracking inefficiencies</li>
-                <li>Missed close dates from late-discovery blockers</li>
-                <li>Reduced team capacity managing manual processes</li>
-                <li>Poor customer experience with unpredictable timelines</li>
-            </ul>
-            <div style="background: #FFEBEE; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #E53935;">💡 Opportunity:</strong> Clear to Close operations need diagnostic intelligence and automation - exactly what the BoB Management Suite platform architecture can deliver.
+            <h2 style="color: #E53935; margin-bottom: 15px;">⚠️ The Problem: Hidden Data Integrity Risks</h2>
+            <p style="font-size: 1rem; margin-bottom: 15px;"><strong>Critical data errors slip through post-close operations</strong></p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #E53935; margin-bottom: 10px;">🎯 Data Integrity Hot Spots:</h3>
+                    <ul style="line-height: 1.6; font-size: 0.95rem;">
+                        <li><strong>Borrower Name Mismatches</strong> - John vs. Jonathan, misspellings</li>
+                        <li><strong>Property Address Discrepancies</strong> - Misaligned addresses across docs</li>
+                        <li><strong>Count Errors</strong> - Borrower/property count inconsistencies</li>
+                        <li><strong>Missing Signatures</strong> - Overlooked in multi-page documents</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #E53935; margin-bottom: 10px;">💰 Business Impact:</h3>
+                    <ul style="line-height: 1.6; font-size: 0.95rem;">
+                        <li><strong>Repurchase Risk</strong> - Forced loan buybacks from data failures</li>
+                        <li><strong>Compliance Violations</strong> - Regulatory penalties from misalignment</li>
+                        <li><strong>Scratch & Dent</strong> - Loans downgraded or rejected by investors</li>
+                        <li><strong>Audit Findings</strong> - Red flags in QC/compliance reviews</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: #FFEBEE; padding: 15px 18px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #E53935; font-size: 1.05rem;">
+                <strong style="color: #E53935; font-weight: 700;">😓 Why Humans Miss These:</strong> <strong style="font-weight: 600;">Operational teams are overwhelmed with volume and tight deadlines. Subtle errors (missing initials, transposed digits, dropped suffixes) hide in plain sight across hundreds of pages. Systematic validation against source of truth repositories isn't feasible at scale.</strong>
             </div>
         </div>
 
         <div id="ctc-slide2-solution">
-            <h2 style="color: #4CAF50; margin-bottom: 20px;">👨‍⚕️ Dr. BoB Concept</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>AI-Powered CTC Diagnostic Platform</strong></p>
-            <h3 style="color: #4CAF50; margin-top: 30px;">🎯 Core Concept:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Health Diagnostics:</strong> Real-time loan health scores with red/yellow/green indicators</li>
-                <li><strong>Blocker Detection:</strong> AI identifies missing docs, expired conditions, and potential delays</li>
-                <li><strong>Smart Recommendations:</strong> Context-aware action suggestions to accelerate loan progression</li>
-                <li><strong>Predictive Analytics:</strong> ML models forecast realistic close dates based on current state</li>
-            </ul>
-            <h3 style="color: #4CAF50; margin-top: 30px;">✨ Platform Benefits:</h3>
-            <ul style="line-height: 2;">
-                <li>Built on proven BoB architecture - faster time to value</li>
-                <li>Leverages existing CLEAR portal framework and patterns</li>
-                <li>Reuses authentication, security, and integration infrastructure</li>
-                <li>Extends platform ROI across multiple operational use cases</li>
-            </ul>
-            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #4CAF50;">💡 Impact:</strong> Dr. BoB transforms CTC from reactive manual tracking to proactive AI-powered diagnostics.
+            <h2 style="color: #4CAF50; margin-bottom: 15px;">💡 The Vision: BoB → Doctor BoB Workflow</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>Leveraging Existing Infrastructure for AI-Powered Data Integrity Validation</strong></p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #4CAF50; margin-top: 0; margin-bottom: 10px; font-size: 1rem;">🔄 The Intelligent Workflow:</h3>
+                    <ul style="line-height: 1.6; font-size: 0.9rem; margin-bottom: 0;">
+                        <li><strong>Step 1 - BoB Generates:</strong> Structured PDFs for internal QC teams</li>
+                        <li><strong>Step 2 - Shared Storage:</strong> Bundle delivered to repository</li>
+                        <li><strong>Step 3 - Doctor BoB Validates:</strong> AI reviews & cross-references data</li>
+                        <li><strong>Step 4 - Hot Spot ID:</strong> Flags name/address/count errors</li>
+                        <li><strong>Step 5 - Alert Teams:</strong> Instant notifications to QC/Post-Close for potential remediation</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #4CAF50; margin-top: 0; margin-bottom: 10px; font-size: 1rem;">🎯 Why This Works:</h3>
+                    <ul style="line-height: 1.6; font-size: 0.9rem; margin-bottom: 0;">
+                        <li><strong>Consistent Flow:</strong> BoB's structured output = perfect "Docs AI" foundation</li>
+                        <li><strong>Proven Infrastructure:</strong> Uses existing BoB capability</li>
+                        <li><strong>AI Excellence:</strong> Predictable structure enables pattern recognition</li>
+                        <li><strong>Sharper Eyes:</strong> AI catches errors humans miss</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: #E8F5E9; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #4CAF50; font-weight: 700;">💡 Key Insight:</strong> <strong style="font-weight: 600;">BoB's document flow isn't just for investors - it's the perfect foundation for AI validation throughout the loan lifecycle.</strong>
             </div>
         </div>
 
         <div id="ctc-slide2-value">
-            <h2 style="color: #2E7D60; margin-bottom: 20px;">💎 Value Proposition</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Operational Efficiency Through Diagnostic Intelligence</strong></p>
-            <h3 style="color: #2E7D60; margin-top: 30px;">👥 Target Users:</h3>
-            <ul style="line-height: 2;">
-                <li><strong>Processors:</strong> Real-time condition tracking and blocker alerts</li>
-                <li><strong>Underwriters:</strong> Clear visibility into condition satisfaction status</li>
-                <li><strong>Closers:</strong> Predictive close date insights and readiness diagnostics</li>
-                <li><strong>Quality Control:</strong> Pipeline-wide health monitoring and risk identification</li>
-            </ul>
-            <h3 style="color: #2E7D60; margin-top: 30px;">🚀 Key Benefits:</h3>
-            <ul style="line-height: 2;">
-                <li>Identify and resolve blockers before they cause delays</li>
-                <li>Real-time aggregate view across entire loan portfolio</li>
-                <li>Data-driven close date forecasting</li>
-                <li>Reduce manual tracking effort by 60-70%</li>
-            </ul>
-            <div style="background: #D7F0E5; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #2E7D60;">💡 Impact:</strong> Measurable improvements in cycle time, team capacity, and customer experience through intelligent CTC automation.
+            <h2 style="color: #2E7D60; margin-bottom: 15px;">🎯 Strategic Value: Protecting CMG from Repurchase Risk</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>Turning Consistent Document Flow Into Competitive Advantage</strong></p>
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr 1fr; gap: 15px;">
+                <div>
+                    <h3 style="color: #2E7D60; margin-top: 0; margin-bottom: 8px; font-size: 0.95rem;">✨ The "Docs AI" Advantage:</h3>
+                    <ul style="line-height: 1.5; font-size: 0.85rem; margin-bottom: 0;">
+                        <li><strong>Systematic Array:</strong> Same flow = AI pattern recognition</li>
+                        <li><strong>Methodical Process:</strong> Doc-by-doc hot spot validation</li>
+                        <li><strong>Instructed Validation:</strong> Cross-refs against "true north" data</li>
+                        <li><strong>Improving Accuracy:</strong> AI learns with each cycle</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #2E7D60; margin-top: 0; margin-bottom: 8px; font-size: 0.95rem;">👥 Who Benefits:</h3>
+                    <ul style="line-height: 1.5; font-size: 0.85rem; margin-bottom: 0;">
+                        <li><strong>QC Teams:</strong> Sharper eyes</li>
+                        <li><strong>Post-Close:</strong> Early validation</li>
+                        <li><strong>Compliance:</strong> Data alignment</li>
+                        <li><strong>Leadership:</strong> Risk reduction</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #2E7D60; margin-top: 0; margin-bottom: 8px; font-size: 0.95rem;">🚀 Strategic Benefits:</h3>
+                    <ul style="line-height: 1.5; font-size: 0.85rem; margin-bottom: 0;">
+                        <li><strong>Prevent Repurchase Risk</strong></li>
+                        <li><strong>Reduce Violations</strong></li>
+                        <li><strong>Minimize Scratch & Dent</strong></li>
+                        <li><strong>Improve Data Quality</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="background: #D7F0E5; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #2E7D60; font-weight: 700;">💡 The Vision:</strong> <strong style="font-weight: 600;">Doctor BoB isn't just automation - it's a sharper set of eyes ensuring data integrity and eliminating delivery gaps across the operational loan lifecycle.</strong>
             </div>
         </div>
 
         <div id="ctc-slide3-feature1">
-            <h2 style="color: #4CAF50; margin-bottom: 20px;">🎯 Predictive Close Date Analysis</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>ML-powered forecasting for realistic close date expectations</strong></p>
-            <h3 style="color: #2C3E50; margin-top: 30px;">How It Works:</h3>
-            <ul style="line-height: 2;">
+            <h2 style="color: #4CAF50; margin-bottom: 15px;">🎯 Predictive Close Date Analysis</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>ML-powered forecasting for realistic close date expectations</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 15px; font-size: 1rem;">How It Works:</h3>
+            <ul style="line-height: 1.6; font-size: 0.9rem;">
                 <li>Analyzes current loan conditions, outstanding items, and historical patterns</li>
                 <li>Machine learning models trained on thousands of closed loans</li>
                 <li>Factors in complexity, borrower responsiveness, and external dependencies</li>
                 <li>Updates predictions in real-time as conditions change</li>
             </ul>
-            <h3 style="color: #2C3E50; margin-top: 30px;">User Benefits:</h3>
-            <ul style="line-height: 2;">
+            <h3 style="color: #2C3E50; margin-top: 15px; font-size: 1rem;">User Benefits:</h3>
+            <ul style="line-height: 1.6; font-size: 0.9rem;">
                 <li>Set realistic customer expectations upfront</li>
                 <li>Identify loans at risk of missing close dates early</li>
                 <li>Prioritize work based on predicted close date confidence</li>
             </ul>
-            <div style="background: #E8F5E9; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #4CAF50;">💡 Impact:</strong> Replace guesswork with data-driven close date forecasts.
+            <div style="background: #E8F5E9; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #4CAF50; font-weight: 700;">💡 Impact:</strong> <strong style="font-weight: 600;">Replace guesswork with data-driven close date forecasts.</strong>
             </div>
         </div>
 
         <div id="ctc-slide3-feature2">
-            <h2 style="color: #3A9675; margin-bottom: 20px;">🤖 Smart Action Recommendations</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Context-aware guidance for accelerating loan progression</strong></p>
-            <h3 style="color: #2C3E50; margin-top: 30px;">Example Recommendations:</h3>
-            <ul style="line-height: 2;">
+            <h2 style="color: #3A9675; margin-bottom: 15px;">🤖 Smart Action Recommendations</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>Context-aware guidance for accelerating loan progression</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 15px; font-size: 1rem;">Example Recommendations:</h3>
+            <ul style="line-height: 1.6; font-size: 0.9rem;">
                 <li>"Request updated VOE - previous expires in 3 days"</li>
                 <li>"Schedule final walkthrough - property access confirmed"</li>
                 <li>"Follow up on outstanding appraisal condition with borrower"</li>
                 <li>"Notify title company - closing date approaching"</li>
             </ul>
-            <div style="background: #D7F0E5; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #3A9675;">💡 Impact:</strong> Accelerate loan progression with AI-powered next-best-action recommendations.
+            <div style="background: #D7F0E5; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #3A9675; font-weight: 700;">💡 Impact:</strong> <strong style="font-weight: 600;">Accelerate loan progression with AI-powered next-best-action recommendations.</strong>
             </div>
         </div>
 
         <div id="ctc-slide3-feature3">
-            <h2 style="color: #2E5C4A; margin-bottom: 20px;">📊 Multi-Loan Pipeline View</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Aggregate visibility across entire CTC pipeline</strong></p>
-            <h3 style="color: #2C3E50; margin-top: 30px;">Key Features:</h3>
-            <ul style="line-height: 2;">
+            <h2 style="color: #2E5C4A; margin-bottom: 15px;">📊 Multi-Loan Pipeline View</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>Aggregate visibility across entire CTC pipeline</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 15px; font-size: 1rem;">Key Features:</h3>
+            <ul style="line-height: 1.6; font-size: 0.9rem;">
                 <li>Real-time dashboard showing all loans in CTC stage</li>
                 <li>Color-coded health scores for quick status identification</li>
                 <li>Filter by processor, loan type, close date, health score</li>
                 <li>Drill down from pipeline view into individual loan diagnostics</li>
             </ul>
-            <div style="background: #C5E8D9; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #2E5C4A;">💡 Impact:</strong> Transform CTC to strategic pipeline management with real-time visibility.
+            <div style="background: #C5E8D9; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #2E5C4A; font-weight: 700;">💡 Impact:</strong> <strong style="font-weight: 600;">Transform CTC to strategic pipeline management with real-time visibility.</strong>
             </div>
         </div>
 
         <div id="ctc-slide3-feature4">
-            <h2 style="color: #46A382; margin-bottom: 20px;">🔔 Intelligent Alerts & Notifications</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Proactive notifications for critical events and approaching deadlines</strong></p>
-            <h3 style="color: #2C3E50; margin-top: 30px;">Alert Types:</h3>
-            <ul style="line-height: 2;">
+            <h2 style="color: #46A382; margin-bottom: 15px;">🔔 Intelligent Alerts & Notifications</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 15px;"><strong>Proactive notifications for critical events and approaching deadlines</strong></p>
+            <h3 style="color: #2C3E50; margin-top: 15px; font-size: 1rem;">Alert Types:</h3>
+            <ul style="line-height: 1.6; font-size: 0.9rem;">
                 <li><strong>Critical Blockers:</strong> Immediate attention required to avoid delays</li>
                 <li><strong>Approaching Deadlines:</strong> 3-day, 1-day, and same-day expiration warnings</li>
                 <li><strong>Anomaly Detection:</strong> Unusual patterns that may indicate issues</li>
                 <li><strong>Milestone Progress:</strong> Positive updates when conditions are satisfied</li>
             </ul>
-            <div style="background: #B8E0CE; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <strong style="color: #46A382;">💡 Impact:</strong> Shift from reactive fire-fighting to proactive issue management.
+            <div style="background: #B8E0CE; padding: 15px 18px; border-radius: 6px; margin-top: 15px; font-size: 1.05rem;">
+                <strong style="color: #46A382; font-weight: 700;">💡 Impact:</strong> <strong style="font-weight: 600;">Shift from reactive fire-fighting to proactive issue management.</strong>
             </div>
         </div>
     </div>
@@ -3500,6 +3750,279 @@
                     countSpan.textContent = newCount;
                 });
             }
+        }
+
+        // CTC Slide 4 - Doctor BoB Functions
+        function filterCtcDocs(filterType) {
+            const table = document.getElementById('ctcDocTable');
+            if (!table) return;
+
+            const rows = table.querySelectorAll('tbody tr');
+            const filterAll = document.getElementById('ctcFilterAll');
+            const filterFail = document.getElementById('ctcFilterFail');
+            const filterPass = document.getElementById('ctcFilterPass');
+
+            // Reset all filter button styles
+            if (filterAll) {
+                filterAll.style.border = '1px solid #cbd5e0';
+                filterAll.style.fontWeight = 'normal';
+            }
+            if (filterFail) {
+                filterFail.style.border = '1px solid #cbd5e0';
+                filterFail.style.fontWeight = 'normal';
+            }
+            if (filterPass) {
+                filterPass.style.border = '1px solid #cbd5e0';
+                filterPass.style.fontWeight = 'normal';
+            }
+
+            // Apply filter
+            if (filterType === 'all') {
+                rows.forEach(row => row.style.display = '');
+                if (filterAll) {
+                    filterAll.style.border = '2px solid #14b8a6';
+                    filterAll.style.fontWeight = '600';
+                }
+            } else if (filterType === 'fail') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'fail') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterFail) {
+                    filterFail.style.border = '2px solid #14b8a6';
+                    filterFail.style.fontWeight = '600';
+                }
+            } else if (filterType === 'pass') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'pass') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterPass) {
+                    filterPass.style.border = '2px solid #14b8a6';
+                    filterPass.style.fontWeight = '600';
+                }
+            }
+        }
+
+        function runCtcDocBoB() {
+            const loanInput = document.getElementById('ctcLoanInput');
+            const bundleSelect = document.getElementById('ctcBundleSelect');
+
+            if (!loanInput || !loanInput.value.trim()) {
+                return;
+            }
+
+            // Show spinner
+            showSpinner();
+
+            // Change spinner text for Doctor BoB
+            const spinnerText = document.querySelector('#spinnerOverlay div div:nth-child(2)');
+            if (spinnerText) {
+                spinnerText.textContent = 'Running Doctor BoB...';
+            }
+
+            // Simulate processing time (3 seconds)
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Reset spinner text
+                if (spinnerText) {
+                    spinnerText.textContent = 'Building Bundle...';
+                }
+
+                // Randomize document statuses for demo
+                const table = document.getElementById('ctcDocTable');
+                if (table) {
+                    const rows = table.querySelectorAll('tbody tr');
+                    const statuses = ['pass', 'pass', 'pass', 'fail', 'pass', 'fail', 'pass', 'pass'];
+                    const failMessages = [
+                        'Property address mismatch',
+                        'Borrower name incorrect',
+                        'Missing required signature',
+                        'Document date discrepancy'
+                    ];
+
+                    let passCount = 0;
+                    let failCount = 0;
+
+                    rows.forEach((row, index) => {
+                        if (index >= 8) return; // Skip N/A docs
+
+                        const randomStatus = Math.random() > 0.6 ? 'fail' : 'pass';
+                        row.dataset.status = randomStatus;
+
+                        const statusCell = row.cells[1];
+                        const actionCell = row.cells[2];
+
+                        if (randomStatus === 'fail') {
+                            failCount++;
+                            statusCell.innerHTML = '<span style="color: #dc3545; font-weight: 600;">✗ Fail</span>';
+                            actionCell.innerHTML = '<button onclick="alert(\'Processor notified about validation failure\')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button>';
+                            row.style.background = '#fff5f5';
+                        } else {
+                            passCount++;
+                            statusCell.innerHTML = '<span style="color: #28a745; font-weight: 600;">✓ Pass</span>';
+                            actionCell.innerHTML = '—';
+                            row.style.background = '';
+                        }
+                    });
+
+                    // Update counts
+                    const countAll = document.getElementById('ctcCountAll');
+                    const countFail = document.getElementById('ctcCountFail');
+                    const countPass = document.getElementById('ctcCountPass');
+
+                    if (countAll) countAll.textContent = '10';
+                    if (countFail) countFail.textContent = failCount;
+                    if (countPass) countPass.textContent = passCount;
+                }
+
+                // Reset filter to show all
+                filterCtcDocs('all');
+            }, 3000);
+        }
+
+        function startNewCtcRun() {
+            const loanInput = document.getElementById('ctcLoanInput');
+            const bundleSelect = document.getElementById('ctcBundleSelect');
+
+            if (loanInput) loanInput.value = '';
+            if (bundleSelect) bundleSelect.selectedIndex = 0;
+
+            // Reset all document statuses to initial state
+            const table = document.getElementById('ctcDocTable');
+            if (table) {
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach((row, index) => {
+                    if (index < 3) {
+                        row.dataset.status = 'pass';
+                        row.cells[1].innerHTML = '<span style="color: #28a745; font-weight: 600;">✓ Pass</span>';
+                        row.cells[2].innerHTML = '—';
+                        row.style.background = '';
+                    } else if (index < 8) {
+                        if (index === 3 || index === 4 || index === 7) {
+                            row.dataset.status = 'fail';
+                            row.cells[1].innerHTML = '<span style="color: #dc3545; font-weight: 600;">✗ Fail</span>';
+                            row.cells[2].innerHTML = '<button onclick="alert(\'Processor notified about validation failure\')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button>';
+                            row.style.background = '#fff5f5';
+                        } else {
+                            row.dataset.status = 'pass';
+                            row.cells[1].innerHTML = '<span style="color: #28a745; font-weight: 600;">✓ Pass</span>';
+                            row.cells[2].innerHTML = '—';
+                            row.style.background = '';
+                        }
+                    }
+                });
+            }
+
+            // Reset counts
+            const countAll = document.getElementById('ctcCountAll');
+            const countFail = document.getElementById('ctcCountFail');
+            const countPass = document.getElementById('ctcCountPass');
+
+            if (countAll) countAll.textContent = '10';
+            if (countFail) countFail.textContent = '3';
+            if (countPass) countPass.textContent = '5';
+
+            // Reset filter to show all
+            filterCtcDocs('all');
+
+            if (loanInput) loanInput.focus();
+        }
+
+        // CTC Slide 3 - BoB Internal Stacking Order Functions
+        function filterCtcSlide3Docs(filterType) {
+            const table = document.getElementById('ctcSlide3DocTable');
+            if (!table) return;
+
+            const rows = table.querySelectorAll('tbody tr');
+            const filterAll = document.getElementById('ctcSlide3FilterAll');
+            const filterMissing = document.getElementById('ctcSlide3FilterMissing');
+            const filterFound = document.getElementById('ctcSlide3FilterFound');
+
+            // Reset all filter button styles
+            if (filterAll) {
+                filterAll.style.border = '1px solid #cbd5e0';
+                filterAll.style.fontWeight = 'normal';
+            }
+            if (filterMissing) {
+                filterMissing.style.border = '1px solid #cbd5e0';
+                filterMissing.style.fontWeight = 'normal';
+            }
+            if (filterFound) {
+                filterFound.style.border = '1px solid #cbd5e0';
+                filterFound.style.fontWeight = 'normal';
+            }
+
+            // Apply filter
+            if (filterType === 'all') {
+                rows.forEach(row => row.style.display = '');
+                if (filterAll) {
+                    filterAll.style.border = '2px solid #17a2b8';
+                    filterAll.style.fontWeight = '600';
+                }
+            } else if (filterType === 'missing') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'missing') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterMissing) {
+                    filterMissing.style.border = '2px solid #17a2b8';
+                    filterMissing.style.fontWeight = '600';
+                }
+            } else if (filterType === 'found') {
+                rows.forEach(row => {
+                    if (row.dataset.status === 'found') {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                if (filterFound) {
+                    filterFound.style.border = '2px solid #17a2b8';
+                    filterFound.style.fontWeight = '600';
+                }
+            }
+        }
+
+        function buildCtcSlide3Bundle() {
+            // Show spinner
+            showSpinner();
+
+            // Change spinner text for BoB Internal Bundle
+            const spinnerText = document.querySelector('#spinnerOverlay div div:nth-child(2)');
+            if (spinnerText) {
+                spinnerText.textContent = 'Building Internal QC Bundle...';
+            }
+
+            // Simulate processing time (2.5 seconds)
+            setTimeout(() => {
+                // Hide spinner
+                hideSpinner();
+
+                // Reset spinner text
+                if (spinnerText) {
+                    spinnerText.textContent = 'Building Bundle...';
+                }
+
+                // Reset filter to show all
+                filterCtcSlide3Docs('all');
+            }, 2500);
+        }
+
+        function startNewCtcSlide3Bundle() {
+            // Reset filter to show all
+            filterCtcSlide3Docs('all');
         }
 
         // Initialize - Start with BoB deck
