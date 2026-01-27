@@ -18,11 +18,11 @@
             overflow: hidden;
         }
 
-        /* CMG Financial Logo */
+        /* CMG Financial Logo - Aligned with slide header */
         .cmg-logo {
             position: fixed;
             top: 15px;
-            left: 40px;
+            left: 60px;
             z-index: 1000;
             background: white;
             padding: 10px 18px;
@@ -38,11 +38,11 @@
             width: auto;
         }
 
-        /* Breadcrumb Navigation */
+        /* Breadcrumb Navigation - Aligned with slide header */
         .breadcrumb-nav {
             position: fixed;
             top: 15px;
-            right: 40px;
+            right: 60px;
             z-index: 1000;
             display: flex;
             gap: 8px;
@@ -1027,7 +1027,7 @@
                 <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Single Flow Delivery</h1>
                 <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 0 20px 0 0; overflow: hidden; height: calc(100% - 90px);">
                 <!-- Left: Scaled Interface -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
                     <!-- Clear Header -->
@@ -1292,7 +1292,7 @@
                 <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Bulk Bundle Delivery</h1>
                 <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px);">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 0 20px 0 0; overflow: hidden; height: calc(100% - 90px);">
                 <!-- Left: Scaled Interface -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
                     <!-- Clear Header with Navigation -->
@@ -1338,7 +1338,7 @@
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 7px;">
                                 <div>
                                     <label style="display: block; font-size: 0.62rem; font-weight: 600; color: #2C3E50; margin-bottom: 3px;">Subject Loans</label>
-                                    <textarea id="slide5LoanTextarea" style="width: 100%; height: 48px; padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.6rem; resize: none; font-family: monospace;">TEST10008332,TEST10008333;TEST10008334/TEST10008335.TEST10008336 TEST10008337</textarea>
+                                    <textarea id="slide5LoanTextarea" style="width: 100%; height: 48px; padding: 5px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.6rem; resize: none; font-family: monospace;">TEST10008332TEST10008333TEST10008334,TEST10008335;TEST10008336/test10008337.TEST10008332</textarea>
                                     <div style="margin-top: 2px; font-size: 0.5rem; color: #78909C; line-height: 1.2;">
                                         Separate loan numbers by comma, space, backslash, period, or semicolon (e.g. TEST000).
                                     </div>
@@ -1418,7 +1418,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008332</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008332')">TEST10008332</td>
                                             <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="9" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">9</span></td>
                                             <td style="padding: 5px 6px; text-align: center;">1</td>
                                             <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
@@ -1427,7 +1427,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008333</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008333')">TEST10008333</td>
                                             <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="7" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">7</span></td>
                                             <td style="padding: 5px 6px; text-align: center;">1</td>
                                             <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
@@ -1436,7 +1436,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008334</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008334')">TEST10008334</td>
                                             <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="3" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">3</span></td>
                                             <td style="padding: 5px 6px; text-align: center;">13</td>
                                             <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
@@ -1445,7 +1445,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008335</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008335')">TEST10008335</td>
                                             <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="1" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">1</span></td>
                                             <td style="padding: 5px 6px; text-align: center;">13</td>
                                             <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
@@ -1454,7 +1454,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008336</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008336')">TEST10008336</td>
                                             <td style="padding: 5px 6px; text-align: center;"><span class="slide5-missing-count" data-base="1" style="background: #f8d7da; color: #721c24; padding: 1px 5px; border-radius: 3px; font-weight: 600;">1</span></td>
                                             <td style="padding: 5px 6px; text-align: center;">1</td>
                                             <td style="padding: 5px 6px; color: #78909C;">Not Bundled</td>
@@ -1463,7 +1463,7 @@
                                             <td style="padding: 5px 6px; text-align: center;">
                                                 <input type="checkbox" checked class="slide5-loan-checkbox" onchange="updateSlide5SelectedCount()" style="width: 11px; height: 11px; accent-color: #17a2b8; cursor: pointer;">
                                             </td>
-                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;">TEST10008337</td>
+                                            <td style="padding: 5px 6px; color: #17a2b8; font-weight: 500; text-decoration: underline; cursor: pointer;" onclick="showSlide5LoanDetail('TEST10008337')">TEST10008337</td>
                                             <td style="padding: 5px 6px; text-align: center;">0</td>
                                             <td style="padding: 5px 6px; text-align: center;">20</td>
                                             <td style="padding: 5px 6px; color: #28a745; font-weight: 600;">Ready to Bundle</td>
@@ -1802,7 +1802,7 @@
                 <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">BoB - Internal Stacking Order</h1>
                 <p class="slide-subtitle" style="font-size: 0.9rem;">From External Delivery to Internal Operations</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px); max-height: calc(100% - 90px);">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 0 20px 0 0; overflow: hidden; height: calc(100% - 90px); max-height: calc(100% - 90px);">
                 <!-- Left: BoB UI -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1); height: 100%; max-height: 100%;">
                     <!-- Clear Header -->
@@ -1969,7 +1969,7 @@
                 <h1 class="slide-title" style="font-size: 1.5rem; margin-bottom: 3px;">Doctor BoB - Single Loan QC</h1>
                 <p class="slide-subtitle" style="font-size: 0.9rem;">User Interface Feature & Function Highlights</p>
             </div>
-            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 20px; overflow: hidden; height: calc(100% - 90px); max-height: calc(100% - 90px);">
+            <div class="slide-content" style="display: grid; grid-template-columns: 50% 50%; gap: 20px; padding: 0 20px 0 0; overflow: hidden; height: calc(100% - 90px); max-height: calc(100% - 90px);">
                 <!-- Left: Scaled Interface -->
                 <div style="background: white; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.1); height: 100%; max-height: 100%;">
                     <!-- Clear Header -->
@@ -1988,10 +1988,11 @@
 
                             <div style="margin-bottom: 10px;">
                                 <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Select Doctor Bundle</label>
-                                <select id="ctcBundleSelect" style="width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 0.75rem; background: white; color: #2C3E50;">
-                                    <option>Approved & Locked</option>
-                                    <option>Clear to Close & Locked</option>
-                                    <option>Docs Back</option>
+                                <select id="ctcBundleSelect" onchange="updateCtcSlide4Notifications()" style="width: 100%; padding: 8px 10px; border: 2px solid #FFC107; border-radius: 4px; font-size: 0.75rem; background: #FFF9C4; color: #2C3E50; font-weight: 600;">
+                                    <option value="Approved & Locked" selected>Approved & Locked</option>
+                                    <option value="Clear to Close & Locked">Clear to Close & Locked</option>
+                                    <option value="Docs Back">Docs Back</option>
+                                    <option value="Funded">Funded</option>
                                 </select>
                             </div>
 
@@ -2023,54 +2024,124 @@
                                     </thead>
                                     <tbody>
                                         <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">HOI Policy</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">HOI Policy</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    ✓ Pass
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                         <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Title</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Title</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    ✓ Pass
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                         <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">CPL</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">CPL</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    ✓ Pass
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
-                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Appraisal</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Appraisal validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Appraisal</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <div class="ctc-fail-badge-wrapper" style="position: relative; display: inline-block;">
+                                                    <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #f8d7da; color: #721c24; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: pointer;">
+                                                        ✗ Fail
+                                                    </span>
+                                                    <div class="ctc-fail-tooltip" style="display: none; position: absolute; left: 50%; transform: translateX(-50%); top: calc(100% + 8px); z-index: 1000; background: #dc3545; color: white; padding: 10px 14px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);">
+                                                        Warning - Property Street Address Zip Code do not Match Application
+                                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: #dc3545;"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                </span>
+                                            </td>
                                         </tr>
-                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Purchase Contract</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Purchase Contract validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Purchase Contract</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <div class="ctc-fail-badge-wrapper" style="position: relative; display: inline-block;">
+                                                    <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #f8d7da; color: #721c24; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: pointer;">
+                                                        ✗ Fail
+                                                    </span>
+                                                    <div class="ctc-fail-tooltip" style="display: none; position: absolute; left: 50%; transform: translateX(-50%); top: calc(100% + 8px); z-index: 1000; background: #dc3545; color: white; padding: 10px 14px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);">
+                                                        Borrower name is incorrect on purchase agreement
+                                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: #dc3545;"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                </span>
+                                            </td>
                                         </tr>
                                         <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Bond Resv./Comm.</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Bond Resv./Comm.</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    ✓ Pass
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                         <tr data-status="pass" style="border-bottom: 1px solid #f1f3f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Credit Report</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #28a745; font-weight: 600;">✓ Pass</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Credit Report</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #d4edda; color: #155724; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    ✓ Pass
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
-                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5; background: #fff5f5;">
-                                            <td style="padding: 7px 8px; color: #2C3E50;">Flood Cert</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #dc3545; font-weight: 600;">✗ Fail</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;"><button onclick="alert('Processor notified about Flood Cert validation failure')" style="padding: 4px 8px; background: #14b8a6; color: white; border: none; border-radius: 3px; font-size: 0.68rem; cursor: pointer;">Update Processor</button></td>
+                                        <tr data-status="fail" style="border-bottom: 1px solid #f1f3f5;">
+                                            <td style="padding: 7px 8px; color: #2C3E50; font-size: 0.7rem;">Flood Cert</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <div class="ctc-fail-badge-wrapper" style="position: relative; display: inline-block;">
+                                                    <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #f8d7da; color: #721c24; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: pointer;">
+                                                        ✗ Fail
+                                                    </span>
+                                                    <div class="ctc-fail-tooltip" style="display: none; position: absolute; left: 50%; transform: translateX(-50%); top: calc(100% + 8px); z-index: 1000; background: #dc3545; color: white; padding: 10px 14px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);">
+                                                        Document date discrepancy with application submission date
+                                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: #dc3545;"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                </span>
+                                            </td>
                                         </tr>
                                         <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
-                                            <td style="padding: 7px 8px; color: #78909C;">Test Document A</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #6c757d; font-weight: 600;">N/A</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #78909C; font-size: 0.7rem;">Test Document A</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #e2e3e5; color: #6c757d; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    N/A
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                         <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
-                                            <td style="padding: 7px 8px; color: #78909C;">Test Document B</td>
-                                            <td style="padding: 7px 8px; text-align: center;"><span style="color: #6c757d; font-weight: 600;">N/A</span></td>
-                                            <td style="padding: 7px 8px; text-align: center;">—</td>
+                                            <td style="padding: 7px 8px; color: #78909C; font-size: 0.7rem;">Test Document B</td>
+                                            <td style="padding: 7px 8px; text-align: center;">
+                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #e2e3e5; color: #6c757d; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
+                                                    N/A
+                                                </span>
+                                            </td>
+                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -3319,7 +3390,7 @@
             }
         }
 
-        // Slide 5 Bulk Bundle Builder Functions
+        // Slide 5 Bulk Bundle Builder Functions - SMART FORMAT
         function fixSlide5LoanFormat() {
             const textarea = document.getElementById('slide5LoanTextarea');
             if (!textarea) return;
@@ -3327,18 +3398,53 @@
             // Get current value
             let loanText = textarea.value;
 
-            // Split by any combination of delimiters (comma, semicolon, period, backslash, space, newline)
-            let loans = loanText.split(/[,;.\\/\s\n]+/).filter(loan => loan.trim() !== '');
+            // STEP 1: Smart split - detect concatenated loan numbers without spaces
+            // Common patterns: TEST00000000, CMG00000000, etc. (letters followed by 8+ digits)
+            // This regex finds patterns like TEST10008332 even when stuck together
+            const loanPattern = /[A-Z]{2,}\d{8,}/gi;
+            let loans = loanText.match(loanPattern);
 
-            // Clean up each loan number (remove extra spaces)
-            loans = loans.map(loan => loan.trim());
+            // STEP 2: If no pattern matches, fall back to delimiter-based splitting
+            if (!loans || loans.length === 0) {
+                loans = loanText.split(/[,;.\\/\s\n]+/).filter(loan => loan.trim() !== '');
+            }
 
-            // Join with commas and update textarea
+            // STEP 3: Clean up each loan number (remove extra spaces, convert to uppercase)
+            loans = loans.map(loan => loan.trim().toUpperCase());
+
+            // STEP 4: Remove empty entries
+            loans = loans.filter(loan => loan.length > 0);
+
+            // Count before removing duplicates
+            const countBefore = loans.length;
+
+            // STEP 5: Remove duplicates while preserving order
+            loans = [...new Set(loans)];
+
+            // Count after removing duplicates
+            const countAfter = loans.length;
+            const duplicatesRemoved = countBefore - countAfter;
+
+            // STEP 6: Join with commas and update textarea
             textarea.value = loans.join(', ');
 
             // Visual feedback: briefly change border color
             textarea.style.border = '2px solid #28a745';
             textarea.style.background = '#d4edda';
+
+            // Show success message with count
+            const msg = `✓ Formatted ${countAfter} loan${countAfter !== 1 ? 's' : ''}` +
+                        (duplicatesRemoved > 0 ? ` (${duplicatesRemoved} duplicate${duplicatesRemoved !== 1 ? 's' : ''} removed)` : '');
+
+            // Create temporary message element
+            const msgDiv = document.createElement('div');
+            msgDiv.textContent = msg;
+            msgDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4); z-index: 10000;';
+            document.body.appendChild(msgDiv);
+
+            setTimeout(() => {
+                msgDiv.remove();
+            }, 3000);
 
             setTimeout(() => {
                 textarea.style.border = '1px solid #cbd5e0';
@@ -3994,6 +4100,186 @@
 
         // Initialize - Start with BoB deck
         switchDeck('bob');
-    </script>
+    
+        // CTC Slide 4 ONLY - Dynamic notification updates
+        function updateCtcSlide4Notifications() {
+            const select = document.getElementById('ctcBundleSelect');
+            if (!select) return;
+
+            const value = select.value;
+            const badges = document.querySelectorAll('.ctc-notified-text');
+            const badgeContainers = document.querySelectorAll('.ctc-notification-badge');
+
+            badges.forEach(badge => {
+                if (value === 'Docs Back') {
+                    badge.textContent = 'Doc Drawer Notified';
+                } else if (value === 'Funded') {
+                    badge.textContent = 'Funder Notified';
+                } else {
+                    badge.textContent = 'Processor Notified';
+                }
+            });
+
+            badgeContainers.forEach(container => {
+                if (value === 'Docs Back') {
+                    container.setAttribute('title', 'Email notification sent to the assigned BytePro doc drawer detailing document failures found in this loan file.');
+                } else if (value === 'Funded') {
+                    container.setAttribute('title', 'Email notification sent to the assigned BytePro funder detailing document failures found in this loan file.');
+                } else {
+                    container.setAttribute('title', 'Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.');
+                }
+            });
+        }
+
+
+        // Slide 5 - Loan Detail Demo Function
+        const slide5LoanMissingDocs = {
+            'TEST10008332': ['1003 URLA', 'Initial 1008', 'VOE - Verification of Employment', 'Tax Transcripts', 'Signed Initial Disclosures', 'Title Commitment', 'HOI - Homeowners Insurance Policy', 'Appraisal', 'Flood Certification'],
+            'TEST10008333': ['1003 URLA', 'VOE - Verification of Employment', 'W-2 Forms', 'Paystubs (Most Recent 2)', 'Bank Statements (2 months)', 'Title Commitment', 'Appraisal'],
+            'TEST10008334': ['Tax Transcripts', 'Signed Initial Disclosures', 'Appraisal'],
+            'TEST10008335': ['HOI - Homeowners Insurance Policy'],
+            'TEST10008336': ['Flood Certification'],
+            'TEST10008337': [] // Ready to bundle - no missing docs
+        };
+
+        // CTC Slide 4: Hover tooltips for fail badges
+        document.addEventListener('DOMContentLoaded', function() {
+            setupCtcFailBadgeHovers();
+        });
+
+        function setupCtcFailBadgeHovers() {
+            const wrappers = document.querySelectorAll('.ctc-fail-badge-wrapper');
+            wrappers.forEach(wrapper => {
+                const badge = wrapper.querySelector('span');
+                const tooltip = wrapper.querySelector('.ctc-fail-tooltip');
+
+                if (badge && tooltip) {
+                    badge.addEventListener('mouseenter', () => {
+                        tooltip.style.display = 'block';
+                    });
+
+                    badge.addEventListener('mouseleave', () => {
+                        tooltip.style.display = 'none';
+                    });
+                }
+            });
+        }
+
+        function showSlide5LoanDetail(loanNumber) {
+            const missingDocs = slide5LoanMissingDocs[loanNumber] || [];
+            const missingCount = missingDocs.length;
+
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'slide5LoanDetailOverlay';
+            overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 20000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease;';
+
+            // Create detail panel
+            const panel = document.createElement('div');
+            panel.style.cssText = 'background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; animation: slideUp 0.3s ease;';
+
+            // Header
+            const header = document.createElement('div');
+            header.style.cssText = 'background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white; padding: 20px; border-radius: 12px 12px 0 0;';
+            header.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 5px;">Single Loan View</div>
+                        <div style="font-size: 1.5rem; font-weight: 700;">${loanNumber}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 2rem; font-weight: 700; color: ${missingCount > 0 ? '#ff6b6b' : '#51cf66'};">${missingCount}</div>
+                        <div style="font-size: 0.85rem;">Missing Docs</div>
+                    </div>
+                </div>
+            `;
+
+            // Content
+            const contentDiv = document.createElement('div');
+            contentDiv.style.cssText = 'padding: 25px;';
+
+            if (missingCount > 0) {
+                contentDiv.innerHTML = `
+                    <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                        <div style="font-weight: 600; color: #856404; margin-bottom: 5px;">⚠️ Action Required</div>
+                        <div style="color: #856404; font-size: 0.95rem;">This loan has ${missingCount} missing document${missingCount !== 1 ? 's' : ''} that must be obtained before bundling.</div>
+                    </div>
+                    <div style="font-weight: 600; color: #2C3E50; margin-bottom: 15px; font-size: 1.1rem;">Missing Documents:</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        ${missingDocs.map(doc => `
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #fff5f5; border-radius: 8px; border-left: 3px solid #dc3545;">
+                                <div style="flex-shrink: 0; width: 32px; height: 32px; background: #dc3545; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">✗</div>
+                                <div style="flex: 1; color: #2C3E50; font-size: 0.95rem; font-weight: 500;">${doc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                contentDiv.innerHTML = `
+                    <div style="background: #d4edda; border-left: 4px solid #28a745; padding: 20px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">✓</div>
+                        <div style="font-weight: 700; color: #155724; margin-bottom: 5px; font-size: 1.2rem;">Ready to Bundle!</div>
+                        <div style="color: #155724; font-size: 0.95rem;">All required documents are present for this loan.</div>
+                    </div>
+                `;
+            }
+
+            // Auto-close timer
+            const timerDiv = document.createElement('div');
+            timerDiv.style.cssText = 'padding: 15px 25px; background: #f8f9fa; border-top: 1px solid #e9ecef; text-align: center; color: #6c757d; font-size: 0.9rem; border-radius: 0 0 12px 12px;';
+            timerDiv.innerHTML = 'Auto-closing in <span id="slide5TimerCount">5</span> seconds...';
+
+            panel.appendChild(header);
+            panel.appendChild(contentDiv);
+            panel.appendChild(timerDiv);
+            overlay.appendChild(panel);
+            document.body.appendChild(overlay);
+
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { transform: translateY(30px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Countdown timer
+            let countdown = 5;
+            const timerInterval = setInterval(() => {
+                countdown--;
+                const timerCountEl = document.getElementById('slide5TimerCount');
+                if (timerCountEl) {
+                    timerCountEl.textContent = countdown;
+                }
+                if (countdown <= 0) {
+                    clearInterval(timerInterval);
+                    closeSlide5LoanDetail();
+                }
+            }, 1000);
+
+            // Click overlay to close
+            overlay.onclick = (e) => {
+                if (e.target === overlay) {
+                    clearInterval(timerInterval);
+                    closeSlide5LoanDetail();
+                }
+            };
+        }
+
+        function closeSlide5LoanDetail() {
+            const overlay = document.getElementById('slide5LoanDetailOverlay');
+            if (overlay) {
+                overlay.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => overlay.remove(), 300);
+            }
+        }
+
+</script>
 </body>
 </html>
