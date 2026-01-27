@@ -159,7 +159,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
         /* Status cards matching Waterfall style */
@@ -715,8 +715,9 @@
             width: 85vw;
             max-height: 90vh;
             height: auto;
-            overflow-y: auto;
+            overflow: hidden;
             overflow-x: hidden;
+            overflow-y: hidden;
             position: relative;
             padding: 20px 40px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -1039,7 +1040,7 @@
                     </div>
 
                     <!-- Main Content Area -->
-                    <div style="flex: 1; background: #f5f7f9; padding: 12px; overflow-y: auto; position: relative;">
+                    <div style="flex: 1; background: #f5f7f9; padding: 12px; overflow: hidden; position: relative;">
                         <div style="background: white; border-radius: 6px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
                             <h3 style="color: #2C3E50; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px;">Bundle Builder - Single Loan</h3>
 
@@ -1315,7 +1316,7 @@
                     <!-- Main Content Area with Tab Views -->
                     <div style="flex: 1; background: #f5f7f9; position: relative; overflow: hidden;">
                         <!-- Bulk Bundle Builder View (Default) -->
-                        <div id="bulkBundleView" style="height: 100%; padding: 8px; overflow-y: auto; display: flex; flex-direction: column;">
+                        <div id="bulkBundleView" style="height: 100%; padding: 8px; overflow: hidden; display: flex; flex-direction: column;">
                         <!-- Select Loan Population Section -->
                         <div style="background: white; border-radius: 6px; padding: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 8px;">
                             <div style="background: #e9ecef; padding: 6px 10px; border-radius: 4px; margin-bottom: 7px; font-weight: 600; color: #2C3E50; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; position: relative;">
@@ -1480,7 +1481,7 @@
                         <!-- End of Bulk Bundle Builder View -->
 
                         <!-- Activity Log View (Hidden by default) -->
-                        <div id="activityLogView" style="height: 100%; padding: 15px; overflow-y: auto; display: none;">
+                        <div id="activityLogView" style="height: 100%; padding: 15px; overflow: hidden; display: none;">
                             <!-- Alert Banner -->
                             <div style="background: #f8d7da; border-left: 4px solid #dc3545; padding: 10px 15px; margin-bottom: 15px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
                                 <span style="color: #721c24; font-size: 0.75rem; font-weight: 600;">3 Incomplete Bundle</span>
