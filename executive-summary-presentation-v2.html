@@ -854,7 +854,7 @@
 
         <!-- Slide 1: Title -->
         <div class="slide active title-slide" data-deck="bob">
-            <div class="slide-header">
+            <div class="slide-header" style="width: 1100px !important; max-width: 1100px !important; margin: 0 auto !important; padding: 50px 50px !important; position: relative !important; left: 0 !important; right: 0 !important;">
                 <div class="slide-number">EXECUTIVE SUMMARY</div>
                 <h1 class="slide-title">BoB Management Suite</h1>
                 <p class="slide-subtitle">Builder of Bundles - Product Delivery Plan</p>
@@ -1732,7 +1732,7 @@
 
         <!-- CTC Slide 1: Title -->
         <div class="slide title-slide" data-deck="ctc" style="display: none; background: linear-gradient(135deg, #2E5C4A 0%, #3D7560 50%, #4A8B73 100%);">
-            <div class="slide-header">
+            <div class="slide-header" style="width: 1100px !important; max-width: 1100px !important; margin: 0 auto !important; padding: 50px 50px !important; position: relative !important; left: 0 !important; right: 0 !important;">
                 <div class="slide-number">EXECUTIVE SUMMARY</div>
                 <h1 class="slide-title">BoB Management Suite</h1>
                 <p class="slide-subtitle">Clear to Close - Dr. BoB Concept Design Prototype</p>
@@ -1989,8 +1989,8 @@
                             <div style="margin-bottom: 10px;">
                                 <label style="display: block; font-size: 0.72rem; font-weight: 600; color: #546E7A; margin-bottom: 5px;">Select Doctor Bundle</label>
                                 <select id="ctcBundleSelect" onchange="updateCtcSlide4Notifications()" style="width: 100%; padding: 8px 10px; border: 2px solid #FFC107; border-radius: 4px; font-size: 0.75rem; background: #FFF9C4; color: #2C3E50; font-weight: 600;">
-                                    <option value="Approved & Locked" selected>Approved & Locked</option>
-                                    <option value="Clear to Close & Locked">Clear to Close & Locked</option>
+                                    <option value="Approved & Locked">Approved & Locked</option>
+                                    <option value="Clear to Close & Locked" selected>Clear to Close & Locked</option>
                                     <option value="Docs Back">Docs Back</option>
                                     <option value="Funded">Funded</option>
                                 </select>
@@ -2007,10 +2007,10 @@
                             </div>
 
                             <div style="display: flex; gap: 6px; margin-bottom: 10px; align-items: center; font-size: 0.72rem;">
-                                <span id="ctcFilterAll" onclick="filterCtcDocs('all')" style="padding: 5px 10px; background: white; border: 2px solid #14b8a6; border-radius: 4px; font-weight: 600; color: #2C3E50; cursor: pointer;">All <span id="ctcCountAll">10</span></span>
+                                <span id="ctcFilterAll" onclick="filterCtcDocs('all')" style="padding: 5px 10px; background: white; border: 2px solid #14b8a6; border-radius: 4px; font-weight: 600; color: #2C3E50; cursor: pointer;">All <span id="ctcCountAll">8</span></span>
                                 <span id="ctcFilterFail" onclick="filterCtcDocs('fail')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; position: relative; cursor: pointer;">Fail <span id="ctcCountFail" style="position: absolute; top: -4px; right: -4px; background: #dc3545; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.6rem; font-weight: 700;">3</span></span>
                                 <span id="ctcFilterPass" onclick="filterCtcDocs('pass')" style="padding: 5px 10px; background: white; border: 1px solid #cbd5e0; border-radius: 4px; color: #2C3E50; cursor: pointer;">Pass <span id="ctcCountPass">5</span></span>
-                                <span style="margin-left: auto; color: #78909C;"><span id="ctcTotalDocs">10</span> docs, <span id="ctcTotalPages">20</span> pgs</span>
+                                <span style="margin-left: auto; color: #78909C;"><span id="ctcTotalDocs">8</span> docs, <span id="ctcTotalPages">16</span> pgs</span>
                             </div>
 
                             <div style="overflow-x: auto;">
@@ -2064,8 +2064,8 @@
                                                 </div>
                                             </td>
                                             <td style="padding: 7px 8px; text-align: center;">
-                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
-                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro post close QC team detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Post Close QC Notified</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -2083,8 +2083,8 @@
                                                 </div>
                                             </td>
                                             <td style="padding: 7px 8px; text-align: center;">
-                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
-                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro post close QC team detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Post Close QC Notified</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -2113,35 +2113,17 @@
                                                     <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #f8d7da; color: #721c24; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: pointer;">
                                                         ✗ Fail
                                                     </span>
-                                                    <div class="ctc-fail-tooltip" style="display: none; position: absolute; left: 50%; transform: translateX(-50%); top: calc(100% + 8px); z-index: 1000; background: #dc3545; color: white; padding: 10px 14px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);">
+                                                    <div class="ctc-fail-tooltip" style="display: none; position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(100% + 8px); z-index: 1000; background: #dc3545; color: white; padding: 10px 14px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);">
                                                         Document date discrepancy with application submission date
-                                                        <div style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: #dc3545;"></div>
+                                                        <div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #dc3545;"></div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td style="padding: 7px 8px; text-align: center;">
-                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.">
-                                                    ✓ <span class="ctc-notified-text">Processor Notified</span>
+                                                <span class="ctc-notification-badge" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: #cfe2ff; color: #084298; border-radius: 4px; font-size: 0.68rem; font-weight: 600; cursor: help;" title="Email notification sent to the assigned BytePro post close QC team detailing document failures found in this loan file.">
+                                                    ✓ <span class="ctc-notified-text">Post Close QC Notified</span>
                                                 </span>
                                             </td>
-                                        </tr>
-                                        <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
-                                            <td style="padding: 7px 8px; color: #78909C; font-size: 0.7rem;">Test Document A</td>
-                                            <td style="padding: 7px 8px; text-align: center;">
-                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #e2e3e5; color: #6c757d; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
-                                                    N/A
-                                                </span>
-                                            </td>
-                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
-                                        </tr>
-                                        <tr data-status="na" style="border-bottom: 1px solid #f1f3f5; background: #f8f9fa;">
-                                            <td style="padding: 7px 8px; color: #78909C; font-size: 0.7rem;">Test Document B</td>
-                                            <td style="padding: 7px 8px; text-align: center;">
-                                                <span style="display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; background: #e2e3e5; color: #6c757d; border-radius: 4px; font-size: 0.68rem; font-weight: 600;">
-                                                    N/A
-                                                </span>
-                                            </td>
-                                            <td style="padding: 7px 8px; text-align: center; font-size: 0.7rem;">—</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -2154,10 +2136,10 @@
                 <div style="display: flex; flex-direction: column; gap: 15px; overflow: hidden; height: 100%; max-height: 100%;">
                     <div class="clickable" onclick="openModal('ctc-slide4-feature1')" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #4CAF50; cursor: pointer; transition: transform 0.2s; overflow: hidden;">
                         <h3 style="color: #1B5E20; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 1.4rem;">🎯</span>
-                            Automated Quality Control
+                            <span style="font-size: 1.4rem;">🤖</span>
+                            AI-Powered Quality Control
                         </h3>
-                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Run comprehensive document validation checks against loan data to identify discrepancies, missing information, or data quality issues before they impact closing timelines.</p>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Intelligent AI agents execute comprehensive document validations using custom-trained models that understand stacking order structure—top to bottom, left to right. Behind the scenes, automated intelligence cross-references every data point to maximize data integrity and catch discrepancies before they impact closing timelines.</p>
                     </div>
 
                     <div class="clickable" onclick="openModal('ctc-slide4-feature2')" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #2196F3; cursor: pointer; transition: transform 0.2s; overflow: hidden;">
@@ -2165,7 +2147,7 @@
                             <span style="font-size: 1.4rem;">📊</span>
                             Real-Time Status Filtering
                         </h3>
-                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Instantly filter documents by Pass, Fail, or N/A status. View document counts and page totals to understand validation results at a glance and prioritize remediation efforts.</p>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Instantly filter validation results by Pass or Fail status to focus on critical issues and prioritize remediation efforts. Extensible architecture enables future enhancements when business needs dictate.</p>
                     </div>
 
                     <div class="clickable" onclick="openModal('ctc-slide4-feature3')" style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #FF9800; cursor: pointer; transition: transform 0.2s; overflow: hidden;">
@@ -2173,20 +2155,20 @@
                             <span style="font-size: 1.4rem;">⚠️</span>
                             Detailed Failure Insights
                         </h3>
-                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Failed documents display specific error messages explaining validation failures - from address mismatches to missing signatures - enabling processors to take targeted corrective action.</p>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Failed documents display specific error messages explaining validation failures—from address mismatches to missing signatures—enabling designated CMG actors to take targeted corrective action based on leadership-defined workflows.</p>
                     </div>
 
                     <div class="clickable" onclick="openModal('ctc-slide4-feature4')" style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #9C27B0; cursor: pointer; transition: transform 0.2s; overflow: hidden;">
                         <h3 style="color: #4A148C; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 1.4rem;">🔄</span>
-                            Processor Communication
+                            <span style="font-size: 1.4rem;">📨</span>
+                            Intelligent Actor Notification
                         </h3>
-                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">"Update Processor" action buttons enable instant communication of validation failures to loan processors, streamlining remediation workflows and reducing back-and-forth communication delays.</p>
+                        <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Automated notification system instantly alerts designated CMG team members of validation failures—processors, doc drawers, funders, or post-close QC—based on bundle type and leadership-defined escalation workflows.</p>
                     </div>
 
                     <div class="clickable" onclick="openModal('ctc-slide4-feature5')" style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 8px; padding: 18px; border-left: 5px solid #00897B; cursor: pointer; transition: transform 0.2s; overflow: hidden;">
                         <h3 style="color: #004D40; margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 1.4rem;">🔁</span>
+                            <span style="font-size: 1.4rem;">📂</span>
                             Flexible Bundle Selection
                         </h3>
                         <p style="color: #2C3E50; font-size: 0.85rem; line-height: 1.6;">Select from multiple bundle types (Approved & Locked, Clear to Close & Locked, Docs Back, Funded) to run targeted quality control checks at different loan lifecycle stages.</p>
@@ -2245,7 +2227,7 @@
 
                     <div style="position: relative; z-index: 1;">
                         <h3 style="color: #1B5E20; font-size: 1.875rem; margin-bottom: 10px; text-align: center; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
-                            🙏 Special Thanks to Our Key Stakeholders
+                            🙏 Special Thanks to Key Sponsors
                         </h3>
                         <p style="text-align: center; color: #2E7D32; font-size: 1.0625rem; font-weight: 600; margin-bottom: 16px; letter-spacing: 0.5px;">
                             This concept design is a testament to outstanding collaboration
@@ -2941,64 +2923,118 @@
         </div>
 
         <div id="ctc-slide3-feature1">
-            <h2 style="color: #E65100; margin-bottom: 15px;">🏢 Internal vs. External Focus</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;"><strong>Current:</strong> BoB builds bundles for external third-party investors (Discovery, US Bank, FNMA Audit)</p>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;"><strong>Concept:</strong> BoB's stacking capability redirected to serve internal CMG departments - Docs, Funding, Post Close QC, Audit - enabling operational workflows beyond investor delivery.</p>
+            <h2 style="color: #E65100; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">🏢 Internal vs. External Focus</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;"><strong>Current:</strong> BoB builds bundles for external third-party investors (Discovery, US Bank, FNMA Audit)</p>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;"><strong>Concept:</strong> BoB's stacking capability redirected to serve internal CMG departments - Docs, Funding, Post Close QC, Audit - enabling operational workflows beyond investor delivery.</p>
         </div>
 
         <div id="ctc-slide3-feature2">
-            <h2 style="color: #1B5E20; margin-bottom: 15px;">🎯 Operational Use Cases</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Pre-closing QC review bundles, compliance audit packages, post-close quality assurance sets, training materials for new processors, and internal documentation standards.</p>
+            <h2 style="color: #1B5E20; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">🎯 Operational Use Cases</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Pre-closing QC review bundles, compliance audit packages, post-close quality assurance sets, training materials for new processors, and internal documentation standards.</p>
         </div>
 
         <div id="ctc-slide3-feature3">
-            <h2 style="color: #0D47A1; margin-bottom: 15px;">📋 Custom Stacking Orders</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Each internal department defines their preferred stacking order and requirements. QC teams prioritize critical docs first, while compliance teams need chronological ordering for audit trail purposes.</p>
+            <h2 style="color: #0D47A1; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">📋 Custom Stacking Orders</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Each internal department defines their preferred stacking order and requirements. QC teams prioritize critical docs first, while compliance teams need chronological ordering for audit trail purposes.</p>
         </div>
 
         <div id="ctc-slide3-feature4">
-            <h2 style="color: #4A148C; margin-bottom: 15px;">⚡ Workflow Integration</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Internal bundles trigger automated workflows - QC review tasks, compliance checks, training module assignments - transforming BoB from a delivery tool into an operational automation engine.</p>
+            <h2 style="color: #4A148C; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">⚡ Workflow Integration</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Internal bundles trigger automated workflows - QC review tasks, compliance checks, training module assignments - transforming BoB from a delivery tool into an operational automation engine.</p>
         </div>
 
         <div id="ctc-slide3-feature5">
-            <h2 style="color: #004D40; margin-bottom: 15px;">💡 Strategic Value</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Extends proven architecture beyond external delivery to power internal operations without new system development.</p>
+            <h2 style="color: #004D40; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">💡 Strategic Value</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Extends proven architecture beyond external delivery to power internal operations without new system development.</p>
         </div>
 
         <div id="ctc-slide4-feature1">
-            <h2 style="color: #1B5E20; margin-bottom: 15px;">🎯 Automated Quality Control</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Run comprehensive document validation checks against loan data to identify discrepancies, missing information, or data quality issues before they impact closing timelines.</p>
+            <h2 style="color: #1B5E20; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">🤖 AI-Powered Quality Control</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Intelligent AI agents execute comprehensive document validations using custom-trained models that understand stacking order structure—top to bottom, left to right.</p>
+            <p style="font-size: 1.15rem; margin-bottom: 15px; line-height: 1.7; color: #546E7A;">Behind the scenes, automated intelligence cross-references every data point to maximize data integrity and catch discrepancies before they impact closing timelines.</p>
+            <div style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-left: 4px solid #4CAF50; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3 style="color: #1B5E20; font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">🎯 Key Capabilities:</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Custom-Trained Models:</strong> AI understands document structure and investor-specific requirements</li>
+                    <li style="margin-bottom: 8px;"><strong>Intelligent Validation:</strong> Cross-references every data point across documents and loan data</li>
+                    <li style="margin-bottom: 8px;"><strong>Proactive Detection:</strong> Catches discrepancies before they impact closing timelines</li>
+                    <li style="margin-bottom: 8px;"><strong>Maximum Data Integrity:</strong> Automated agents work 24/7 ensuring accuracy at scale</li>
+                </ul>
+            </div>
         </div>
 
         <div id="ctc-slide4-feature2">
-            <h2 style="color: #0D47A1; margin-bottom: 15px;">📊 Real-Time Status Filtering</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Instantly filter documents by Pass, Fail, or N/A status. View document counts and page totals to understand validation results at a glance and prioritize remediation efforts.</p>
+            <h2 style="color: #0D47A1; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">📊 Real-Time Status Filtering</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Instantly filter validation results by Pass or Fail status to focus on critical issues and prioritize remediation efforts.</p>
+            <div style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-left: 4px solid #2196F3; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3 style="color: #0D47A1; font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">🎯 Filter Capabilities:</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Pass Status Filter:</strong> View only documents that successfully passed validation checks</li>
+                    <li style="margin-bottom: 8px;"><strong>Fail Status Filter:</strong> Isolate documents with validation failures requiring remediation</li>
+                    <li style="margin-bottom: 8px;"><strong>All Documents View:</strong> See complete validation results across entire document set</li>
+                    <li style="margin-bottom: 8px;"><strong>Instant Results:</strong> Real-time filtering for immediate access to critical information</li>
+                </ul>
+            </div>
         </div>
 
         <div id="ctc-slide4-feature3">
-            <h2 style="color: #E65100; margin-bottom: 15px;">⚠️ Detailed Failure Insights</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Failed documents display specific error messages explaining validation failures - from address mismatches to missing signatures - enabling processors to take targeted corrective action.</p>
+            <h2 style="color: #E65100; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">⚠️ Detailed Failure Insights</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Failed documents display specific error messages explaining validation failures—from address mismatches to missing signatures—providing actionable intelligence for remediation.</p>
+            <p style="font-size: 1.15rem; margin-bottom: 15px; line-height: 1.7; color: #546E7A;">Designated CMG actors receive detailed failure context, enabling targeted corrective action based on leadership-defined escalation workflows and business rules.</p>
+            <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-left: 4px solid #FF9800; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3 style="color: #E65100; font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">🎯 Actionable Intelligence:</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Precise Error Context:</strong> Specific failure reasons eliminate guesswork and investigation time</li>
+                    <li style="margin-bottom: 8px;"><strong>Flexible Actor Assignment:</strong> Any CMG team member can be designated based on business needs</li>
+                    <li style="margin-bottom: 8px;"><strong>Leadership-Driven Workflows:</strong> Escalation paths defined by operational requirements</li>
+                    <li style="margin-bottom: 8px;"><strong>Immediate Remediation:</strong> Clear insights enable fast, targeted corrective action</li>
+                </ul>
+            </div>
         </div>
 
         <div id="ctc-slide4-feature4">
-            <h2 style="color: #4A148C; margin-bottom: 15px;">🔄 Processor Communication</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">"Update Processor" action buttons enable instant communication of validation failures to loan processors, streamlining remediation workflows and reducing back-and-forth communication delays.</p>
+            <h2 style="color: #4A148C; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">📨 Intelligent Actor Notification</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Automated notification system instantly alerts designated CMG team members of validation failures—streamlining remediation workflows and eliminating communication delays.</p>
+            <p style="font-size: 1.15rem; margin-bottom: 15px; line-height: 1.7; color: #546E7A;">Bundle type determines which actors receive notifications: processors, doc drawers, funders, or post-close QC teams—based entirely on leadership-defined business rules and operational workflows.</p>
+            <div style="background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%); border-left: 4px solid #9C27B0; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3 style="color: #4A148C; font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">🎯 Dynamic Actor Routing:</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Bundle-Based Routing:</strong> Approved & Locked → Processors | Docs Back → Doc Drawers | Funded → Funders | Clear to Close → Post-Close QC</li>
+                    <li style="margin-bottom: 8px;"><strong>Leadership Control:</strong> Escalation paths defined by operational requirements, not hardcoded roles</li>
+                    <li style="margin-bottom: 8px;"><strong>Instant Communication:</strong> Zero delay between validation failure detection and actor notification</li>
+                    <li style="margin-bottom: 8px;"><strong>Flexible Assignment:</strong> Any CMG team member can be designated as need-to-know actor</li>
+                </ul>
+            </div>
         </div>
 
         <div id="ctc-slide4-feature5">
-            <h2 style="color: #004D40; margin-bottom: 15px;">🔁 Flexible Bundle Selection</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6;">Select from multiple bundle types (Approved & Locked, Clear to Close & Locked, Docs Back, Funded) to run targeted quality control checks at different loan lifecycle stages.</p>
+            <h2 style="color: #004D40; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">📂 Flexible Bundle Selection</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 15px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Select from multiple bundle types to run targeted data integrity validations at critical loan lifecycle stages—each designed to prevent compliance failures, scratch & dent loans, and worst-case repurchase scenarios.</p>
+            <p style="font-size: 1.15rem; margin-bottom: 15px; line-height: 1.7; color: #546E7A;">AI-powered validation catches critical data mismatches before they escalate into regulatory violations or investor rejections. Bundle selection determines which CMG actors receive immediate notification for remediation.</p>
+            <div style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-left: 4px solid #00897B; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h3 style="color: #004D40; font-size: 1.3rem; margin-bottom: 12px; font-weight: 600;">🛡️ Risk Mitigation Across Loan Lifecycle:</h3>
+                <ul style="font-size: 1.1rem; line-height: 1.8; color: #2C3E50; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><strong>Approved & Locked:</strong> Early-stage data integrity validation prevents compliance failures before closing—processor notification for immediate correction</li>
+                    <li style="margin-bottom: 8px;"><strong>Clear to Close & Locked:</strong> Final pre-funding validation catches critical mismatches that could trigger repurchase demands—post-close QC notification</li>
+                    <li style="margin-bottom: 8px;"><strong>Docs Back:</strong> Critical data integrity checks detect discrepancies causing scratch & dent classifications or investor rejections—doc drawer notification</li>
+                    <li style="margin-bottom: 8px;"><strong>Funded:</strong> Post-funding audit validation ensures investor compliance and prevents repurchase risk—funder notification for file remediation</li>
+                </ul>
+            </div>
+            <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border: 3px solid #FF9800; padding: 30px; margin-top: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);">
+                <h3 style="color: #E65100; font-size: 1.8rem; margin-bottom: 18px; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 1px;">💰 REAL VALUE ADD 💰</h3>
+                <p style="font-size: 1.1rem; line-height: 1.6; color: #2C3E50; margin: 0; font-weight: 600; text-align: center;"><strong style="color: #D84315; font-size: 1.15rem;">Prevent financial and regulatory repercussions</strong> by catching data integrity issues before they become compliance failures, investor rejections, or costly loan repurchases.</p>
+                <p style="font-size: 1.15rem; line-height: 1.7; color: #2C3E50; margin-top: 12px; text-align: center; font-weight: 500;">Doctor BoB's AI-powered validation <strong style="color: #E65100;">protects CMG's reputation</strong>, <strong style="color: #E65100;">reduces scratch & dent inventory</strong>, and <strong style="color: #E65100;">eliminates repurchase risk exposure</strong>.</p>
+            </div>
         </div>
 
         <div id="ctc-slide5-vision">
-            <h2 style="color: #3A9675; margin-bottom: 20px; font-size: 1.75rem;">🚀 Strategic Vision</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 20px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Clear to Close - Dr. BoB represents the next evolution of the BoB Management Suite - extending proven architecture and patterns to solve Clear to Close operational challenges. By leveraging existing infrastructure, we can deliver diagnostic intelligence and automation to CTC workflows faster and more cost-effectively than building from scratch.</p>
+            <h2 style="color: #3A9675; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">🚀 Strategic Vision</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 20px; line-height: 1.8; color: #2C3E50; font-weight: 500;">Clear to Close - Dr. BoB represents the next evolution of the BoB Management Suite - extending proven architecture and patterns to solve Clear to Close operational challenges. By leveraging existing infrastructure, we can deliver diagnostic intelligence and automation to CTC workflows faster and more cost-effectively than building from scratch.</p>
         </div>
 
         <div id="ctc-slide5-value">
-            <h2 style="color: #3A9675; margin-bottom: 20px; font-size: 1.75rem;">💎 Long-Term Value</h2>
-            <ul style="font-size: 1.2rem; line-height: 1.8; color: #546E7A; font-weight: 500;">
+            <h2 style="color: #3A9675; margin-bottom: 20px; font-size: 2rem; font-weight: 700;">💎 Long-Term Value</h2>
+            <ul style="font-size: 1.25rem; line-height: 1.8; color: #2C3E50; font-weight: 500; margin-left: 20px;">
                 <li style="margin-bottom: 15px;">AI-powered bundle validation represents the next evolution of BoB's proven architecture - transforming document delivery into intelligent quality assurance</li>
                 <li style="margin-bottom: 15px;">Automated document validation against loan data reduces manual QC review time</li>
                 <li style="margin-bottom: 15px;">Custom stacking orders optimize workflows for Docs, Funding, Post Close QC, and Audit teams</li>
@@ -4115,6 +4151,10 @@
                     badge.textContent = 'Doc Drawer Notified';
                 } else if (value === 'Funded') {
                     badge.textContent = 'Funder Notified';
+                } else if (value === 'Clear to Close & Locked') {
+                    badge.textContent = 'Post Close QC Notified';
+                } else if (value === 'Approved & Locked') {
+                    badge.textContent = 'Processor Notified';
                 } else {
                     badge.textContent = 'Processor Notified';
                 }
@@ -4125,6 +4165,10 @@
                     container.setAttribute('title', 'Email notification sent to the assigned BytePro doc drawer detailing document failures found in this loan file.');
                 } else if (value === 'Funded') {
                     container.setAttribute('title', 'Email notification sent to the assigned BytePro funder detailing document failures found in this loan file.');
+                } else if (value === 'Clear to Close & Locked') {
+                    container.setAttribute('title', 'Email notification sent to the assigned BytePro post close QC team detailing document failures found in this loan file.');
+                } else if (value === 'Approved & Locked') {
+                    container.setAttribute('title', 'Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.');
                 } else {
                     container.setAttribute('title', 'Email notification sent to the assigned BytePro processor detailing document failures found in this loan file.');
                 }
@@ -4145,6 +4189,7 @@
         // CTC Slide 4: Hover tooltips for fail badges
         document.addEventListener('DOMContentLoaded', function() {
             setupCtcFailBadgeHovers();
+            updateCtcSlide4Notifications();
         });
 
         function setupCtcFailBadgeHovers() {
