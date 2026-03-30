@@ -12,30 +12,32 @@
             background: linear-gradient(135deg, #2C3E50 0%, #3D5A6C 50%, #4A6B7C 100%);
             color: #2C3E50;
             overflow: hidden;
+            height: 100vh;
+            width: 100vw;
         }
 
         .cmg-logo {
             position: fixed;
-            top: 15px;
-            left: 60px;
+            top: 14px;
+            left: 55px;
             z-index: 1000;
             background: white;
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .cmg-logo img { height: 32px; width: auto; }
+        .cmg-logo img { height: 28px; width: auto; }
 
         .breadcrumb-nav {
             position: fixed;
-            top: 15px;
-            right: 60px;
+            top: 14px;
+            right: 55px;
             z-index: 1000;
             display: flex;
-            gap: 8px;
+            gap: 7px;
         }
         .breadcrumb-btn {
             background: rgba(255,255,255,0.6);
@@ -43,7 +45,7 @@
             color: rgba(44,62,80,0.7);
             padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -61,16 +63,17 @@
             box-shadow: 0 2px 8px rgba(74,144,164,0.3);
         }
 
-        .presentation-container { width: 100vw; height: 100vh; position: relative; }
+        .presentation-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
 
         .slide {
             width: 100%;
             height: 100%;
             display: none;
-            padding: 80px 60px 60px 60px;
+            padding: 66px 52px 52px 52px;
             position: absolute;
             top: 0; left: 0;
-            animation: slideIn 0.5s ease-out;
+            animation: slideIn 0.4s ease-out;
+            overflow: hidden;
         }
         .slide.active { display: flex; flex-direction: column; }
 
@@ -81,37 +84,39 @@
 
         .slide-header {
             background: white;
-            border-radius: 12px;
-            padding: 12px 40px;
-            margin-bottom: 14px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 10px 32px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
         }
         .slide-number {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #00897B;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             font-weight: 700;
         }
         .slide-title {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #2C3E50;
             line-height: 1.2;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
-        .slide-subtitle { font-size: 0.9rem; color: #546E7A; font-weight: 500; }
+        .slide-subtitle { font-size: 0.82rem; color: #546E7A; font-weight: 500; }
 
-        .slide-content { flex: 1; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+        .slide-content { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden; min-height: 0; }
 
         /* Clickable cards */
         .clickable {
             cursor: pointer;
             transition: transform 0.2s;
+            flex-shrink: 0;
         }
         .clickable:hover {
-            transform: scale(1.02);
+            transform: scale(1.015);
             box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important;
         }
 
@@ -122,34 +127,32 @@
             text-align: center;
         }
         .title-slide .slide-header {
-            width: 1100px;
-            max-width: 1100px;
+            width: min(1200px, calc(100vw - 104px));
             margin: 0 auto;
-            padding: 50px 50px;
+            padding: 32px 44px;
         }
-        .title-slide .slide-title { font-size: 4.5rem; }
-        .title-slide .slide-subtitle { font-size: 1.75rem; }
+        .title-slide .slide-title { font-size: 3.8rem; }
+        .title-slide .slide-subtitle { font-size: 1.5rem; }
         .title-phases-container {
             background: white;
-            border-radius: 12px;
-            padding: 32px 50px;
-            margin: 30px auto 0 auto;
-            width: 1100px;
-            max-width: 1100px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 18px 36px;
+            margin: 18px auto 0 auto;
+            width: min(1200px, calc(100vw - 104px));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .title-phase-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 30px;
-            padding: 14px 0;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            padding: 11px 0;
             border-bottom: 1px solid #E0E0E0;
             align-items: center;
             line-height: 1.3;
         }
         .title-phase-row:last-child { border-bottom: none; }
         .title-meta-item {
-            font-size: 1.05rem;
+            font-size: 0.82rem;
             color: #546E7A;
             text-align: left;
             white-space: nowrap;
@@ -158,57 +161,53 @@
 
         /* Questions/final slide */
         .questions-slide { justify-content: center; align-items: center; text-align: center; }
-        .questions-slide .slide-title { font-size: 3.5rem; margin-bottom: 20px; color: white; }
+        .questions-slide .slide-title { font-size: 3rem; margin-bottom: 16px; color: white; }
         .questions-slide .contact-info {
             background: white;
             border-radius: 12px;
-            padding: 40px;
-            max-width: 700px;
+            padding: 32px 40px;
+            max-width: 860px;
             margin: 0 auto;
             box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
         .questions-slide .contact-info p {
             color: #546E7A;
-            font-size: 1.125rem;
-            line-height: 1.8;
-            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 7px 0;
         }
 
         /* Navigation */
         .navigation {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
+            bottom: 32px;
+            right: 36px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             z-index: 1000;
         }
         .nav-button {
             background: white;
             border: 2px solid #4A90A4;
             color: #2C3E50;
-            padding: 8px 20px;
+            padding: 7px 18px;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .nav-button:hover:not(:disabled) {
-            background: #4A90A4;
-            color: white;
-            transform: translateY(-2px);
-        }
+        .nav-button:hover:not(:disabled) { background: #4A90A4; color: white; transform: translateY(-2px); }
         .nav-button:disabled { opacity: 0.4; cursor: not-allowed; }
         .slide-counter {
             position: fixed;
-            bottom: 40px;
-            left: 40px;
+            bottom: 32px;
+            left: 36px;
             background: white;
-            padding: 8px 18px;
+            padding: 7px 16px;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: #546E7A;
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -219,36 +218,39 @@
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.78);
             z-index: 9999;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 32px;
         }
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: white;
-            border-radius: 16px;
-            max-width: 85vw;
-            width: 85vw;
-            max-height: 90vh;
-            overflow-y: auto;
+            border-radius: 14px;
+            max-width: 88vw;
+            width: 88vw;
+            max-height: 88vh;
+            overflow: hidden;
             position: relative;
-            padding: 50px 50px 40px 50px;
+            padding: 40px 52px 36px 52px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             animation: modalIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
         }
-        .modal-content h3 { font-size: 2.2rem; color: #2C3E50; margin-bottom: 20px; }
-        .modal-content h4 { font-size: 1.6rem; color: #2C3E50; margin: 20px 0 12px; }
-        .modal-content p { font-size: 1.3rem; line-height: 1.7; color: #546E7A; margin: 10px 0; }
-        .modal-content li { font-size: 1.3rem; line-height: 1.7; color: #546E7A; margin: 8px 0 8px 30px; }
-        .modal-content ul { margin: 10px 0; }
+        .modal-content h3 { font-size: 1.7rem; color: #2C3E50; margin-bottom: 18px; flex-shrink: 0; }
+        .modal-content h4 { font-size: 1.15rem; color: #2C3E50; margin: 14px 0 8px; font-weight: 700; }
+        .modal-content p { font-size: 1.05rem; line-height: 1.7; color: #546E7A; margin: 7px 0; }
+        .modal-content li { font-size: 1.05rem; line-height: 1.7; color: #546E7A; margin: 6px 0 6px 24px; }
+        .modal-content ul { margin: 8px 0; }
         .modal-content strong { color: #2C3E50; }
-        .modal-content table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1.1rem; }
-        .modal-content th { background: #2C3E50; color: white; padding: 14px 18px; text-align: left; font-size: 1rem; }
-        .modal-content td { padding: 12px 18px; border-bottom: 1px solid #E0E0E0; color: #546E7A; vertical-align: top; }
+        .modal-content table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.95rem; }
+        .modal-content th { background: #2C3E50; color: white; padding: 11px 16px; text-align: left; font-size: 0.9rem; }
+        .modal-content td { padding: 10px 16px; border-bottom: 1px solid #E0E0E0; color: #546E7A; vertical-align: top; }
         .modal-content tr:hover td { background: #F5F7FA; }
-        .modal-num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #00897B; color: white; border-radius: 50%; font-weight: 800; font-size: 1rem; margin-right: 8px; }
+        .modal-body { flex: 1; overflow: hidden; }
+        .modal-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: #00897B; color: white; border-radius: 50%; font-weight: 800; font-size: 0.9rem; margin-right: 8px; }
 
         @keyframes modalIn {
             from { opacity: 0; transform: scale(0.92); }
@@ -256,13 +258,13 @@
         }
         .modal-close {
             position: absolute;
-            top: 20px; right: 20px;
+            top: 16px; right: 16px;
             background: #D32F2F;
             color: white;
             border: none;
             border-radius: 50%;
-            width: 44px; height: 44px;
-            font-size: 1.5rem;
+            width: 36px; height: 36px;
+            font-size: 1.3rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -275,11 +277,18 @@
 
         .tag {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.68rem;
             font-weight: 700;
             margin-left: 8px;
+        }
+
+        /* Two-column modal layout for content-heavy modals */
+        .modal-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
     </style>
 </head>
@@ -310,248 +319,240 @@
         <div class="title-phases-container">
             <div class="title-phase-row">
                 <div class="title-meta-item"><strong>Phase 0 — BytePro Config</strong></div>
-                <div class="title-meta-item"><strong>Ask:</strong> Leadership Approval Now</div>
-                <div class="title-meta-item"><strong>Effort:</strong> Configuration Only — No New Code</div>
+                <div class="title-meta-item"><strong>Ask:</strong> Leadership Direction</div>
+                <div class="title-meta-item"><strong>Effort:</strong> Config Only — No New Code</div>
                 <div class="title-meta-item"><strong>Gate:</strong> Unlocks All Downstream Phases</div>
             </div>
             <div class="title-phase-row">
                 <div class="title-meta-item"><strong>Phase 1 — Single Bundle PDF</strong></div>
                 <div class="title-meta-item"><strong>Target:</strong> Immediate ROI</div>
                 <div class="title-meta-item"><strong>Infra:</strong> Existing BoB Engine</div>
-                <div class="title-meta-item"><strong>Win:</strong> 1 PDF replaces 6 manual downloads</div>
+                <div class="title-meta-item"><strong>Win:</strong> Big 3 hunt / 5+ min → BoB under 15 sec</div>
             </div>
             <div class="title-phase-row">
                 <div class="title-meta-item"><strong>Phase 2 — Dr. BoB MVP</strong></div>
-                <div class="title-meta-item"><strong>Target:</strong> Discovery Now → Build</div>
+                <div class="title-meta-item"><strong>Target:</strong> Discovery → Build</div>
                 <div class="title-meta-item"><strong>Outcome:</strong> Exception-Only Human Review</div>
-                <div class="title-meta-item"><strong>Impact:</strong> Stare-and-Compare Eliminated</div>
+                <div class="title-meta-item"><strong>Impact:</strong> Post-Close & Ops Teams Freed From Manual Review</div>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 2: Strategic Context -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 2 of 8 — Strategic Context</div>
             <h1 class="slide-title">Where Dr. BoB Fits — The BoB Management Suite</h1>
             <p class="slide-subtitle">One proven platform, two directions — click any card to learn more</p>
         </div>
-        <div class="slide-content">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
             <div class="clickable" onclick="openModal('m-suite')"
-                style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🏗️</span> BoB Management Suite — The Umbrella
+                style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">☂️</span> BoB Management Suite — The Umbrella
                     </h3>
                     <span class="tag" style="background:#1976D2; color:white;">STRATEGY</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">BoB bundles documents for <strong>external investor delivery</strong>. Dr. BoB takes that same proven engine and turns it <strong>inward</strong> — making CMG's post-close operations smarter, faster, and more defensible. Same infrastructure. New purpose. Massive internal ROI.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">BoB bundles docs for <strong>external investor delivery</strong>. Dr. BoB points that same proven engine <strong>inward</strong> — same infrastructure, new purpose, massive internal ROI.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-external')"
-                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📤</span> External — Investor Delivery (In Flight)
+                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📦</span> External — Investor Delivery (In Flight)
                     </h3>
                     <span class="tag" style="background:#388E3C; color:white;">IN FLIGHT</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;"><strong>Bulk Bundle Manager</strong> (Phases 1–2) &nbsp;|&nbsp; <strong>Single Flow BoB</strong> (Phases 1–3) — generating investor-ready bundle PDFs delivered to external partners. The blueprint Dr. BoB is built on.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;"><strong>Bulk Bundle Manager</strong> + <strong>Single Flow BoB</strong> — generating investor-ready PDFs delivered to external partners. The blueprint Dr. BoB is built on.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-internal')"
-                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🔬</span> Internal — Dr. BoB Operational Intelligence ← THIS PROPOSAL
+                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">🔍</span> Internal — Dr. BoB Operational Intelligence ← THIS PROPOSAL
                     </h3>
                     <span class="tag" style="background:#00897B; color:white;">PROPOSAL</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;"><strong>Phase 1 MVP: Recording Fee Reconciliation</strong> — same bundle engine, pointed inward at CMG's post-close audit operations. Future: QC Bundle Review, Compliance Audit, and more operational review types.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;"><strong>Phase 1 MVP: Recording Fee Reconciliation</strong> — BoB engine pointed inward at CMG post-close audit ops. Future expansion: QC Bundle Review, Compliance Audit, Post-Close QC.</p>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 3: The Problem -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 3 of 8 — The Problem</div>
             <h1 class="slide-title">Today's Manual Process Is Broken By Design</h1>
-            <p class="slide-subtitle">Recording Fee Reconciliation requires 8–12 manual steps per loan before a single decision is made — click any card for detail</p>
+            <p class="slide-subtitle">6–10 manual steps per loan, minutes of friction — before a single decision is made — click any card for detail</p>
         </div>
-        <div class="slide-content">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
             <div class="clickable" onclick="openModal('m-steps')"
-                style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🔴</span> 8–12 Manual Steps Per Loan
+                style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">⏱️</span> 6–10 Manual Steps — Minutes Per Loan
                     </h3>
                     <span class="tag" style="background:#E53935; color:white;">CRITICAL</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Navigate 3 separate Byte tabs. Identify which document version is the recorded one. Download 6 files individually. Manually locate fee amounts — buried in varying locations per doc type and county. Compare values by hand. And that's before a single reconciliation decision is made.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">What looks like 3 docs is a Byte scavenger hunt — navigate tabs, identify the approved version among duplicates, hunt for fee stamps buried in varying locations by county. Minutes of friction per loan, multiplied across every auditor, every day.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-risk')"
-                style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E65100;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">⚠️</span> Human Error Risk at Scale
+                style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E65100; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">⚠️</span> Human Error Risk at Scale
                     </h3>
                     <span class="tag" style="background:#E65100; color:white;">COMPLIANCE RISK</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Stare-and-compare fatigue is real. When recording fees on the Closing Disclosure don't match what was actually charged on recorded instruments, <strong style="color:#E53935;">a borrower refund is legally required.</strong> At scale, the current manual process creates systematic compliance exposure that compounds with loan volume.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Each of The Big 3 is a tab hunt — wrong version, buried fee stamp, upstream input error — before a single number gets compared. When CD fees don't match what was recorded, <strong style="color:#E53935; white-space:nowrap;">a borrower refund is legally required.</strong> At scale, the manual process cannot catch every one.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-gaps')"
-                style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #C2185B;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📋</span> No Audit Trail — No Coverage Safety Net
+                style="background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #C2185B; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📋</span> No Audit Trail — No Coverage Safety Net
                     </h3>
                     <span class="tag" style="background:#C2185B; color:white;">OPERATIONAL GAP</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Today's audit trail is reviewer initials on a checklist. When a critical finding sits unattended because the auditor is on vacation, there is no automated safety net. No department coverage. No escalation path. No defensible evidence of what was reviewed and what was found.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Post-close and ops teams carry this burden daily — no automated safety net, no escalation, no defensible trail. Just reviewer initials on a checklist. One auditor out sick and a critical finding sits untouched.</p>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 4: The Solution -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 4 of 8 — The Solution</div>
             <h1 class="slide-title">Dr. BoB — Automated Fee Reconciliation Engine</h1>
             <p class="slide-subtitle">AI-powered OCR in stacking order sequence — humans only review exceptions — click any card for detail</p>
         </div>
-        <div class="slide-content">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
             <div class="clickable" onclick="openModal('m-how')"
-                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">⚡</span> How It Works — End to End
+                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">⚙️</span> How It Works — End to End
                     </h3>
                     <span class="tag" style="background:#388E3C; color:white;">PIPELINE</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">User initiates a Fee Recon bundle in BoB → BoB generates the 6-doc PDF in stacking order → bundle delivered to internal server/SFTP → Dr. BoB picks it up → OCR runs in sequence → fees cross-referenced across docs then against BytePro → findings emailed to the right people. Auditor only opens what flagged.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Auditor initiates a Big 3 bundle in BoB → BoB identifies approved doc versions automatically, no hunting → single bundle delivered in under 15 seconds → Dr. BoB OCRs in stacking order → fees cross-referenced → only exceptions land in the auditor's inbox.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-schema')"
-                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🔑</span> The Secret Weapon: Stacking Order as Schema
+                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">🔑</span> The Secret Weapon: Stacking Order as Schema
                     </h3>
                     <span class="tag" style="background:#00897B; color:white;">INNOVATION</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Dr. BoB is not doing blind OCR on a mystery PDF. Because the stacking order is <strong>known and deterministic</strong>, Dr. BoB knows exactly what document is at every position before it even opens the file. This makes extraction highly reliable — not guesswork. Structured, rule-driven, repeatable every time.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Because the stacking order is <strong>known and deterministic</strong>, Dr. BoB knows exactly what document is at every position before it opens the file. Structured, rule-driven extraction — not guesswork. Reliable at scale.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-shift')"
-                style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🔄</span> The User Experience Shift
+                style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">🔄</span> The User Experience Shift
                     </h3>
                     <span class="tag" style="background:#673AB7; color:white;">IMPACT</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;"><strong style="color:#E53935;">Before:</strong> Open 6 PDFs → read every page → mentally compare against BytePro → flag anything wrong → repeat per loan.<br><br><strong style="color:#388E3C;">After:</strong> Open email → review flagged exceptions only → dismiss, act, or escalate → done. All passing docs never need human eyes.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;"><strong style="color:#E53935;">Before:</strong> Hunt Byte tabs for the right versions, compare manually, sign checklist. &nbsp;<strong style="color:#388E3C;">After:</strong> Open email, review flagged exceptions only, done. Passing loans never need human eyes.</p>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 5: The Bundle -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 5 of 8 — The Bundle</div>
-            <h1 class="slide-title">The Fee Reconciliation Bundle — 6-Document Stacking Order</h1>
-            <p class="slide-subtitle">The same 6 documents auditors download manually today — now defined as a named bundle type in BytePro — click any card for detail</p>
+            <h1 class="slide-title">The Fee Reconciliation Bundle — The Big 3 Stacking Order</h1>
+            <p class="slide-subtitle">The same docs auditors hunt through Byte tabs for today — now a named bundle type in BytePro — click any card for detail</p>
         </div>
-        <div class="slide-content">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
             <div class="clickable" onclick="openModal('m-stack')"
-                style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2; flex: 2;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📋</span> Full Stacking Order — All 6 Documents
+                style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2; flex: 2;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📋</span> Full Stacking Order — The Big 3 Docs
                     </h3>
                     <span class="tag" style="background:#1976D2; color:white;">PHASE 0 CONFIG</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Final Closing Disclosure &nbsp;→&nbsp; Change of Circumstance &nbsp;→&nbsp; Post Closing CD &nbsp;→&nbsp; Final Settlement Statement &nbsp;→&nbsp; Recorded Warranty Deed &nbsp;→&nbsp; Recorded Deed of Trust. Click to see the full table with Byte locations and what Dr. BoB extracts from each.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Final CD → Change of Circumstance → Post Closing CD → Final Settlement Statement → Recorded Warranty Deed → Recorded DOT. Click for full table with Byte locations and extraction targets.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-phase0')"
-                style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; flex: 1;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🔴</span> Phase 0 — The Critical Gate
+                style="background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #E53935; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">🔐</span> Phase 0 — The Critical Gate
                     </h3>
                     <span class="tag" style="background:#E53935; color:white;">ACTION NEEDED</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Configure <strong>"Fee Reconciliation"</strong> as a named bundle type in the Byte bundle tables. This is a <strong>configuration change — not a code change.</strong> Everything else in this proposal depends on this one approval.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Add <strong>"Fee Reconciliation"</strong> as a named bundle type in BytePro. <strong>Config only — no code change.</strong> Everything in this proposal is blocked without this one approval.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-source')"
-                style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #F9A825; flex: 1;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📖</span> Source of Truth
+                style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #F9A825; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📖</span> Source of Truth
                     </h3>
                     <span class="tag" style="background:#F9A825; color:white;">VALIDATED</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">This stacking order is derived directly from CMG's internal <em>Recording Fee Reconciliation Guide</em> — the same document that outlines today's manual steps. Dr. BoB automates exactly this process, document by document, in the same sequence auditors follow today.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Stacking order and rules derived directly from CMG's internal <em>Recording Fee Reconciliation Guide</em>. Dr. BoB automates exactly this process — same documents, same sequence, same logic.</p>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 6: Validation Rules -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 6 of 8 — Validation Engine</div>
             <h1 class="slide-title">Dr. BoB — The 4 OCR Validation Rules</h1>
             <p class="slide-subtitle">Two-phase validation: docs vs. docs first, then BytePro confirms — click any card for the full rule detail</p>
         </div>
-        <div class="slide-content">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1;">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; min-height: 0;">
                 <div class="clickable" onclick="openModal('m-rule1')"
-                    style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                        <h3 style="color:#2C3E50; font-size:1.4rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
-                            <span style="background:#388E3C; color:white; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; flex-shrink:0;">R1</span>
-                            CD vs. Settlement Statement
-                        </h3>
+                    style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 10px; padding: 20px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <span style="background:#388E3C; color:white; width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; flex-shrink:0; margin-right:10px;">R1</span>
+                        <h3 style="color:#2C3E50; font-size:1.1rem; font-weight:700; margin:0;">CD vs. Settlement Statement</h3>
                     </div>
-                    <p style="color:#546E7A; font-size:1.0rem; line-height:1.6; margin:0;">Government Recording Fees on the Final CD must match the Final Settlement Statement. Click for extraction detail and flag messages.</p>
+                    <p style="color:#546E7A; font-size:0.9rem; line-height:1.5; margin:0;">Government Recording Fees on the Final CD must match the Final Settlement Statement. Mismatch = inaccurate fee disclosure to borrower.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('m-rule2')"
-                    style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                        <h3 style="color:#2C3E50; font-size:1.4rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
-                            <span style="background:#1976D2; color:white; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; flex-shrink:0;">R2</span>
-                            FSS vs. Recorded Warranty Deed
-                        </h3>
+                    style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-radius: 10px; padding: 20px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #1976D2;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <span style="background:#1976D2; color:white; width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; flex-shrink:0; margin-right:10px;">R2</span>
+                        <h3 style="color:#2C3E50; font-size:1.1rem; font-weight:700; margin:0;">FSS vs. Recorded Warranty Deed</h3>
                     </div>
-                    <p style="color:#546E7A; font-size:1.0rem; line-height:1.6; margin:0;">FSS recording fee must match the fee stamp on the Recorded Warranty Deed. Mismatch = borrower overcharge. Refund required. Click for detail.</p>
+                    <p style="color:#546E7A; font-size:0.9rem; line-height:1.5; margin:0;">FSS recording fee must match the fee stamp on the Recorded Warranty Deed. Mismatch = borrower overcharge. Refund legally required.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('m-rule3')"
-                    style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                        <h3 style="color:#2C3E50; font-size:1.4rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
-                            <span style="background:#673AB7; color:white; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; flex-shrink:0;">R3</span>
-                            FSS vs. Recorded DOT / Security Instrument
-                        </h3>
+                    style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 10px; padding: 20px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <span style="background:#673AB7; color:white; width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; flex-shrink:0; margin-right:10px;">R3</span>
+                        <h3 style="color:#2C3E50; font-size:1.1rem; font-weight:700; margin:0;">FSS vs. Recorded DOT / Security Instrument</h3>
                     </div>
-                    <p style="color:#546E7A; font-size:1.0rem; line-height:1.6; margin:0;">FSS recording fee must match the fee stamp on the Recorded Deed of Trust. Mismatch = borrower overcharge. Refund required. Click for detail.</p>
+                    <p style="color:#546E7A; font-size:0.9rem; line-height:1.5; margin:0;">FSS recording fee must match the fee stamp on the Recorded Deed of Trust. Mismatch = borrower overcharge. Refund legally required.</p>
                 </div>
 
                 <div class="clickable" onclick="openModal('m-rule4')"
-                    style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #F9A825;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                        <h3 style="color:#2C3E50; font-size:1.4rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
-                            <span style="background:#F9A825; color:white; width:36px; height:36px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; flex-shrink:0;">R4</span>
-                            Bundle Completeness Check
-                        </h3>
+                    style="background: linear-gradient(135deg, #FFF9C4 0%, #FFF59D 100%); border-radius: 10px; padding: 20px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #F9A825;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <span style="background:#F9A825; color:white; width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:800; flex-shrink:0; margin-right:10px;">R4</span>
+                        <h3 style="color:#2C3E50; font-size:1.1rem; font-weight:700; margin:0;">Bundle Completeness Check</h3>
                     </div>
-                    <p style="color:#546E7A; font-size:1.0rem; line-height:1.6; margin:0;">All 6 required documents must be present before OCR begins. A missing document is an incomplete reconciliation — not a pass. Click for flag messages and remediation path.</p>
+                    <p style="color:#546E7A; font-size:0.9rem; line-height:1.5; margin:0;">All required documents in The Big 3 bundle must be present before OCR begins. A missing document = incomplete reconciliation — not a pass. Remediation path included in findings email.</p>
                 </div>
             </div>
         </div>
@@ -559,58 +560,58 @@
 
     <!-- SLIDE 7: Phased Rollout + ROI -->
     <div class="slide">
-        <div class="slide-header">
+        <div class="slide-header" style="width: min(860px, 100%); align-self: center;">
             <div class="slide-number">Slide 7 of 8 — Roadmap & ROI</div>
             <h1 class="slide-title">Crawl → Walk → Run — Phased Delivery & Business Case</h1>
             <p class="slide-subtitle">Each phase delivers standalone value — click any card for the full detail</p>
         </div>
-        <div class="slide-content">
+        <div class="slide-content" style="max-width: 860px; margin: 0 auto; width: 100%;">
             <div class="clickable" onclick="openModal('m-phases')"
-                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">🚀</span> Three Phases — Each Independently Valuable
+                style="background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #00897B; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">🗺️</span> Three Phases — Each Independently Valuable
                     </h3>
                     <span class="tag" style="background:#00897B; color:white;">ROADMAP</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;"><strong style="color:#E53935;">Phase 0:</strong> BytePro config — no code, just approval. &nbsp;<strong style="color:#E65100;">Phase 1:</strong> BoB generates 1 PDF — 6 manual downloads eliminated immediately. &nbsp;<strong style="color:#00897B;">Phase 2:</strong> Dr. BoB runs OCR — auditor reviews exceptions only. Click to see full phase breakdown.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;"><strong style="color:#E53935;">Phase 0:</strong> Byte config — approval only. &nbsp;<strong style="color:#E65100;">Phase 1:</strong> BoB assembles The Big 3 — 6–10 Byte steps and the tab hunt become under 15 seconds. Value ships before Dr. BoB is built. &nbsp;<strong style="color:#00897B;">Phase 2:</strong> OCR + exception-only review. Click for full phase breakdown.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-roi')"
-                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📈</span> ROI & Business Case — Before vs. After
+                style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #388E3C; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📈</span> ROI & Business Case — Before vs. After
                     </h3>
                     <span class="tag" style="background:#388E3C; color:white;">ROI</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Today: 8–12 steps, 6 files, human comparison, no trail. Phase 1: 1 PDF, reduced friction. Phase 2: automated validation, exception-only review, timestamped compliance trail, systematic borrower overcharge detection at any scale. Click for the full before/after breakdown.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Byte's Big 3 hunt — tabs, versions, eye strain, minutes per loan → <strong style="color:#388E3C;">BoB: under 15 seconds, right versions, every time.</strong> Manual compare → automated OCR. Reviewer initials → timestamped audit log. Every loan. Every time. At any volume. Click for full before/after table.</p>
             </div>
 
             <div class="clickable" onclick="openModal('m-notify')"
-                style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 12px; padding: 28px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                    <h3 style="color:#2C3E50; font-size:1.5rem; font-weight:700; margin:0; display:flex; align-items:center; gap:12px;">
-                        <span style="font-size:2rem;">📧</span> Notification & Coverage — Nobody Misses a Finding
+                style="background: linear-gradient(135deg, #EDE7F6 0%, #D1C4E9 100%); border-radius: 10px; padding: 20px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 6px solid #673AB7; flex: 1;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                    <h3 style="color:#2C3E50; font-size:1.25rem; font-weight:700; margin:0; display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:1.6rem;">📧</span> Notification & Coverage — Nobody Misses a Finding
                     </h3>
                     <span class="tag" style="background:#673AB7; color:white;">COVERAGE</span>
                 </div>
-                <p style="color:#546E7A; font-size:1.125rem; line-height:1.6; margin:0;">Initiating user's login = routing key. Bundle-type-scoped department inbox (fee-recon@cmgfi.com) ensures no critical finding sits unattended — even if the auditor is on vacation. Click for the full notification model.</p>
+                <p style="color:#546E7A; font-size:0.95rem; line-height:1.5; margin:0;">Initiating user's login = routing key. Bundle-type-scoped dept inbox (<strong>fee-recon@cmgfi.com</strong>) ensures no critical finding sits unattended — even if the auditor is on vacation. Click for full notification model.</p>
             </div>
         </div>
     </div>
 
     <!-- SLIDE 8: The Ask -->
     <div class="slide questions-slide">
-        <h1 class="slide-title" style="font-size:3.5rem; color:white; margin-bottom:20px;">What We Need — Today</h1>
-        <div class="contact-info" style="max-width: 900px;">
-            <p style="font-size:1.3rem; color:#2C3E50; font-weight:700; margin-bottom:16px;">Phase 0 — Leadership Approval</p>
-            <p style="font-size:1.1rem; font-style:italic; color:#00897B; margin-bottom:24px; line-height:1.7;">"Authorize the BytePro team to configure a <strong>'Fee Reconciliation'</strong> bundle type in the Byte bundle tables with the 6-document stacking order defined in this proposal."</p>
-            <p style="font-size:1rem; color:#546E7A; margin-bottom:8px;"><strong style="color:#2C3E50;">Configuration only. No new code. No new infrastructure.</strong><br>This is the critical gate that unlocks every phase of the Dr. BoB roadmap.</p>
-            <div style="border-top: 1px solid #E0E0E0; margin: 24px 0;"></div>
-            <p style="margin:6px 0;"><strong>Product Manager / BSA:</strong> Aza Olival &nbsp;|&nbsp; aolival@cmgfi.com</p>
-            <p style="margin:6px 0;"><strong>Business Leadership:</strong> Colleen Schofield · Ashley Kempe · Carol Overton · Scott Fine · Adam Covey</p>
-            <p style="margin:6px 0;"><strong>Next Step:</strong> BytePro config conversation → Fee Recon team discovery → Dr. BoB Phase 2 BRD</p>
+        <h1 class="slide-title">The Path Forward</h1>
+        <div class="contact-info">
+            <p style="font-size:1.15rem; color:#2C3E50; font-weight:700; margin-bottom:12px;">Phase 0 — Leadership Approval</p>
+            <p style="font-size:0.95rem; font-style:italic; color:#00897B; margin-bottom:18px; line-height:1.6;">"Authorize the BytePro team to configure a <strong>'Fee Reconciliation'</strong> bundle type in the Byte bundle tables — defining The Big 3 document stacking order — so BoB can assemble the right versions automatically and Dr. BoB can validate them."</p>
+            <p style="font-size:0.9rem; color:#546E7A; margin-bottom:8px;"><strong style="color:#2C3E50;">Configuration only. No new code. No new infrastructure.</strong><br>This single approval hands CMG's post-close and ops teams back hours of their day — and makes every reconciliation bulletproof.</p>
+            <div style="border-top: 1px solid #E0E0E0; margin: 18px 0;"></div>
+            <p style="margin:5px 0; font-size:0.9rem;"><strong>Product Manager / BSA:</strong> Aza Olival &nbsp;|&nbsp; aolival@cmgfi.com</p>
+            <p style="margin:5px 0; font-size:0.9rem;"><strong>Business Leadership:</strong> Colleen Schofield · Ashley Kempe · Carol Overton · Scott Fine · Adam Covey</p>
+            <p style="margin:5px 0; font-size:0.9rem;"><strong>Next Step:</strong> BytePro config conversation → Fee Recon team discovery → Dr. BoB Phase 2 BRD</p>
         </div>
     </div>
 
@@ -622,10 +623,12 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-suite')">×</button>
         <h3>🏗️ BoB Management Suite — The Full Picture</h3>
-        <p>BoB was built to bundle mortgage documents for <strong>external investor delivery</strong>. The Bulk Bundle Manager and Single Flow BoB are both in-flight delivering bundles out to investors. This is proven, working infrastructure.</p>
-        <p>Dr. BoB takes that exact same pipeline and points it <strong>inward</strong> at CMG's own operational needs. Same bundle engine. Same delivery mechanism. Same stacking order logic. New destination — an internal server folder instead of an investor SFTP. New purpose — automated QC and reconciliation instead of investor delivery.</p>
-        <p><strong>The external product is the blueprint. Dr. BoB is the internal dividend.</strong></p>
-        <p>Dr. BoB was first introduced to leadership in the BoB Executive Summary presentation as <em>"AI-powered data integrity validation extending BoB architecture."</em> This proposal takes that concept and delivers the first concrete implementation plan with a specific MVP, defined documents, and a clear Phase 0 ask.</p>
+        <div class="modal-body">
+            <p>BoB was built to bundle mortgage documents for <strong>external investor delivery</strong>. Bulk Bundle Manager and Single Flow BoB are in-flight delivering bundles to investors — proven, working infrastructure.</p>
+            <p>Dr. BoB takes that exact same pipeline and points it <strong>inward</strong> at CMG's own operational needs. Same bundle engine. Same delivery mechanism. Same stacking order logic. New destination — internal server instead of investor SFTP. New purpose — automated QC and reconciliation instead of investor delivery.</p>
+            <p><strong>The external product is the blueprint. Dr. BoB is the internal dividend.</strong></p>
+            <p>Dr. BoB was first introduced to leadership in the BoB Executive Summary as <em>"AI-powered data integrity validation extending BoB architecture."</em> This proposal delivers the first concrete implementation: a defined MVP, specific documents, and a clear Phase 0 ask.</p>
+        </div>
     </div>
 </div>
 
@@ -633,48 +636,86 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-external')">×</button>
         <h3>📤 External — Investor Delivery (In Flight)</h3>
-        <ul>
-            <li><strong>Bulk Bundle Manager (Phases 1–2):</strong> Generates bundle PDFs for multiple loans in a background job and delivers them to investor-specific destinations (network shares, SFTP). In development now.</li>
-            <li><strong>Single Flow BoB (Phases 1–3):</strong> Single-loan bundle builder with Stored Doc Manager integration. Phase 3 prototype complete. Design review with Tim Borquez in progress.</li>
-        </ul>
-        <p>Both products use the same core bundle engine — document retrieval from BytePro, stacking order configuration, PDF generation, and delivery to a configured destination path. Dr. BoB Fee Recon uses the same engine with a different destination and a downstream OCR step added.</p>
+        <div class="modal-body">
+            <ul>
+                <li><strong>Bulk Bundle Manager (Phases 1–2):</strong> Generates bundle PDFs for multiple loans in a background job, delivers to investor-specific SFTP or network shares. In development now.</li>
+                <li><strong>Single Flow BoB (Phases 1–3):</strong> Single-loan bundle builder with Stored Doc Manager integration. Phase 3 prototype complete.</li>
+            </ul>
+            <p>Both use the same core bundle engine — document retrieval from BytePro, stacking order config, PDF generation, delivery to destination. Dr. BoB Fee Recon uses the same engine with an internal destination and a downstream OCR step.</p>
+        </div>
     </div>
 </div>
 
 <div id="m-internal" class="modal-overlay" onclick="if(event.target===this)closeModal('m-internal')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-internal')">×</button>
-        <h3>🔬 Internal — Dr. BoB Operational Intelligence</h3>
-        <p><strong>Phase 1 MVP: Recording Fee Reconciliation</strong> — the focus of this proposal. Automates the manual 8-12 step process currently required per loan.</p>
-        <p><strong>Future bundle review types on the roadmap:</strong></p>
-        <ul>
-            <li><strong>QC Bundle Review:</strong> Doc-to-BytePro cross-reference — property address, borrower names, income amounts — flagging data integrity errors against the system of record.</li>
-            <li><strong>Compliance Audit Packages:</strong> Large-scale audit review where Dr. BoB surfaces errors at document + page level (e.g., "Name error on 1003 page 74") so auditors triage by exception.</li>
-            <li><strong>Post-Close QC:</strong> Pre-shipment quality gate before investor delivery — confirming all stacking order requirements met before the bundle goes out.</li>
-        </ul>
-        <p>Each bundle review type carries its own rule set — Dr. BoB is the engine, the rule sets are the configuration. New review type = new rule set, not new code.</p>
+        <h3>🔬 Recording Fee Reconciliation — The First Internal BoB Package</h3>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>What This Is</h4>
+                    <ul>
+                        <li>The <strong>first BoB bundle built for CMG's own operations</strong> — not for investors, for us</li>
+                        <li>Same proven BoB engine that powers external investor delivery, now pointed inward at Post-Close and Operations</li>
+                        <li>Recording Fee Reconciliation is the MVP — the highest-impact, most clearly defined internal use case to build first</li>
+                    </ul>
+                    <h4>The Value Delivered</h4>
+                    <ul>
+                        <li>Byte's Big 3 hunt — tabs, versions, eye strain <strong>→ under 15 seconds with BoB</strong></li>
+                        <li>Auditor gets one clean PDF in stacking order — no tab-hunting, no manual assembly</li>
+                        <li>Phase 2: Dr. BoB OCR validates fees automatically — humans only review exceptions</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>What This Unlocks</h4>
+                    <ul>
+                        <li><strong>QC Bundle Review</strong> — doc-to-BytePro cross-reference for data integrity errors</li>
+                        <li><strong>Compliance Audit Packages</strong> — exception-level surfacing across large audit volumes</li>
+                        <li><strong>Post-Close QC</strong> — quality gate before investor delivery</li>
+                    </ul>
+                    <h4>The Architecture Advantage</h4>
+                    <ul>
+                        <li>Every new internal review type = a new rule set, not new code</li>
+                        <li>Recording Fee Recon proves the pattern — each one after it gets easier and faster to build</li>
+                        <li><strong>One engine. Unlimited internal use cases.</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="m-steps" class="modal-overlay" onclick="if(event.target===this)closeModal('m-steps')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-steps')">×</button>
-        <h3>🔴 The 8–12 Manual Steps Per Loan</h3>
-        <p>This is the current Recording Fee Reconciliation workflow, derived from CMG's internal process guide:</p>
-        <ul>
-            <li>Navigate to Byte Stored Documents — 3 separate tabs (DOCS, PROP, POST CLSNG)</li>
-            <li>Identify which document version is the <em>recorded</em> one — multiple versions often exist in the same tab</li>
-            <li>Download the Final Closing Disclosure</li>
-            <li>Download the Change of Circumstance (if present)</li>
-            <li>Download the Final Settlement Statement / Disbursement Ledger</li>
-            <li>Download the Recorded Warranty Deed from the PROP tab</li>
-            <li>Download the Recorded Deed of Trust / Security Instrument from POST CLSNG</li>
-            <li>Open each document and manually locate the recording fee amount — which can be on the first page top-right, the last page bottom, or a separate attached page depending on the county recorder</li>
-            <li>Manually compare fee values line by line across all documents</li>
-            <li>If documents are missing from Byte — navigate to the Parties screen, find the Settlement Agent, draft and send an email request, wait for a response</li>
-            <li>If fees don't match — determine if a borrower refund is required and notify the Settlement Agent / Title Company</li>
-        </ul>
-        <p>All of this happens before a single reconciliation decision is made. At scale, across CMG's post-close audit volume, this is an enormous ongoing time cost with compounding human error risk.</p>
+        <h3>🔴 The Big 3 Rabbit Hole — Minutes of Friction Before a Single Decision</h3>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>Document Retrieval</h4>
+                    <ul>
+                        <li>Navigate 3 separate Byte tabs (DOCS, PROP, POST CLSNG)</li>
+                        <li>Identify which version is the <em>recorded</em> one — multiples often exist</li>
+                        <li>Hunt Byte tabs for the right versions across all 3 tabs</li>
+                    </ul>
+                    <h4>Manual Comparison</h4>
+                    <ul>
+                        <li>Open each document, locate fee amounts — location varies by county recorder</li>
+                        <li>Compare all values line by line across The Big 3 docs</li>
+                        <li>Sign checklist — that's the entire audit trail</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Exception Handling</h4>
+                    <ul>
+                        <li>Missing docs → navigate Parties screen, find Settlement Agent, email request, wait</li>
+                        <li>Fee mismatch → determine refund requirement, notify Title Company</li>
+                    </ul>
+                    <h4>The Scale Problem</h4>
+                    <p>All of this happens per loan. At CMG's post-close audit volume, this is an enormous ongoing time cost with compounding human error risk — before a single reconciliation decision is made.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -682,16 +723,25 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-risk')">×</button>
         <h3>⚠️ Compliance Risk — Borrower Overcharge Exposure</h3>
-        <p>Under RESPA regulations, if the recording fees charged to the borrower (as shown on the Recorded Warranty Deed and Recorded DOT) do not match the fees disclosed on the Closing Disclosure and Final Settlement Statement, <strong>a refund to the borrower is legally required.</strong></p>
-        <p>This refund request must be sent to the Settlement Agent and the refund made by the Title Company.</p>
-        <p>The current manual process relies entirely on auditor attention and accuracy. Factors that create systematic risk:</p>
-        <ul>
-            <li><strong>Volume:</strong> Each loan requires the same multi-step process — error rate compounds with loan count</li>
-            <li><strong>Fatigue:</strong> Stare-and-compare across 6 documents per loan is cognitively demanding — accuracy degrades over a shift</li>
-            <li><strong>Fee location variability:</strong> Recording fee stamps appear in different locations depending on the county recorder — easy to miss</li>
-            <li><strong>No systematic check:</strong> There is no automated verification that every loan was reconciled and every mismatch was caught</li>
-        </ul>
-        <p>Dr. BoB makes borrower overcharge detection <strong>systematic and complete</strong> — every loan, every time, without fatigue.</p>
+        <div class="modal-body">
+            <p>Under RESPA, if recording fees charged to the borrower don't match what was disclosed on the CD and FSS, <strong>a refund to the borrower is legally required</strong> — made by the Title Company via the Settlement Agent.</p>
+            <div class="modal-two-col" style="margin-top:10px;">
+                <div>
+                    <h4>Why Risk Compounds at Scale</h4>
+                    <ul>
+                        <li><strong>Volume:</strong> Same multi-step process per loan — error rate multiplies with count</li>
+                        <li><strong>Fatigue:</strong> Stare-and-compare across The Big 3 docs per loan degrades accuracy over a shift</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>What Dr. BoB Delivers</h4>
+                    <ul>
+                        <li><strong>Fee location variability handled:</strong> Fee stamps appear in different locations by county — Dr. BoB scans all known positions</li>
+                        <li><strong>Systematic detection:</strong> Every loan, every time, without fatigue</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -699,17 +749,27 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-gaps')">×</button>
         <h3>📋 Audit Trail & Coverage Gaps</h3>
-        <p><strong>The audit trail problem:</strong> Today's evidence of recording fee reconciliation is reviewer initials on a checklist. When a regulatory examiner requests evidence of reconciliation for a specific loan, the answer is a piece of paper with a signature. This is difficult to defend, difficult to scale, and provides no granular detail of what was compared, what was found, or what action was taken.</p>
-        <p><strong>The coverage problem:</strong> When the auditor who initiated a reconciliation job is on vacation for two weeks, there is no automated safety net. A critical finding — one that requires a borrower refund — can sit unattended indefinitely.</p>
-        <p><strong>What Dr. BoB provides instead:</strong></p>
-        <ul>
-            <li>Timestamped automated scan log per loan — every document scanned, every value extracted, every comparison made</li>
-            <li>Findings record showing what matched and what flagged, with specific extracted values</li>
-            <li>Actor-based notification routing — initiating user + department coverage inbox</li>
-            <li>Bundle-type-scoped department inbox (fee-recon@cmgfi.com) — the entire team sees every finding regardless of who initiated the job</li>
-            <li>Findings resolution states: Resolved, Dismissed with Reason, Accepted Risk</li>
-        </ul>
-        <p>When a regulatory examiner requests evidence, the answer becomes a complete automated audit log with extracted values, comparison results, and resolution actions for every loan reviewed.</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>Today's Gaps</h4>
+                    <ul>
+                        <li><strong>Audit trail:</strong> Reviewer initials on a checklist — difficult to defend to a regulatory examiner</li>
+                        <li><strong>Coverage gap:</strong> Auditor on vacation = critical findings sit unattended indefinitely</li>
+                        <li><strong>No escalation:</strong> No automated path from finding to resolution</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>What Dr. BoB Provides</h4>
+                    <ul>
+                        <li>Timestamped scan log per loan — every doc scanned, every value extracted</li>
+                        <li>Pass/flag findings record with extracted values and remediation path</li>
+                        <li>Bundle-type-scoped dept inbox — team sees every finding regardless of who initiated</li>
+                        <li>Resolution states: Resolved, Dismissed with Reason, Accepted Risk</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -717,19 +777,35 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-how')">×</button>
         <h3>⚡ Dr. BoB — End-to-End Pipeline</h3>
-        <ul>
-            <li><strong>Step 1:</strong> Ops user logs into BoB and initiates a Fee Reconciliation bundle job (single loan or bulk)</li>
-            <li><strong>Step 2:</strong> BoB retrieves the 6 required documents from BytePro Stored Documents in stacking order sequence</li>
-            <li><strong>Step 3:</strong> BoB generates a single merged PDF bundle and delivers it to the designated internal server folder or SFTP</li>
-            <li><strong>Step 4:</strong> Dr. BoB detects the new bundle (file watcher or polling) and begins processing</li>
-            <li><strong>Step 5:</strong> OCR runs in stacking order sequence — Dr. BoB knows exactly what document is at every position</li>
-            <li><strong>Step 6:</strong> Phase 1 validation — docs cross-referenced against each other (CD vs FSS vs Recorded instruments)</li>
-            <li><strong>Step 7:</strong> Phase 2 validation — agreed fee values confirmed against BytePro DB as the system of record</li>
-            <li><strong>Step 8:</strong> Findings report generated — pass/flag per rule</li>
-            <li><strong>Step 9:</strong> Email notification delivered to initiating user + fee-recon@cmgfi.com with all flagged exceptions</li>
-            <li><strong>Step 10:</strong> Auditor reviews exceptions only — dismisses, actions, or escalates each finding</li>
-        </ul>
-        <p>For loans where all 4 rules pass, the auditor receives a "Clean — no exceptions" notification and never opens a single document.</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>Bundle Generation (BoB)</h4>
+                    <ul>
+                        <li>Ops user initiates Fee Recon bundle in BoB (single or bulk)</li>
+                        <li>BoB identifies approved versions and retrieves The Big 3 from BytePro in stacking order</li>
+                        <li>Single merged PDF delivered to internal folder / SFTP</li>
+                    </ul>
+                    <h4>OCR & Validation (Dr. BoB)</h4>
+                    <ul>
+                        <li>Dr. BoB detects new bundle and begins processing</li>
+                        <li>OCR runs in stacking order sequence — doc position is pre-known</li>
+                        <li>Phase 1: docs cross-referenced against each other</li>
+                        <li>Phase 2: values confirmed against BytePro DB</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Findings & Resolution</h4>
+                    <ul>
+                        <li>Findings email → initiating user + fee-recon@cmgfi.com</li>
+                        <li>Auditor reviews exceptions only — dismisses, actions, or escalates</li>
+                        <li>Clean loans: "No exceptions found" — auditor never opens a document</li>
+                    </ul>
+                    <h4>The Key Outcome</h4>
+                    <p>For a post-close team reviewing hundreds of loans, this is the difference between a full day on reconciliation and 30 minutes on only the loans that actually have problems.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -737,16 +813,25 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-schema')">×</button>
         <h3>🔑 The Stacking Order as Schema</h3>
-        <p>Traditional OCR on an unknown document has to figure out what it's looking at before it can extract anything. This is error-prone and unreliable at scale.</p>
-        <p>Dr. BoB doesn't have that problem. Because BoB generates the bundle PDF in a <strong>known, fixed stacking order</strong>, Dr. BoB knows before it opens the file:</p>
-        <ul>
-            <li>Document 1 is the Final Closing Disclosure — extract Government Recording Fees from Section H</li>
-            <li>Document 4 is the Final Settlement Statement — extract Government Recording Fees section</li>
-            <li>Document 5 is the Recorded Warranty Deed — scan for fee stamp at top-right of page 1, then last page, then attached pages</li>
-            <li>Document 6 is the Recorded DOT — scan for fee stamp at right corner or attached page</li>
-        </ul>
-        <p>This is <strong>structured, deterministic extraction</strong>. The stacking order acts as a schema — defining what field to look for, in what document, in what location. Dr. BoB doesn't guess. It executes a defined extraction plan every time.</p>
-        <p>This is why the stacking order configuration in BytePro (Phase 0) is the critical gate — without a fixed, defined bundle structure, Dr. BoB cannot operate reliably.</p>
+        <div class="modal-body">
+            <p>Traditional OCR must figure out what it's looking at before extracting anything — error-prone and unreliable at scale. Dr. BoB doesn't have that problem.</p>
+            <p>Because BoB generates the PDF in a <strong>known, fixed stacking order</strong>, Dr. BoB knows before it opens the file:</p>
+            <div class="modal-two-col" style="margin-top:8px;">
+                <div>
+                    <ul>
+                        <li><strong>Doc 1</strong> = Final CD → extract Government Recording Fees from Section H</li>
+                        <li><strong>Doc 4</strong> = Final Settlement Statement → extract Government Recording Fees section</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <li><strong>Doc 5</strong> = Recorded Warranty Deed → scan top-right page 1, then last page, then attached pages</li>
+                        <li><strong>Doc 6</strong> = Recorded DOT → scan right corner or attached page</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top:8px;"><strong>Structured, deterministic extraction — not guesswork.</strong> This is why Phase 0 (the BytePro stacking order config) is the critical gate. Without a fixed bundle structure, Dr. BoB cannot operate reliably.</p>
+        </div>
     </div>
 </div>
 
@@ -754,45 +839,54 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-shift')">×</button>
         <h3>🔄 The User Experience Shift</h3>
-        <h4>Before Dr. BoB — Per Loan</h4>
-        <ul>
-            <li>Navigate to 3 Byte tabs, download 6 documents</li>
-            <li>Open each document, locate fee amounts (different location per county)</li>
-            <li>Manually compare all values line by line</li>
-            <li>If missing docs — email Settlement Agent and wait</li>
-            <li>If mismatch — determine refund, notify Title Company</li>
-            <li>Sign checklist — that's the audit trail</li>
-        </ul>
-        <h4>After Dr. BoB — Per Loan</h4>
-        <ul>
-            <li>Open email notification from Dr. BoB</li>
-            <li>If all rules passed: "Clean — no exceptions found." Done.</li>
-            <li>If exceptions found: review each flagged item — specific document, specific value, specific remediation action</li>
-            <li>Dismiss, resolve, or escalate each finding</li>
-            <li>Automated timestamped audit record generated — no checklist needed</li>
-        </ul>
-        <p>For a post-close audit group processing hundreds of loans, this is the difference between spending a full day on reconciliation and spending 30 minutes reviewing only the loans that actually have problems.</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4 style="color:#E53935;">Before Dr. BoB — Per Loan</h4>
+                    <ul>
+                        <li>Hunt Byte tabs for the right versions — approved doc among duplicates, fee stamps buried by county</li>
+                        <li>Open each doc, locate fee amounts (different location per county)</li>
+                        <li>Manually compare all values line by line</li>
+                        <li>Missing docs → email Settlement Agent, wait</li>
+                        <li>Mismatch → determine refund, notify Title Company</li>
+                        <li>Sign checklist — that's the audit trail</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:#388E3C;">After Dr. BoB — Per Loan</h4>
+                    <ul>
+                        <li>Open email notification from Dr. BoB</li>
+                        <li>All rules passed → "Clean — no exceptions." Done.</li>
+                        <li>Exceptions found → review each flagged item with specific values and remediation path</li>
+                        <li>Dismiss, resolve, or escalate each finding</li>
+                        <li>Automated timestamped audit record generated — no checklist</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="m-stack" class="modal-overlay" onclick="if(event.target===this)closeModal('m-stack')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-stack')">×</button>
-        <h3>📋 Fee Reconciliation Bundle — Full Stacking Order</h3>
-        <p>Source: CMG Recording Fee Reconciliation Guide (internal). These are the exact documents auditors download manually today.</p>
-        <table>
-            <thead>
-                <tr><th>#</th><th>Document</th><th>Byte Location</th><th>Dr. BoB Extracts</th><th>Validation Role</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>1</strong></td><td>Final Closing Disclosure (CD)</td><td>DOCS tab</td><td>Government Recording Fees line items</td><td>Fees disclosed to borrower — primary reference</td></tr>
-                <tr><td><strong>2</strong></td><td>Change of Circumstance (if present)</td><td>DOCS tab</td><td>Fee change disclosures</td><td>Flags intentional post-CD fee changes</td></tr>
-                <tr><td><strong>3</strong></td><td>Post Closing CD / PCCD (if present)</td><td>POST CLSNG tab</td><td>Refunds or post-close fee changes</td><td>Confirms any borrower refund already issued</td></tr>
-                <tr><td><strong>4</strong></td><td>Final Settlement Statement / Disbursement Ledger</td><td>DOCS tab</td><td>Government Recording Fees actually charged</td><td>Cross-reference anchor — must match CD and recorded instruments</td></tr>
-                <tr><td><strong>5</strong></td><td>Recorded Warranty Deed</td><td>PROP tab</td><td>Fee stamp: top-right page 1, last page, or attached page</td><td>Actual county-recorded fee — must match FSS/CD</td></tr>
-                <tr><td><strong>6</strong></td><td>Recorded Deed of Trust / Security Instrument</td><td>POST CLSNG tab</td><td>Fee stamp: right corner or attached page</td><td>Actual county-recorded fee — must match FSS/CD</td></tr>
-            </tbody>
-        </table>
+        <h3>📋 Fee Reconciliation Bundle — The Big 3 Full Stacking Order</h3>
+        <div class="modal-body">
+            <p style="margin-bottom:8px;">Source: CMG Recording Fee Reconciliation Guide (internal). These are the exact documents post-close and ops teams hunt through Byte tabs for today.</p>
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Document</th><th>Byte Location</th><th>Dr. BoB Extracts</th><th>Validation Role</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>1</strong></td><td>Final Closing Disclosure</td><td>DOCS tab</td><td>Government Recording Fees (Section H)</td><td>Fees disclosed to borrower — primary reference</td></tr>
+                    <tr><td><strong>2</strong></td><td>Change of Circumstance (if present)</td><td>DOCS tab</td><td>Fee change disclosures</td><td>Flags intentional post-CD fee changes</td></tr>
+                    <tr><td><strong>3</strong></td><td>Post Closing CD / PCCD (if present)</td><td>POST CLSNG tab</td><td>Post-close fee changes / refunds</td><td>Confirms any borrower refund already issued</td></tr>
+                    <tr><td><strong>4</strong></td><td>Final Settlement Statement</td><td>DOCS tab</td><td>Government Recording Fees charged</td><td>Cross-reference anchor — must match CD and instruments</td></tr>
+                    <tr><td><strong>5</strong></td><td>Recorded Warranty Deed</td><td>PROP tab</td><td>Fee stamp: top-right p.1, last page, or attached</td><td>Actual county-recorded fee — must match FSS/CD</td></tr>
+                    <tr><td><strong>6</strong></td><td>Recorded Deed of Trust</td><td>POST CLSNG tab</td><td>Fee stamp: right corner or attached page</td><td>Actual county-recorded fee — must match FSS/CD</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -800,16 +894,25 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-phase0')">×</button>
         <h3>🔴 Phase 0 — The Critical Gate</h3>
-        <p><strong>The ask:</strong> Configure "Fee Reconciliation" as a named bundle type in the Byte bundle tables with the 6-document stacking order defined in this proposal.</p>
-        <p><strong>What this is:</strong> A database configuration change in BytePro. It defines a new bundle type with a name, a document list, and a stacking order. The Byte team does this for investor bundles routinely.</p>
-        <p><strong>What this is not:</strong> A code change. No new development. No new infrastructure. No sprint capacity beyond the BytePro config work.</p>
-        <p><strong>Why it's the critical gate:</strong></p>
-        <ul>
-            <li>Without a named bundle type in BytePro, BoB cannot generate a Fee Recon bundle — Phase 1 is blocked</li>
-            <li>Without a fixed stacking order, Dr. BoB cannot operate reliably — Phase 2 is blocked</li>
-            <li>Everything downstream in this proposal depends on this one configuration being in place</li>
-        </ul>
-        <p><strong>Owner:</strong> BytePro / Byte team<br><strong>Dependency:</strong> Byte 25.2 release (already in the pipeline)</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>The Ask</h4>
+                    <p>Configure <strong>"Fee Reconciliation"</strong> as a named bundle type in the Byte bundle tables with The Big 3 document stacking order defined in this proposal.</p>
+                    <h4>What This Is</h4>
+                    <p>A database configuration change in BytePro. The Byte team does this for investor bundles routinely. <strong>Not a code change — no sprint capacity beyond Byte team config work.</strong></p>
+                </div>
+                <div>
+                    <h4>Why It's the Gate</h4>
+                    <ul>
+                        <li>Without a named bundle type, BoB cannot generate a Fee Recon bundle — Phase 1 blocked</li>
+                        <li>Without a fixed stacking order, Dr. BoB cannot operate reliably — Phase 2 blocked</li>
+                        <li>Everything downstream depends on this one configuration</li>
+                    </ul>
+                    <p><strong>Owner:</strong> BytePro / Byte team &nbsp;|&nbsp; <strong>Dependency:</strong> Byte 25.2 (in pipeline)</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -817,16 +920,18 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-source')">×</button>
         <h3>📖 Source of Truth — CMG Recording Fee Reconciliation Guide</h3>
-        <p>The 6-document stacking order and the validation rules in this proposal are derived directly from CMG's internal <strong>Recording Fee Reconciliation Guide</strong> — the same document that outlines the current manual process auditors follow today.</p>
-        <p>The guide specifies:</p>
-        <ul>
-            <li>Exactly which documents are required for a recording fee reconciliation</li>
-            <li>Where those documents live in Byte Stored Documents (which tab)</li>
-            <li>Where to locate the fee amounts on each document (first page top-right, last page, or attached page)</li>
-            <li>The comparison logic — FSS fees must match the fee stamps on recorded instruments</li>
-            <li>The remediation path — mismatch requires refund via Settlement Agent / Title Company</li>
-        </ul>
-        <p>Dr. BoB automates exactly this process, document by document, in the same sequence, with the same comparison logic — but without human eyes reading every page.</p>
+        <div class="modal-body">
+            <p>The Big 3 document stacking order and validation rules are derived directly from CMG's internal <strong>Recording Fee Reconciliation Guide</strong> — the same document that defines today's manual process.</p>
+            <p>The guide specifies:</p>
+            <ul>
+                <li>Which documents are required for a recording fee reconciliation</li>
+                <li>Where they live in Byte Stored Documents (which tab)</li>
+                <li>Where fee amounts appear on each doc (first page top-right, last page, or attached)</li>
+                <li>Comparison logic — FSS fees must match fee stamps on recorded instruments</li>
+                <li>Remediation path — mismatch requires refund via Settlement Agent / Title Company</li>
+            </ul>
+            <p>Dr. BoB automates exactly this process — same documents, same sequence, same logic. Without human eyes reading every page.</p>
+        </div>
     </div>
 </div>
 
@@ -834,11 +939,25 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-rule1')">×</button>
         <h3><span class="modal-num">R1</span> CD vs. Final Settlement Statement</h3>
-        <p><strong>Extract from:</strong> Final Closing Disclosure (Doc 1) — Government Recording Fees section (Section H)</p>
-        <p><strong>Extract from:</strong> Final Settlement Statement (Doc 4) — Government Recording Fees section</p>
-        <p><strong>Comparison:</strong> All line item fee amounts must match between the two documents</p>
-        <p><strong>Why it matters:</strong> The CD discloses what the borrower was told they would be charged. The FSS shows what was actually charged at closing. These must agree — any discrepancy means the borrower was given inaccurate fee disclosure.</p>
-        <p><strong>Flag message:</strong> "Government Recording Fees on Final CD do not match Final Settlement Statement. CD shows {$X}, FSS shows {$Y}. Disclosure discrepancy — review required."</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>What Dr. BoB Extracts</h4>
+                    <ul>
+                        <li><strong>Doc 1 — Final CD:</strong> Government Recording Fees section (Section H)</li>
+                        <li><strong>Doc 4 — Final Settlement Statement:</strong> Government Recording Fees section</li>
+                    </ul>
+                    <h4>Comparison</h4>
+                    <p>All line item fee amounts must match between the two documents.</p>
+                </div>
+                <div>
+                    <h4>Why It Matters</h4>
+                    <p>The CD discloses what the borrower was told they'd be charged. The FSS shows what was actually charged at closing. Any discrepancy = inaccurate fee disclosure.</p>
+                    <h4>Flag Message</h4>
+                    <p style="font-style:italic; font-size:0.82rem;">"Government Recording Fees on Final CD do not match Final Settlement Statement. CD: <strong>{$X}</strong>, FSS: <strong>{$Y}</strong>. Disclosure discrepancy — review required."</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -846,23 +965,47 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-rule2')">×</button>
         <h3><span class="modal-num">R2</span> FSS vs. Recorded Warranty Deed</h3>
-        <p><strong>Extract from:</strong> Final Settlement Statement (Doc 4) — Government Recording Fees section</p>
-        <p><strong>Extract from:</strong> Recorded Warranty Deed (Doc 5) — Dr. BoB scans in this order: (1) top-right corner of first page, (2) bottom of last page, (3) separate attached page</p>
-        <p><strong>Comparison:</strong> The recording fee amount stamped on the Recorded Warranty Deed must match the fee shown on the FSS</p>
-        <p><strong>Why it matters:</strong> The fee stamp on the recorded instrument is what was actually charged by the county recorder. If this differs from what the FSS says was charged, the borrower was overcharged — a refund is legally required.</p>
-        <p><strong>Flag message:</strong> "Warranty Deed recording fee ({$X}) does not match FSS recording fee ({$Y}). Borrower may have been overcharged. Refund required — notify Settlement Agent and Title Company."</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>What Dr. BoB Extracts</h4>
+                    <ul>
+                        <li><strong>Doc 4 — FSS:</strong> Government Recording Fees section</li>
+                        <li><strong>Doc 5 — Recorded Warranty Deed:</strong> Fee stamp scanned in order: (1) top-right of page 1, (2) bottom of last page, (3) separate attached page</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Why It Matters</h4>
+                    <p>The fee stamp on the recorded instrument is what the county actually charged. If it differs from FSS, the borrower was overcharged — <strong>a refund is legally required.</strong></p>
+                    <h4>Flag Message</h4>
+                    <p style="font-style:italic; font-size:0.82rem;">"Warranty Deed fee (<strong>{$X}</strong>) ≠ FSS fee (<strong>{$Y}</strong>). Borrower overcharge — notify Settlement Agent and Title Company."</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="m-rule3" class="modal-overlay" onclick="if(event.target===this)closeModal('m-rule3')">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-rule3')">×</button>
-        <h3><span class="modal-num">R3</span> FSS vs. Recorded Deed of Trust / Security Instrument</h3>
-        <p><strong>Extract from:</strong> Final Settlement Statement (Doc 4) — Government Recording Fees section</p>
-        <p><strong>Extract from:</strong> Recorded Deed of Trust / Security Instrument (Doc 6) — Dr. BoB scans: (1) right corner of document, (2) separate attached page</p>
-        <p><strong>Comparison:</strong> The recording fee amount on the Recorded DOT must match the fee shown on the FSS</p>
-        <p><strong>Why it matters:</strong> Same compliance requirement as Rule 2 — the DOT recording fee is a separate county charge that must match what was disclosed and charged to the borrower.</p>
-        <p><strong>Flag message:</strong> "DOT/Security Instrument recording fee ({$X}) does not match FSS recording fee ({$Y}). Borrower may have been overcharged. Refund required — notify Settlement Agent and Title Company."</p>
+        <h3><span class="modal-num">R3</span> FSS vs. Recorded Deed of Trust</h3>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>What Dr. BoB Extracts</h4>
+                    <ul>
+                        <li><strong>Doc 4 — FSS:</strong> Government Recording Fees section</li>
+                        <li><strong>Doc 6 — Recorded DOT:</strong> Fee stamp scanned: (1) right corner of doc, (2) separate attached page</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Why It Matters</h4>
+                    <p>Same RESPA compliance requirement as R2 — the DOT recording fee is a separate county charge that must match what was disclosed and charged to the borrower.</p>
+                    <h4>Flag Message</h4>
+                    <p style="font-style:italic; font-size:0.82rem;">"DOT/Security Instrument fee (<strong>{$X}</strong>) ≠ FSS fee (<strong>{$Y}</strong>). Borrower overcharge — notify Settlement Agent and Title Company."</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -870,17 +1013,25 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-rule4')">×</button>
         <h3><span class="modal-num">R4</span> Bundle Completeness Check</h3>
-        <p><strong>When it runs:</strong> Before any OCR begins — this is the first check</p>
-        <p><strong>What it checks:</strong> All 6 required documents are present in the bundle PDF</p>
-        <p><strong>Why it matters:</strong> A reconciliation is only valid if all required documents were reviewed. If the Recorded Warranty Deed is missing from the bundle, Dr. BoB cannot confirm whether the recording fee matches — so the result is incomplete, not a pass.</p>
-        <p><strong>Flag messages by missing document:</strong></p>
-        <ul>
-            <li>"Final Closing Disclosure not found in bundle. Reconciliation cannot proceed."</li>
-            <li>"Final Settlement Statement not found in bundle. Reconciliation cannot proceed."</li>
-            <li>"Recorded Warranty Deed not found in bundle. Request from Settlement Agent via Parties screen in Byte."</li>
-            <li>"Recorded Deed of Trust not found in bundle. Request from Settlement Agent via Parties screen in Byte."</li>
-        </ul>
-        <p>If a document is flagged as missing, the findings email includes the remediation path — directing the auditor to the Parties screen in Byte to locate the Settlement Agent contact for document retrieval.</p>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>When It Runs</h4>
+                    <p>First check — before any OCR begins. A reconciliation is only valid if all required documents were reviewed.</p>
+                    <h4>Why It Matters</h4>
+                    <p>If the Recorded Warranty Deed is missing, Dr. BoB cannot confirm the recording fee matches. Result = <strong>incomplete</strong>, not a pass.</p>
+                </div>
+                <div>
+                    <h4>Flag Messages by Missing Doc</h4>
+                    <ul>
+                        <li>"Final CD not found. Reconciliation cannot proceed."</li>
+                        <li>"Final Settlement Statement not found. Reconciliation cannot proceed."</li>
+                        <li>"Recorded Warranty Deed not found. Request from Settlement Agent via Parties screen in Byte."</li>
+                        <li>"Recorded DOT not found. Request from Settlement Agent via Parties screen in Byte."</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -888,33 +1039,37 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-phases')">×</button>
         <h3>🚀 Three Phases — Full Breakdown</h3>
-        <h4>Phase 0 — BytePro Bundle Configuration</h4>
-        <ul>
-            <li>Configure "Fee Reconciliation" as a named bundle type in Byte bundle tables</li>
-            <li>Define 6-document stacking order in BytePro config</li>
-            <li>Configuration change only — no new code, no sprint capacity beyond Byte team config work</li>
-            <li>Owner: BytePro / Byte team | Dependency: Byte 25.2 (in pipeline)</li>
-            <li><strong>This is the critical gate. Nothing below works without this.</strong></li>
-        </ul>
-        <h4>Phase 1 — One Bundle PDF (Immediate ROI)</h4>
-        <ul>
-            <li>BoB generates a single Fee Reconciliation bundle PDF on demand</li>
-            <li>User downloads 1 file instead of searching 3 Byte tabs for 6 separate documents</li>
-            <li>All documents in correct review sequence — every time, without manual assembly</li>
-            <li>Auditor still reviews manually — but dramatically faster and less error-prone</li>
-            <li>Zero net-new infrastructure — uses the BoB bundle engine already in development</li>
-            <li><strong>This phase ships value before Dr. BoB is even built.</strong></li>
-        </ul>
-        <h4>Phase 2 — Dr. BoB Fee Recon MVP</h4>
-        <ul>
-            <li>Dr. BoB picks up the bundle PDF from the delivery folder</li>
-            <li>OCR runs in stacking order sequence — 4 validation rules applied</li>
-            <li>Two-phase validation: intra-bundle cross-reference → BytePro DB confirmation</li>
-            <li>Findings email to initiating user + fee-recon@cmgfi.com department inbox</li>
-            <li>All passing documents automatically dismissed — auditor only reviews flagged exceptions</li>
-            <li>Timestamped compliance audit trail generated per run</li>
-            <li><strong>Stare-and-compare eliminated at scale.</strong></li>
-        </ul>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4 style="color:#E53935;">Phase 0 — BytePro Config</h4>
+                    <ul>
+                        <li>Configure "Fee Reconciliation" as a named bundle type in Byte bundle tables</li>
+                        <li>Define The Big 3 stacking order in BytePro config</li>
+                        <li>Config change only — no new code</li>
+                        <li><strong>Critical gate. Nothing below works without this.</strong></li>
+                    </ul>
+                    <h4 style="color:#E65100;">Phase 1 — Big 3 Bundle PDF</h4>
+                    <ul>
+                        <li>BoB assembles The Big 3 bundle on demand — right versions, automatically</li>
+                        <li>Big 3 hunt across Byte tabs → <strong>under 15 seconds, no hunting</strong></li>
+                        <li>Zero new infrastructure — existing BoB engine</li>
+                        <li><strong>Ships measurable time savings before Dr. BoB is built.</strong></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:#00897B;">Phase 2 — Dr. BoB Fee Recon MVP</h4>
+                    <ul>
+                        <li>Dr. BoB picks up bundle PDF from delivery folder</li>
+                        <li>OCR runs in stacking order — 4 validation rules applied</li>
+                        <li>Findings email → initiating user + fee-recon@cmgfi.com</li>
+                        <li>All passing docs dismissed — auditor reviews exceptions only</li>
+                        <li>Timestamped compliance audit trail per run</li>
+                        <li><strong>Stare-and-compare eliminated at scale.</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -922,20 +1077,21 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-roi')">×</button>
         <h3>📈 ROI & Business Case</h3>
-        <table>
-            <thead><tr><th>Metric</th><th style="color:#FFCDD2;">Today — Manual</th><th style="color:#C8E6C9;">Phase 1</th><th style="color:#B2DFDB;">Phase 2 — Dr. BoB</th></tr></thead>
-            <tbody>
-                <tr><td>Steps per loan (retrieval)</td><td>8–12 manual</td><td>2–3 steps</td><td>0 — automated</td></tr>
-                <tr><td>Documents to open</td><td>6 separate files</td><td>1 bundle PDF</td><td>0 — Dr. BoB reads it</td></tr>
-                <tr><td>Comparison method</td><td>Human stare-and-compare</td><td>Human — single PDF</td><td>Automated OCR rules</td></tr>
-                <tr><td>Human error risk</td><td>High — fatigue at scale</td><td>Reduced</td><td>Minimal — systematic</td></tr>
-                <tr><td>Compliance audit trail</td><td>Reviewer initials</td><td>Same</td><td>Automated — timestamped, logged</td></tr>
-                <tr><td>Coverage gap risk</td><td>High — no safety net</td><td>Same</td><td>Dept inbox — always covered</td></tr>
-                <tr><td>Borrower overcharge detection</td><td>Auditor-dependent</td><td>Faster — still manual</td><td>Systematic — every loan, every time</td></tr>
-                <tr><td>Scale impact (100 loans)</td><td>100× full manual review hours</td><td>100× faster retrieval</td><td>Background processing — exceptions only</td></tr>
-                <tr><td>New infrastructure required</td><td>—</td><td>Existing BoB engine</td><td>Dr. BoB OCR + rules engine</td></tr>
-            </tbody>
-        </table>
+        <div class="modal-body">
+            <table>
+                <thead><tr><th>Metric</th><th>Today — Manual</th><th>Phase 1</th><th>Phase 2 — Dr. BoB</th></tr></thead>
+                <tbody>
+                    <tr><td>Steps per loan</td><td>Big 3 hunt — tabs, versions, eye strain</td><td><strong>Under 15 sec — BoB pulls correct versions</strong></td><td>0 — fully automated</td></tr>
+                    <tr><td>Downloads in Byte</td><td>Manual hunt across 3 Byte tabs</td><td><strong>1 click — Big 3 assembled by BoB</strong></td><td>0 — Dr. BoB reads it</td></tr>
+                    <tr><td>Comparison method</td><td>Human stare-and-compare</td><td>Human — single PDF</td><td>Automated OCR rules</td></tr>
+                    <tr><td>Human error risk</td><td>High — fatigue at scale</td><td>Reduced</td><td>Minimal — systematic</td></tr>
+                    <tr><td>Compliance audit trail</td><td>Reviewer initials</td><td>Same</td><td>Automated — timestamped, logged</td></tr>
+                    <tr><td>Coverage gap risk</td><td>High — no safety net</td><td>Same</td><td>Dept inbox — always covered</td></tr>
+                    <tr><td>Overcharge detection</td><td>Auditor-dependent</td><td>Faster — still manual</td><td>Systematic — every loan, every time</td></tr>
+                    <tr><td>Scale impact (100 loans)</td><td>100× full manual review</td><td>100× faster retrieval</td><td>Background — exceptions only</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -943,26 +1099,36 @@
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('m-notify')">×</button>
         <h3>📧 Notification & Coverage Model</h3>
-        <p><strong>Layer 1 — Primary recipient (always automatic):</strong> The user who initiated the bundle job. Their login identity at job initiation is the routing key for the entire findings workflow. No manual assignment needed.</p>
-        <p><strong>Layer 2 — Department coverage inbox (configurable at setup):</strong> A shared inbox scoped to the bundle type ensures the full team sees every finding, regardless of who initiated the job or whether they are available.</p>
-        <table>
-            <thead><tr><th>Bundle Type</th><th>Primary</th><th>CC / Coverage</th></tr></thead>
-            <tbody>
-                <tr><td>Fee Reconciliation</td><td>Initiating user</td><td>fee-recon@cmgfi.com</td></tr>
-                <tr><td>QC Review</td><td>Initiating user</td><td>qc-review@cmgfi.com</td></tr>
-                <tr><td>Post-Close Audit</td><td>Initiating user</td><td>postclosing-audit@cmgfi.com</td></tr>
-                <tr><td>Compliance Audit</td><td>Initiating user</td><td>compliance@cmgfi.com</td></tr>
-            </tbody>
-        </table>
-        <p><strong>Why bundle-type-scoped?</strong> Fee Recon findings should not hit the QC team inbox and vice versa. Each department owns their coverage model independently — IT manages distribution list membership without touching the application.</p>
-        <p><strong>Layer 3 — Escalation (Phase 2 roadmap):</strong> Findings that remain unactioned past X days auto-escalate to a supervisor or manager. Not in Phase 1 scope, but the data model will support it.</p>
-        <p><strong>What the findings email contains:</strong></p>
-        <ul>
-            <li>Loan number + bundle name</li>
-            <li>Documents scanned / rules passed / rules flagged</li>
-            <li>Each flagged finding: document, extracted value, expected value, remediation path</li>
-            <li>Link back to bundle in BoB Activity Log</li>
-        </ul>
+        <div class="modal-body">
+            <div class="modal-two-col">
+                <div>
+                    <h4>Two-Layer Routing</h4>
+                    <ul>
+                        <li><strong>Layer 1 — Initiating user:</strong> Login at job initiation = routing key. Automatic. No manual assignment.</li>
+                        <li><strong>Layer 2 — Dept inbox:</strong> Bundle-type-scoped shared inbox — full team sees every finding regardless of who initiated or if they're available.</li>
+                    </ul>
+                    <table style="margin-top:8px;">
+                        <thead><tr><th>Bundle Type</th><th>CC / Coverage</th></tr></thead>
+                        <tbody>
+                            <tr><td>Fee Reconciliation</td><td>fee-recon@cmgfi.com</td></tr>
+                            <tr><td>QC Review</td><td>qc-review@cmgfi.com</td></tr>
+                            <tr><td>Compliance Audit</td><td>compliance@cmgfi.com</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4>What the Findings Email Contains</h4>
+                    <ul>
+                        <li>Loan number + bundle name</li>
+                        <li>Documents scanned / rules passed / rules flagged</li>
+                        <li>Each flag: document, extracted value, expected value, remediation path</li>
+                        <li>Link back to bundle in BoB Activity Log</li>
+                    </ul>
+                    <h4>Layer 3 — Escalation (Phase 2 Roadmap)</h4>
+                    <p>Findings unactioned past X days auto-escalate to supervisor. Not Phase 1 scope — data model will support it.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -996,12 +1162,11 @@
     }
 
     document.addEventListener('keydown', e => {
-        if (document.querySelector('.modal-overlay.active')) {
-            if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
-            return;
-        }
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
         if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+        }
     });
 </script>
 </body>
