@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoB EOD — April 1, 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(135deg, #2C3E50 0%, #3D5A6C 50%, #4A6B7C 100%); min-height: 100vh; padding: 40px 20px; color: #2C3E50; }
+  .container { max-width: 860px; margin: 0 auto; }
+  .header { background: white; border-radius: 12px; padding: 24px 32px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .header h1 { font-size: 1.6rem; font-weight: 800; color: #2C3E50; }
+  .header p { font-size: 0.9rem; color: #546E7A; margin-top: 4px; }
+  .badge { display: inline-block; background: #00897B; color: white; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-left: 10px; letter-spacing: 0.04em; }
+  .section { background: white; border-radius: 12px; padding: 20px 28px; margin-bottom: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .section-title { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .task { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f3f5; cursor: pointer; }
+  .task:last-child { border-bottom: none; }
+  .task input[type="checkbox"] { margin-top: 2px; width: 17px; height: 17px; accent-color: #00897B; cursor: pointer; flex-shrink: 0; }
+  .task-text { font-size: 0.93rem; color: #37474F; line-height: 1.5; flex: 1; }
+  .task-text.done { text-decoration: line-through; color: #90A4AE; }
+  .task-sub { font-size: 0.78rem; color: #78909C; margin-top: 2px; }
+  .add-row { display: flex; gap: 10px; margin-top: 14px; }
+  .add-row input { flex: 1; border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 9px 14px; font-size: 0.9rem; color: #2C3E50; outline: none; }
+  .add-row input:focus { border-color: #4A90A4; }
+  .add-row button { background: #00897B; color: white; border: none; border-radius: 8px; padding: 9px 18px; font-size: 0.88rem; font-weight: 700; cursor: pointer; }
+  .add-row button:hover { background: #00695C; }
+  .completed-today { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-left: 4px solid #388E3C; }
+  .completed-today .section-title { color: #2E7D32; }
+  .done-item { font-size: 0.9rem; color: #37474F; padding: 7px 0; border-bottom: 1px solid rgba(56,142,60,0.15); display: flex; align-items: center; gap: 8px; }
+  .done-item:last-child { border-bottom: none; }
+  .done-item::before { content: "✓"; color: #388E3C; font-weight: 900; font-size: 0.85rem; flex-shrink: 0; }
+  .footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 0.78rem; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>BoB EOD Handoff <span class="badge">April 1, 2026</span></h1>
+    <p>Dr. BoB Fee Recon Deck — Tomorrow's priorities and open items</p>
+  </div>
+
+  <div class="section completed-today">
+    <div class="section-title">Completed Today</div>
+    <div class="done-item">Em dash audit and cleanup — all deck copy (slides 1-6)</div>
+    <div class="done-item">Font scale increase across all landing slides — titles, tiles, tags, icons</div>
+    <div class="done-item">Proof image modals on slide 3 — clickable cards expand to 92vw with 4.2rem time display</div>
+    <div class="done-item">Stat banner single-row fix (white-space: nowrap) — Aza-Riz rule saved to memory</div>
+    <div class="done-item">Step 8 corrected in manual process modal — values mismatch action, not missing docs</div>
+    <div class="done-item">Bold Recording Fee Reconciliation in all modal body text</div>
+    <div class="done-item">GitHub Issues #2 and #3 created in bob-documentation</div>
+    <div class="done-item">All changes committed, pushed to GitHub, deployed to Vercel</div>
+  </div>
+
+  <div class="section" style="border-left: 5px solid #E53935;">
+    <div class="section-title" style="color:#C62828;">🔴 High Priority — Tomorrow First</div>
+    <div id="high-list">
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Slide 5 review — Phase 0 / 1 / 2 tile body and modal copy</div><div class="task-sub">Roadmap & ROI slide — tile framing, wording, C-suite accuracy</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Slide 5 — Before vs. After ROI tile and modal review</div><div class="task-sub">Confirm numbers, wording, and layout are presentation-ready</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Slide 6 review — Closing slide and Phase 0 ask copy</div><div class="task-sub">Final ask language, contact/next steps, quote block accuracy</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Full deck read-through before signing off</div><div class="task-sub">No orphaned words, no em dashes, no played-out icons, no scrollbars</div></div>
+      </div>
+    </div>
+    <div class="add-row">
+      <input id="high-input" type="text" placeholder="Add high priority task...">
+      <button onclick="addTask('high-list','high-input')">Add</button>
+    </div>
+  </div>
+
+  <div class="section" style="border-left: 5px solid #F9A825;">
+    <div class="section-title" style="color:#E65100;">🟡 Medium Priority</div>
+    <div id="med-list">
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Schedule BytePro config conversation with Byte team</div><div class="task-sub">Phase 0 gate — config approval needed before any phases can run</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Schedule Fee Recon discovery session with Post-Close Audit team</div><div class="task-sub">Validate OCR rules, resolution workflow, what "pass" means</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Apply Aza-Riz font scale to executive-summary-presentation.html</div><div class="task-sub">GitHub Issue #3 — standards consistency across all deck files</div></div>
+      </div>
+    </div>
+    <div class="add-row">
+      <input id="med-input" type="text" placeholder="Add medium priority task...">
+      <button onclick="addTask('med-list','med-input')">Add</button>
+    </div>
+  </div>
+
+  <div class="section" style="border-left: 5px solid #78909C;">
+    <div class="section-title" style="color:#546E7A;">⚪ Backlog</div>
+    <div id="low-list">
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">Dr. BoB Phase 2 BRD — begin after Phase 0 leadership approval</div><div class="task-sub">OCR rules, two-phase validation, stakeholder discovery sessions</div></div>
+      </div>
+      <div class="task" onclick="toggle(this)">
+        <input type="checkbox">
+        <div><div class="task-text">BoB Bulk Bundle Path — Q2 2026 dev in progress tracking</div><div class="task-sub">bob-doctor-bulk repo, production target Q2 2026</div></div>
+      </div>
+    </div>
+    <div class="add-row">
+      <input id="low-input" type="text" placeholder="Add backlog task...">
+      <button onclick="addTask('low-list','low-input')">Add</button>
+    </div>
+  </div>
+
+  <div class="footer">BoB Management Suite · EOD April 1, 2026 · Dr. BoB Fee Recon Initiative</div>
+</div>
+<script>
+  function toggle(row) {
+    const cb = row.querySelector('input[type="checkbox"]');
+    const txt = row.querySelector('.task-text');
+    cb.checked = !cb.checked;
+    txt.classList.toggle('done', cb.checked);
+    save();
+  }
+  function addTask(listId, inputId) {
+    const input = document.getElementById(inputId);
+    const val = input.value.trim();
+    if (!val) return;
+    const list = document.getElementById(listId);
+    const div = document.createElement('div');
+    div.className = 'task';
+    div.onclick = function() { toggle(this); };
+    div.innerHTML = '<input type="checkbox"><div><div class="task-text">' + val + '</div></div>';
+    list.appendChild(div);
+    input.value = '';
+    save();
+  }
+  function save() {
+    const state = {};
+    document.querySelectorAll('.task').forEach((t,i) => {
+      state[i] = t.querySelector('input').checked;
+    });
+    localStorage.setItem('eod-2026-04-01', JSON.stringify(state));
+  }
+  function load() {
+    const state = JSON.parse(localStorage.getItem('eod-2026-04-01') || '{}');
+    document.querySelectorAll('.task').forEach((t,i) => {
+      if (state[i]) {
+        t.querySelector('input').checked = true;
+        t.querySelector('.task-text').classList.add('done');
+      }
+    });
+  }
+  load();
+</script>
+</body>
+</html>
