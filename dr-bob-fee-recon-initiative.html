@@ -18,32 +18,33 @@
 
         /* ── CMG Logo ── */
         .cmg-logo {
-            position: fixed; top: 14px; left: 55px; z-index: 1000;
-            background: white; padding: 8px 16px; border-radius: 6px;
+            position: fixed; top: 15px; left: 60px; z-index: 1000;
+            background: white; padding: 10px 18px; border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            display: flex; align-items: center;
+            display: flex; align-items: center; justify-content: center;
         }
-        .cmg-logo img { height: 28px; width: auto; }
+        .cmg-logo img { height: 32px; width: auto; }
 
         /* ── Breadcrumb Nav ── */
         .breadcrumb-nav {
-            position: fixed; top: 14px; right: 55px; z-index: 1000;
-            display: flex; gap: 7px; align-items: center;
+            position: fixed; top: 15px; right: 60px; z-index: 1000;
+            display: flex; gap: 8px; align-items: center;
         }
         .breadcrumb-btn {
-            background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3);
-            color: rgba(255,255,255,0.85); padding: 5px 12px; border-radius: 6px;
-            font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+            background: rgba(255,255,255,0.6); border: 2px solid rgba(74,144,164,0.5);
+            color: rgba(44,62,80,0.7); padding: 4px 10px; border-radius: 6px;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
+            text-decoration: none; display: flex; align-items: center; gap: 4px;
         }
-        .breadcrumb-btn:hover { background: rgba(255,255,255,0.35); color: white; }
-        .breadcrumb-btn.active { background: white; color: #2C3E50; border-color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .breadcrumb-btn:hover { background: #4A90A4; color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,144,164,0.3); }
+        .breadcrumb-btn.active { background: white; color: #2C3E50; border-color: #4A90A4; border-width: 3px; box-shadow: 0 2px 8px rgba(74,144,164,0.3); }
 
         /* ── Slide Engine ── */
         .presentation-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
 
         .slide {
             width: 100%; height: 100%;
-            display: none; padding: 66px 52px 42px 52px;
+            display: none; padding: 80px 60px 40px 60px;
             position: absolute; top: 0; left: 0;
             animation: slideIn 0.4s ease-out;
             overflow: hidden; flex-direction: column;
@@ -53,14 +54,13 @@
 
         /* ── Aza-Riz Header ── */
         .slide-header {
-            background: white; border-radius: 10px;
-            padding: 10px 32px; margin-bottom: 14px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;
-            width: min(860px, 100%); align-self: center;
+            background: white; border-radius: 12px;
+            padding: 32px 50px; margin-bottom: 15px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
-        .slide-number { font-size: 0.65rem; color: #00897B; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; font-weight: 700; }
-        .slide-title  { font-size: 1.45rem; font-weight: 800; color: #2C3E50; margin-bottom: 2px; }
-        .slide-subtitle { font-size: 0.82rem; color: #546E7A; font-weight: 500; }
+        .slide-number { display: none; }
+        .slide-title  { font-size: 2rem; font-weight: 600; color: #2C3E50; line-height: 1.2; margin-bottom: 8px; }
+        .slide-subtitle { font-size: 1rem; color: #546E7A; font-weight: 500; }
 
         /* ── Aza-Riz Content ── */
         .slide-content {
@@ -88,8 +88,8 @@
 
         /* ── Title Slide ── */
         .title-slide { justify-content: center; align-items: center; }
-        .title-slide .slide-header { width: min(860px, 100%) !important; text-align: center; padding: 32px 48px !important; margin-bottom: 20px; }
-        .title-slide .slide-title { font-size: 3.0rem; line-height: 1.15; }
+        .title-slide .slide-header { width: 1100px; max-width: 100%; text-align: center; padding: 32px 50px; margin-bottom: 20px; }
+        .title-slide .slide-title { font-size: 4.5rem; line-height: 1.1; }
         .title-slide .slide-subtitle { font-size: 1.15rem; margin-top: 6px; }
         .title-meta-row { display: flex; gap: 12px; flex-wrap: wrap; max-width: 860px; width: 100%; justify-content: center; }
         .title-meta-item {
@@ -111,11 +111,18 @@
         /* ── Closing Slide ── */
         .closing-slide { justify-content: center; align-items: center; }
 
+        /* ── Navigation ── */
+        .navigation { position: fixed; bottom: 40px; right: 40px; display: flex; gap: 15px; z-index: 1000; }
+        .nav-button { background: white; border: 2px solid #4A90A4; color: #2C3E50; padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .nav-button:hover:not(:disabled) { background: #4A90A4; color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,144,164,0.3); }
+        .nav-button:disabled { opacity: 0.4; cursor: not-allowed; }
+
         /* ── Slide Counter ── */
         .slide-counter {
-            position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9);
-            padding: 5px 16px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; z-index: 100;
+            position: fixed; bottom: 40px; left: 40px;
+            background: white; padding: 8px 18px; border-radius: 6px;
+            font-size: 0.8rem; color: #546E7A; font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 1000;
         }
 
         /* ── Modal ── */
@@ -154,12 +161,9 @@
 </div>
 
 <div class="breadcrumb-nav">
-    <span id="btn-1" class="breadcrumb-btn active"  onclick="goToSlide(1)">01 Title</span>
-    <span id="btn-2" class="breadcrumb-btn" onclick="goToSlide(2)">02 Platform</span>
-    <span id="btn-3" class="breadcrumb-btn" onclick="goToSlide(3)">03 Proof</span>
-    <span id="btn-4" class="breadcrumb-btn" onclick="goToSlide(4)">04 How It Works</span>
-    <span id="btn-5" class="breadcrumb-btn" onclick="goToSlide(5)">05 Roadmap</span>
-    <span id="btn-6" class="breadcrumb-btn" onclick="goToSlide(6)">06 Thank You</span>
+    <a href="#" class="breadcrumb-btn active" onclick="return false;" style="cursor:default;">
+        <span style="font-size: 1.8rem;">🔬</span> Dr. BoB — Fee Recon
+    </a>
 </div>
 
 <div class="presentation-container">
@@ -192,7 +196,7 @@
 
 <!-- ══ SLIDE 2 — PLATFORM + PROBLEM ══ -->
 <div class="slide" id="slide-2">
-    <div class="slide-header" style="width:min(860px,100%);align-self:center;">
+    <div class="slide-header">
         <div class="slide-number">Slide 2 of 6 — Foundation</div>
         <h1 class="slide-title">One Proven Platform — Two Directions</h1>
         <p class="slide-subtitle">The engine we already built becomes the cornerstone of AI-powered operations — click any tile to learn more</p>
@@ -233,7 +237,7 @@
 
 <!-- ══ SLIDE 3 — THE PROOF ══ -->
 <div class="slide" id="slide-3">
-    <div class="slide-header" style="width:min(860px,100%);align-self:center;">
+    <div class="slide-header">
         <div class="slide-number">Slide 3 of 6 — Live Demo Results</div>
         <h1 class="slide-title">Seconds Over Minutes — Real Production Evidence</h1>
         <p class="slide-subtitle">Same SOP. Same documents. Same output. One followed manually in Byte. One run through BoB. Stopwatch running both times.</p>
@@ -267,7 +271,7 @@
 
 <!-- ══ SLIDE 4 — HOW IT WORKS ══ -->
 <div class="slide" id="slide-4">
-    <div class="slide-header" style="width:min(860px,100%);align-self:center;">
+    <div class="slide-header">
         <div class="slide-number">Slide 4 of 6 — The Engine</div>
         <h1 class="slide-title">How Dr. BoB Works — Pipeline, Bundle &amp; Rules</h1>
         <p class="slide-subtitle">Stacking order as schema — structured, deterministic, reliable at scale — click any tile for full detail</p>
@@ -311,7 +315,7 @@
 
 <!-- ══ SLIDE 5 — ROADMAP ══ -->
 <div class="slide" id="slide-5">
-    <div class="slide-header" style="width:min(860px,100%);align-self:center;">
+    <div class="slide-header">
         <div class="slide-number">Slide 5 of 6 — Roadmap &amp; ROI</div>
         <h1 class="slide-title">Crawl → Walk → Run — Phased Delivery</h1>
         <p class="slide-subtitle">Each phase delivers standalone business value — no phase requires the next to justify its existence — click any tile for full detail</p>
@@ -404,7 +408,11 @@
 
 </div><!-- /presentation-container -->
 
-<div class="slide-counter">Slide <span id="current-slide">1</span> of 6</div>
+<div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">6</span></div>
+<div class="navigation">
+    <button class="nav-button" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
+    <button class="nav-button" id="next-btn" onclick="changeSlide(1)">Next →</button>
+</div>
 
 <!-- ══ MODALS ══ -->
 <div id="m-umbrella" class="modal-overlay" onclick="if(event.target===this)closeModal('m-umbrella')">
@@ -609,13 +617,16 @@
     const total = 6;
     function goToSlide(n) {
         document.getElementById('slide-' + cur).classList.remove('active');
-        document.getElementById('btn-' + cur).classList.remove('active');
         cur = n;
         document.getElementById('slide-' + cur).classList.add('active');
-        document.getElementById('btn-' + cur).classList.add('active');
         document.getElementById('current-slide').textContent = cur;
+        updateNavButtons();
     }
     function changeSlide(d) { const n = cur + d; if (n >= 1 && n <= total) goToSlide(n); }
+    function updateNavButtons() {
+        document.getElementById('prev-btn').disabled = (cur === 1);
+        document.getElementById('next-btn').disabled = (cur === total);
+    }
     function openModal(id)  { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
     document.addEventListener('keydown', function(e) {
@@ -626,6 +637,7 @@
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
         if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changeSlide(-1);
     });
+    updateNavButtons();
 </script>
 </body>
 </html>
