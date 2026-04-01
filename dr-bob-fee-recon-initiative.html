@@ -208,7 +208,7 @@
                 <h3 class="tile-title"><span class="tile-icon">🔀</span> BoB Management Suite — One Platform, Two Directions</h3>
                 <span class="tag" style="background:#1976D2;">STRATEGY</span>
             </div>
-            <p class="tile-body">BoB assembles investor-ready PDF bundles for <strong>external delivery</strong> — decoupling operations from Byte LOS lockouts. That same proven engine is now pointed <strong>inward</strong>. Same infrastructure. New purpose. Massive internal ROI.</p>
+            <p class="tile-body"><strong>Phase 0:</strong> BoB → internal server → PDF bundle generated. Same proven engine, pointed inward. <strong>Future State:</strong> Dr. BoB executes OCR validation + system of record confirmation, then routes findings to the initiating user and the department shared inbox.</p>
         </div>
         <div class="tile-row">
             <div class="tile" onclick="openModal('m-external')" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-left:6px solid #388E3C;">
@@ -420,16 +420,16 @@
     <div class="modal-box"><button class="modal-close" onclick="closeModal('m-umbrella')">✕</button>
     <div class="modal-title">🔀 BoB Management Suite — One Platform, Two Directions</div>
     <div class="modal-body">
-        <h4>What BoB Is Today</h4>
-        <p>BoB decouples post-close bundling from Byte LOS, enabling background PDF assembly. It's in production, proven, and delivering investor packages daily — eliminating 5–20 minute Byte lockouts per bundle.</p>
-        <h4>The Strategic Pivot</h4>
-        <p>The same infrastructure — BytePro API connections, stacking order config, PDF assembly engine, and delivery pipeline — can be pointed <strong>inward</strong> at CMG's own operational needs. Not a new product. A new direction for a working platform.</p>
+        <h4>Phase 0 — What Happens Today</h4>
+        <p>BoB receives the request, queries BytePro for the correct document versions, assembles The Big 3 in stacking order, and delivers the PDF bundle to the internal server. That's it. PDF in hand. No manual Byte tab hunting. Same engine already running in production for external delivery — pointed inward.</p>
+        <h4>Future State — Dr. BoB Takes It From There</h4>
+        <p>Once the bundle lands, Dr. BoB executes: OCR extracts fee values in stacking order → 4 cross-reference rules applied → system of record confirmation against BytePro → findings routed via email to the <strong>initiating BoB user</strong> and the <strong>department shared inbox</strong>. Passing loans: no action needed. Exceptions: field-level detail, ready to act on.</p>
         <h4>Suite Architecture</h4>
         <ul>
-            <li><strong>External (In Flight):</strong> Bulk Bundle Manager + Single Flow BoB → Investor delivery</li>
-            <li><strong>Internal (This Proposal):</strong> Dr. BoB → Internal server → OCR validation → Exception email routing</li>
+            <li><strong>External (In Flight):</strong> Single Flow BoB + Bulk Bundle Manager → Investor delivery</li>
+            <li><strong>Internal Phase 0:</strong> BoB → Internal server → PDF bundle generated</li>
+            <li><strong>Internal Future State:</strong> Dr. BoB → OCR validation → System of record → Email notification</li>
         </ul>
-        <p>Recording Fee Reconciliation is the first internal BoB bundle — the proof the engine works both ways.</p>
     </div></div>
 </div>
 
